@@ -1,6 +1,7 @@
 module Pages.ArtworkPage exposing (..)
 
 import Html exposing (Html, div, h1)
+import Html.Attributes exposing (class)
 
 
 type alias Model =
@@ -15,7 +16,7 @@ initModel =
 
 
 view : model -> Html msg
-view model =
-    div []
+view _ =
+    div [ class "pt-44" ]
         [ h1 [] [ Html.text "ArtworkPage" ]
         ]

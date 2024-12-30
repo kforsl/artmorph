@@ -13,30 +13,37 @@ type Route
     | RouteHomePage
 
 
+aboutPageParser : Url.Parser.Parser a a
 aboutPageParser =
     Url.Parser.s "about"
 
 
+artistPageParser : Url.Parser.Parser a a
 artistPageParser =
     Url.Parser.s "artist"
 
 
+artworkPageParser : Url.Parser.Parser a a
 artworkPageParser =
     Url.Parser.s "artwork"
 
 
+authPageParser : Url.Parser.Parser a a
 authPageParser =
     Url.Parser.s "auth"
 
 
+exhibitionPageParser : Url.Parser.Parser a a
 exhibitionPageParser =
     Url.Parser.s "exhibition"
 
 
+homePageParser : Url.Parser.Parser a a
 homePageParser =
     Url.Parser.top
 
 
+routerParser : Url.Parser.Parser (Route -> c) c
 routerParser =
     Url.Parser.oneOf
         [ Url.Parser.map RouteAboutPage aboutPageParser

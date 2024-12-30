@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Browser
 import Browser.Navigation
-import Html exposing (Html, a, div, footer, h1, h2, header, li, nav, p, section, text, ul)
+import Html exposing (Html, a, div, footer, h1, h2, header, li, nav, section, text, ul)
 import Html.Attributes exposing (class, href)
 import Pages.AboutPage as AboutPage
 import Pages.ArtistPage as ArtistPage
@@ -100,14 +100,17 @@ viewContent model =
 
 viewHeader : Html msg
 viewHeader =
-    header [ class "max-w-fit fixed right-4 xl:right-24 lg:right-12 " ]
-        [ viewNavigation
+    header [ class "bg-bgDark fixed top-0 w-full z-50" ]
+        [ div [ class "flex justify-between   max-w-maxWidth m-auto" ]
+            [ h1 [ class "text-6xl font-logo text-primary font-medium content-center py-2" ] [ Html.text "ArtMorph" ]
+            , viewNavigation
+            ]
         ]
 
 
 viewNavigation : Html msg
 viewNavigation =
-    nav [ class "max-w-fit" ]
+    nav [ class "max-w-fit content-center" ]
         [ ul [ class "grid grid-cols-3 auto-cols-max" ]
             [ viewLink "/" "Home"
             , viewLink "/about" "About"
