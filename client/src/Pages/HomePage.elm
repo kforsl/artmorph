@@ -153,7 +153,7 @@ viewNewsletter =
             [ h3 [ class "font-bread font-medium text-xl leading-relaxed mb-4" ] [ text "Whether you’re a collector, an admirer, or an artist, ArtMorph is a space for discovery and connection. Let’s shape the future of art together." ]
             , p [ class "font-bread text-base font-regular leading-normal mb-4" ] [ text "Stay updated with the latest exhibitions, featured artists, and exclusive content delivered straight to your inbox." ]
             , form [ class " w-full flex gap-4 pb-4" ]
-                [ input [ class "w-full rounded-lg pl-2" ] []
+                [ input [ class "w-full rounded-lg pl-2 py-2" ] []
                 , button [ class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold" ] [ text "Subscribe Now" ]
                 ]
             , nav [ class "flex justify-around" ]
