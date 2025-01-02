@@ -29,6 +29,7 @@ type alias Model =
 type Msg
     = MsgUrlChange Url.Url
     | MsgUrlRequest Browser.UrlRequest
+    | MsgAuthPage AuthPage.Msg
 
 
 main : Program () Model Msg
@@ -91,7 +92,7 @@ getTitle url =
 
 viewContent : Model -> Html Msg
 viewContent model =
-    div [ class "w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1" ]
+    div [ class "max-w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1" ]
         [ viewHeader
         , viewPage model
         , viewFooter
@@ -129,7 +130,7 @@ viewLink path label =
 
 viewFooter : Html msg
 viewFooter =
-    footer [ class "p-8 bg-bgDark min-h-72 grid auto-rows-max place-content-between grid-cols-1" ]
+    footer [ class "p-8 bg-bgDark min-h-72 max-w-full grid auto-rows-max place-content-between grid-cols-1" ]
         [ section [ class "max-w-maxWidth m-auto w-full" ]
             [ h2 [ class "text-4xl text-primary font-logo font-medium" ] [ text "ArtMorph" ]
             ]
@@ -137,7 +138,7 @@ viewFooter =
         ]
 
 
-viewPage : Model -> Html msg
+viewPage : Model -> Html Msg
 viewPage model =
     case Router.fromUrl model.url of
         Just Router.RouteAboutPage ->
@@ -150,7 +151,7 @@ viewPage model =
             ArtworkPage.view model.modelArtworkPage
 
         Just Router.RouteAuthPage ->
-            AuthPage.view model.modelAuthPage
+            Html.map MsgAuthPage (AuthPage.view model.modelAuthPage)
 
         Just Router.RouteExhibitionPage ->
             ExhibitionPage.view model.modelExhibitionPage
@@ -162,7 +163,7 @@ viewPage model =
             div [] [ h1 [] [ text "Error" ] ]
 
 
-update : Msg -> Model -> ( Model, Cmd msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         MsgUrlChange url ->
@@ -179,6 +180,15 @@ update msg model =
 
                 Browser.External url ->
                     ( model, Browser.Navigation.load url )
+
+        MsgAuthPage msgAuthPage ->
+            let
+                ( newAuthPageModel, cmdAuthPage ) =
+                    AuthPage.update msgAuthPage model.modelAuthPage
+            in
+            ( { model | modelAuthPage = newAuthPageModel }
+            , Cmd.map MsgAuthPage cmdAuthPage
+            )
 
 
 subscriptions : Model -> Sub Msg
