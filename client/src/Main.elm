@@ -30,6 +30,8 @@ type Msg
     = MsgUrlChange Url.Url
     | MsgUrlRequest Browser.UrlRequest
     | MsgAuthPage AuthPage.Msg
+    | MsgAboutPage AboutPage.Msg
+    | MsgHomePage HomePage.Msg
 
 
 main : Program () Model Msg
@@ -142,7 +144,7 @@ viewPage : Model -> Html Msg
 viewPage model =
     case Router.fromUrl model.url of
         Just Router.RouteAboutPage ->
-            AboutPage.view model.modelAboutPage
+            Html.map MsgAboutPage (AboutPage.view model.modelAboutPage)
 
         Just Router.RouteArtistPage ->
             ArtistPage.view model.modelArtistPage
@@ -157,7 +159,7 @@ viewPage model =
             ExhibitionPage.view model.modelExhibitionPage
 
         Just Router.RouteHomePage ->
-            HomePage.view model.modelHomePage
+            Html.map MsgHomePage (HomePage.view model.modelHomePage)
 
         Nothing ->
             div [] [ h1 [] [ text "Error" ] ]
@@ -188,6 +190,24 @@ update msg model =
             in
             ( { model | modelAuthPage = newAuthPageModel }
             , Cmd.map MsgAuthPage cmdAuthPage
+            )
+
+        MsgAboutPage msgAboutPage ->
+            let
+                ( newAboutPageModel, cmdAuthPage ) =
+                    AboutPage.update msgAboutPage model.modelAboutPage
+            in
+            ( { model | modelAboutPage = newAboutPageModel }
+            , Cmd.map MsgAuthPage cmdAuthPage
+            )
+
+        MsgHomePage msgHomePage ->
+            let
+                ( newHomePageModel, cmdAuthPage ) =
+                    HomePage.update msgHomePage model.modelHomePage
+            in
+            ( { model | modelHomePage = newHomePageModel }
+            , Cmd.map MsgHomePage cmdAuthPage
             )
 
 

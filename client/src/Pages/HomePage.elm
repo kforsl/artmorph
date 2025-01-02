@@ -1,6 +1,6 @@
 module Pages.HomePage exposing (..)
 
-import Html exposing (Html, a, article, div, figure, form, h2, h3, h4, img, input, li, nav, p, section, span, text, ul)
+import Html exposing (Html, a, article, div, figure, h2, h3, h4, img, li, p, section, span, text, ul)
 import Html.Attributes exposing (class, href, src)
 import UI
 
@@ -10,13 +10,17 @@ type alias Model =
     }
 
 
+type Msg
+    = MsgSignUpToNewsletter
+
+
 initModel : Model
 initModel =
     { title = "About"
     }
 
 
-view : model -> Html msg
+view : Model -> Html Msg
 view _ =
     div [ class "bg-bgLight" ]
         [ viewHero
@@ -24,7 +28,7 @@ view _ =
         , viewExhibitions
         , viewPictureOfTheMonth
         , viewArtist
-        , UI.viewNewsletter
+        , UI.viewNewsletter MsgSignUpToNewsletter
         ]
 
 
@@ -124,3 +128,9 @@ viewArtist =
             , UI.viewArtistCard
             ]
         ]
+
+
+update msg model =
+    case msg of
+        MsgSignUpToNewsletter ->
+            ( model, Cmd.none )

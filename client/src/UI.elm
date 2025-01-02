@@ -2,7 +2,7 @@ module UI exposing (..)
 
 import Html exposing (Html, a, article, button, figure, form, h2, h3, h5, h6, img, input, label, nav, p, section, text)
 import Html.Attributes exposing (class, href, src)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onSubmit)
 
 
 link : String -> String -> Html msg
@@ -56,8 +56,8 @@ titlePrimary title =
     h2 [ class "font-title text-3xl mb-4 text-primary col-span-full" ] [ text title ]
 
 
-viewNewsletter : Html msg
-viewNewsletter =
+viewNewsletter : msg -> Html msg
+viewNewsletter msg =
     article [ class "max-w-maxWidth m-auto py-16 grid grid-cols-2 gap-4" ]
         [ h2 [ class "font-title text-3xl col-span-full" ]
             [ text "Your Journey Into Art Begins Here" ]
@@ -67,7 +67,7 @@ viewNewsletter =
         , section [ class "py-4" ]
             [ h3 [ class "font-bread font-medium text-xl leading-relaxed mb-4" ] [ text "Whether you’re a collector, an admirer, or an artist, ArtMorph is a space for discovery and connection. Let’s shape the future of art together." ]
             , p [ class "font-bread text-base font-regular leading-normal mb-4" ] [ text "Stay updated with the latest exhibitions, featured artists, and exclusive content delivered straight to your inbox." ]
-            , form [ class " w-full flex gap-4 pb-4" ]
+            , form [ class " w-full flex gap-4 pb-4", onSubmit msg ]
                 [ input [ class "w-full rounded-lg pl-2 py-2" ] []
                 , button [ class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold" ] [ text "Subscribe Now" ]
                 ]

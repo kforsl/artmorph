@@ -10,13 +10,17 @@ type alias Model =
     }
 
 
+type Msg
+    = MsgSignUpToNewsletter
+
+
 initModel : Model
 initModel =
     { title = "About"
     }
 
 
-view : model -> Html msg
+view : Model -> Html Msg
 view _ =
     div [ class "bg-bgLight" ]
         [ viewHero
@@ -25,7 +29,7 @@ view _ =
         , viewExhibitions
         , viewSpotlight
         , viewContact
-        , UI.viewNewsletter
+        , UI.viewNewsletter MsgSignUpToNewsletter
         ]
 
 
@@ -161,8 +165,14 @@ viewContact =
             , UI.formInput "Email:"
             , label []
                 [ text "Message:"
-                , textarea [ class "w-full rounded-lg pl-2 resize-none h-44 pl-2 pt-2" ] []
+                , textarea [ class "w-full rounded-lg resize-none h-44 pl-2 pt-2" ] []
                 ]
             , UI.buttonSecondary "Send Message"
             ]
         ]
+
+
+update msg model =
+    case msg of
+        MsgSignUpToNewsletter ->
+            ( model, Cmd.none )
