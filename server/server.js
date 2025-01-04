@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+var cors = require('cors')
 
 const app = express();
 
@@ -11,6 +12,7 @@ const exhibitionRoute = require('./routes/exhibitionRoute');
 
 const PORT = process.env.PORT;
 
+app.use(cors())
 app.use(express.json());
 
 app.use('/api/artwork', artworkRoute);
