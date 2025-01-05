@@ -1,8 +1,8 @@
 module Pages.AboutPage exposing (..)
 
+import Components.UI
 import Html exposing (Html, article, div, figure, form, h2, h3, img, label, li, p, section, span, text, textarea, ul)
 import Html.Attributes exposing (class, src)
-import UI
 
 
 type alias Model =
@@ -29,7 +29,7 @@ view _ =
         , viewExhibitions
         , viewSpotlight
         , viewContact
-        , UI.viewNewsletter MsgSignUpToNewsletter
+        , Components.UI.viewNewsletter MsgSignUpToNewsletter
         ]
 
 
@@ -57,7 +57,7 @@ viewAbout : Html msg
 viewAbout =
     article [ class "max-w-maxWidth m-auto py-8 grid grid-cols-2 border-b-2 border-black" ]
         [ section [ class "p-4" ]
-            [ UI.titleDark "The Vision Behind ArtMorph"
+            [ Components.UI.titleDark "The Vision Behind ArtMorph"
             , p [ class "font-bread text-base mb-2" ] [ text "ArtMorph was born from a passion for bridging the timeless beauty of traditional art with the endless possibilities of digital expression. Founded in [Year], our gallery was envisioned as a space where artists and art lovers could explore the evolution of creativity. From classical brushstrokes to digital masterpieces, we celebrate the transformation of art and its ability to inspire, challenge, and connect." ]
             , p [ class "font-bread text-base mb-2" ] [ text "Our mission is simple—to honor tradition while embracing innovation. By showcasing art that spans mediums and styles, we aim to spark curiosity, conversation, and appreciation for the ever-changing world of artistic expression. Whether you’re an artist, collector, or admirer, ArtMorph is your gateway to a world where creativity knows no boundaries." ]
             ]
@@ -70,10 +70,10 @@ viewAbout =
 viewArtists : Html msg
 viewArtists =
     article [ class "max-w-maxWidth m-auto py-8 grid grid-cols-3 gap-x-8" ]
-        [ UI.titleDark "Meet the Creators Behind the Art"
+        [ Components.UI.titleDark "Meet the Creators Behind the Art"
         , ul [ class "flex overflow-hidden justify-between" ]
-            [ UI.viewArtistCard
-            , UI.viewArtistCard
+            [ Components.UI.viewArtistCard
+            , Components.UI.viewArtistCard
             ]
         , section [ class "col-span-2" ]
             [ p [ class "font-bread text-base mb-2" ] [ text "ArtMorph collaborates with a diverse group of artists, each with a unique story to tell. From painters and sculptors to digital illustrators and multimedia creators, our gallery highlights talents who dare to push the boundaries of their craft." ]
@@ -86,7 +86,7 @@ viewExhibitions : Html msg
 viewExhibitions =
     section [ class "pt-32 bg-bgDark relative z-0" ]
         [ div [ class "max-w-maxWidth m-auto grid grid-cols-2" ]
-            [ UI.titlePrimary "Exploring Creativity Through Exhibitions"
+            [ Components.UI.titlePrimary "Exploring Creativity Through Exhibitions"
             , figure []
                 [ img [ src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", class "h-full aspect-video" ] []
                 ]
@@ -108,11 +108,11 @@ viewSpotlight : Html msg
 viewSpotlight =
     section [ class "py-32 bg-bgDark relative z-0" ]
         [ article [ class "max-w-maxWidth m-auto" ]
-            [ UI.titlePrimary "ArtMorph in the Spotlight"
+            [ Components.UI.titlePrimary "ArtMorph in the Spotlight"
             , ul [ class "grid grid-cols-3" ]
-                [ viewSpotlightQuote "'ArtMorph is a breath of fresh air in the art world. It’s a place where tradition meets innovation, and the results are stunning.'" "Art Insider Magazine"
-                , viewSpotlightQuote "'This gallery doesn’t just showcase art—it tells a story of transformation and connection.'" "Creative Review"
-                , viewSpotlightQuote "'Visiting ArtMorph felt like stepping into the future of art. Inspiring and thought-provoking.'" "Gallery Visitor"
+                [ viewSpotlightQuote """ "ArtMorph is a breath of fresh air in the art world. It’s a place where tradition meets innovation, and the results are stunning." """ "Art Insider Magazine"
+                , viewSpotlightQuote """ "This gallery doesn’t just showcase art—it tells a story of transformation and connection." """ "Creative Review"
+                , viewSpotlightQuote """ "Visiting ArtMorph felt like stepping into the future of art. Inspiring and thought-provoking." """ "Gallery Visitor"
                 ]
             ]
         ]
@@ -130,7 +130,7 @@ viewContact : Html msg
 viewContact =
     article [ class "max-w-maxWidth m-auto py-8 grid grid-cols-2 gap-x-8" ]
         [ section [ class "px-11 grid gap-4" ]
-            [ UI.titleDark "Let’s Get in Touch"
+            [ Components.UI.titleDark "Let’s Get in Touch"
             , p [ class "font-bread text-base text-textDark mb-8" ]
                 [ text "We’d love to hear from you! Whether you’re an artist looking to collaborate, a collector with inquiries, or someone who simply loves art, don’t hesitate to reach out."
                 ]
@@ -161,13 +161,13 @@ viewContact =
             ]
         , form [ class "p-8 bg-primary rounded-2xl flex flex-col gap-4" ]
             [ h3 [ class "font-title text-3xl text-center" ] [ text "Contact Form:" ]
-            , UI.formInput "Name:"
-            , UI.formInput "Email:"
+            , Components.UI.formInput "Name:"
+            , Components.UI.formInput "Email:"
             , label []
                 [ text "Message:"
                 , textarea [ class "w-full rounded-lg resize-none h-44 pl-2 pt-2" ] []
                 ]
-            , UI.buttonSecondary "Send Message"
+            , Components.UI.buttonSecondary "Send Message"
             ]
         ]
 

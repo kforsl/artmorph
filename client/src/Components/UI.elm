@@ -1,4 +1,4 @@
-module UI exposing (..)
+module Components.UI exposing (..)
 
 import Html exposing (Html, a, article, button, figure, form, h2, h3, h5, h6, img, input, label, nav, p, section, text)
 import Html.Attributes exposing (class, href, src)

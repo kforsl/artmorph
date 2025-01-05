@@ -1,8 +1,8 @@
 module Pages.HomePage exposing (..)
 
+import Components.UI
 import Html exposing (Html, a, article, div, figure, h2, h3, h4, img, li, p, section, span, text, ul)
 import Html.Attributes exposing (class, href, src)
-import UI
 
 
 type alias Model =
@@ -28,14 +28,14 @@ view _ =
         , viewExhibitions
         , viewPictureOfTheMonth
         , viewArtist
-        , UI.viewNewsletter MsgSignUpToNewsletter
+        , Components.UI.viewNewsletter MsgSignUpToNewsletter
         ]
 
 
 viewHero : Html msg
 viewHero =
     section [ class "pt-32 bg-bgDark relative z-0" ]
-        [ UI.bgTextSecondary
+        [ Components.UI.bgTextSecondary
         , div [ class "max-w-maxWidth m-auto grid gap-20 grid-cols-2 pt-24" ]
             [ figure [ class "relative max-w-md" ]
                 [ img [ src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", class " bg-contain overflow-hidden" ] []
@@ -53,7 +53,7 @@ viewWelcome =
             [ img [ src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", class "w-full aspect-video" ] []
             ]
         , section [ class "p-4" ]
-            [ UI.titleDark "Welcome to Artmorph"
+            [ Components.UI.titleDark "Welcome to Artmorph"
             , p
                 [ class "font-bread text-base mb-2" ]
                 [ text "Where tradition meets innovation, and art takes on new forms. We are a digital platform celebrating the evolution of creativity, from timeless brushstrokes to cutting-edge digital masterpieces. Explore a gallery where boundaries fade, and imagination thrives in both physical and virtual spaces." ]
@@ -66,7 +66,7 @@ viewExhibitions : Html msg
 viewExhibitions =
     article [ class "max-w-maxWidth m-auto py-16" ]
         [ section [ class "flex justify-between" ]
-            [ UI.titleDark "Featured Exhibitions"
+            [ Components.UI.titleDark "Featured Exhibitions"
             , viewFilterExhibition
             ]
         , ul [ class "flex gap-4 overflow-hidden py-8" ]
@@ -98,14 +98,14 @@ viewExhibitionCard : Html msg
 viewExhibitionCard =
     li [ class "grid gap-0.5" ]
         [ img [ src "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", class "max-w-96" ] []
-        , UI.link "/exhibition" "Title "
+        , Components.UI.link "/exhibition" "Title "
         ]
 
 
 viewPictureOfTheMonth : Html msg
 viewPictureOfTheMonth =
     section [ class "bg-bgDark py-16 relative z-0" ]
-        [ UI.bgTextSecondary
+        [ Components.UI.bgTextSecondary
         , div [ class "max-w-maxWidth m-auto" ]
             [ h2 [ class "font-title text-3xl mb-8 text-primary text-center" ] [ text "Picture of the month" ]
             , img [ src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", class "mb-8 max-w-96 m-auto" ] []
@@ -118,14 +118,14 @@ viewPictureOfTheMonth =
 viewArtist : Html msg
 viewArtist =
     section [ class "max-w-maxWidth m-auto py-16 border-b-2 border-black" ]
-        [ UI.titleDark "The Minds Behind the Masterpieces"
+        [ Components.UI.titleDark "The Minds Behind the Masterpieces"
         , ul [ class "flex overflow-hidden justify-between" ]
-            [ UI.viewArtistCard
-            , UI.viewArtistCard
-            , UI.viewArtistCard
-            , UI.viewArtistCard
-            , UI.viewArtistCard
-            , UI.viewArtistCard
+            [ Components.UI.viewArtistCard
+            , Components.UI.viewArtistCard
+            , Components.UI.viewArtistCard
+            , Components.UI.viewArtistCard
+            , Components.UI.viewArtistCard
+            , Components.UI.viewArtistCard
             ]
         ]
 
