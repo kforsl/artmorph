@@ -11,15 +11,35 @@ type alias ApiResponse =
     }
 
 
-type Msg
-    = GotArtists (Result Http.Error ApiResponse)
-
-
-getArtists : Cmd Msg
-getArtists =
+fetchArtists : (Result Http.Error ApiResponse -> msg) -> Cmd msg
+fetchArtists msg =
     Http.get
         { url = "http://localhost:8080/api/artist"
-        , expect = Http.expectJson GotArtists apiResponseDecoder
+        , expect = Http.expectJson msg apiResponseDecoder
+        }
+
+
+fetchArtistsById : String -> (Result Http.Error ApiResponse -> msg) -> Cmd msg
+fetchArtistsById id msg =
+    Http.get
+        { url = "http://localhost:8080/api/artist/" ++ id
+        , expect = Http.expectJson msg apiResponseDecoder
+        }
+
+
+fetchArtistsByStyle : String -> (Result Http.Error ApiResponse -> msg) -> Cmd msg
+fetchArtistsByStyle style msg =
+    Http.get
+        { url = "http://localhost:8080/api/artist/" ++ style
+        , expect = Http.expectJson msg apiResponseDecoder
+        }
+
+
+fetchArtistsByMedium : String -> (Result Http.Error ApiResponse -> msg) -> Cmd msg
+fetchArtistsByMedium medium msg =
+    Http.get
+        { url = "http://localhost:8080/api/artist/" ++ medium
+        , expect = Http.expectJson msg apiResponseDecoder
         }
 
 

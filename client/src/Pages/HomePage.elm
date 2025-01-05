@@ -130,6 +130,7 @@ viewArtist =
         ]
 
 
+update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
     case msg of
         MsgSignUpToNewsletter ->

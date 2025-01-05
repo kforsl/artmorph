@@ -1,11 +1,10 @@
 module View exposing (..)
 
 import Browser
-import Browser.Navigation
 import Components.Footer exposing (viewFooter)
 import Components.Header exposing (viewHeader)
-import Html exposing (Html, a, div, footer, h1, h2, header, li, nav, section, text, ul)
-import Html.Attributes exposing (class, href)
+import Html exposing (Html, div, h1, text)
+import Html.Attributes exposing (class)
 import Msg exposing (Msg(..))
 import Pages.AboutPage as AboutPage
 import Pages.ArtistPage as ArtistPage
