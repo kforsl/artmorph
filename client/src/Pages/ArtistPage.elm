@@ -1,7 +1,9 @@
 module Pages.ArtistPage exposing (..)
 
-import Html exposing (Html, div, h1)
-import Html.Attributes exposing (class)
+import Element.Footer exposing (viewFooter)
+import Element.Header exposing (viewHeader)
+import Html exposing (Html)
+import Html.Attributes as HA
 
 
 type alias Model =
@@ -17,6 +19,11 @@ initModel =
 
 view : model -> Html msg
 view _ =
-    div [ class "pt-44" ]
-        [ h1 [] [ Html.text "ArtistPage" ]
+    Html.div
+        [ HA.class "max-w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1 " ]
+        [ viewHeader
+        , Html.h1
+            []
+            [ Html.text "ArtistPage" ]
+        , viewFooter
         ]

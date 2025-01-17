@@ -1,75 +1,167 @@
 module Pages.AuthPage exposing (..)
 
-import Components.UI
-import Html exposing (Html, div, form, h1, p, span, text)
-import Html.Attributes exposing (class)
-import Html.Events exposing (onClick, onSubmit)
+import Element.UI
+import Html exposing (Html)
+import Html.Attributes as HA
+import Html.Events as HE
+import Process
+import Task
 
 
 type alias Model =
-    { formTitle : String
-    , formInputs : List String
-    , formLinkText : String
-    , formMessage : String
-    , formBtnText : String
+    { formType : FormType
+    , formState : FormState
+    }
+
+
+type FormType
+    = Login
+    | Register
+
+
+type FormState
+    = Resting
+    | Loading
+    | Success
+    | Error
+
+
+initModel : Model
+initModel =
+    { formType = Register
+    , formState = Resting
     }
 
 
 type Msg
     = MsgChangeFormType
     | MsgSubmitForm
-
-
-initModel : Model
-initModel =
-    { formTitle = "Sign In"
-    , formInputs = [ "Email", "Password" ]
-    , formLinkText = "Create an account"
-    , formMessage = "to start exploring exhibitions, connect with artists, and receive exclusive updates."
-    , formBtnText = "Login"
-    }
-
-
-view : Model -> Html Msg
-view model =
-    div [ class " absolute top-0 z-50 h-full max-h-svh bg-bgDark w-full grid place-content-center" ]
-        [ Components.UI.bgTextSecondary
-        , form [ class "bg-primary flex flex-col p-28 pt-40 gap-4 max-w-3xl justify-center", onSubmit MsgSubmitForm ]
-            [ h1 [ class "text-sizeBg w-full text-secondary font-logo absolute top-1/3 -translate-y-2/3 left-0 text-center text-nowrap z-20" ] [ text model.formTitle ]
-            , div [ class "grid gap-2" ] (List.map Components.UI.formInput model.formInputs)
-            , p [ class "text-base font-bread text-center font-bold" ] [ span [ class "mr-1 underline underline-offset-2 cursor-pointer", onClick MsgChangeFormType ] [ text model.formLinkText ], text model.formMessage ]
-            , Components.UI.buttonSecondary model.formBtnText
-            ]
-        ]
+    | MsgSubmitError
+    | MsgSubmitResting
+    | MsgSubmitSuccess
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         MsgChangeFormType ->
-            if model.formTitle == "Sign In" then
-                let
-                    changedInputs =
-                        { formTitle = "Register"
-                        , formInputs = [ "Email", "Password", "Repeat Password" ]
-                        , formLinkText = "Log in"
-                        , formMessage = "to continue discovering and engaging with          inspiring art                collections."
-                        , formBtnText = "Sign up"
-                        }
-                in
-                ( changedInputs, Cmd.none )
+            case model.formType of
+                Login ->
+                    ( { model | formType = Register }, Cmd.none )
 
-            else
-                let
-                    changedInputs =
-                        { formTitle = "Sign In"
-                        , formInputs = [ "Email", "Password" ]
-                        , formLinkText = "Create an account"
-                        , formMessage = "to start exploring exhibitions, connect with artists, and receive exclusive updates."
-                        , formBtnText = "Login"
-                        }
-                in
-                ( changedInputs, Cmd.none )
+                Register ->
+                    ( { model | formType = Login }, Cmd.none )
 
         MsgSubmitForm ->
-            ( { model | formBtnText = "Loading..." }, Cmd.none )
+            ( { model | formState = Loading }, sendToSelfWithDelay 2000 MsgSubmitError )
+
+        MsgSubmitError ->
+            ( { model | formState = Error }, sendToSelfWithDelay 4000 MsgSubmitResting )
+
+        MsgSubmitResting ->
+            ( { model | formState = Resting }, Cmd.none )
+
+        MsgSubmitSuccess ->
+            ( { model | formState = Success }, Cmd.none )
+
+
+sendToSelfWithDelay : Float -> msg -> Cmd msg
+sendToSelfWithDelay delay msg =
+    Process.sleep delay
+        |> Task.map (\_ -> msg)
+        |> Task.perform identity
+
+
+view : Model -> Html Msg
+view model =
+    case model.formType of
+        Login ->
+            Html.main_
+                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center" ]
+                [ Html.section
+                    [ HA.class "grid place-content-center relative" ]
+                    [ Html.h1
+                        [ HA.class "text-sizeBg w-full text-secondary font-logo absolute -top-12 left-0 -translate-y-1/2 text-center text-nowrap z-20" ]
+                        [ Html.text "Sign In" ]
+                    , Html.form
+                        [ HA.class "bg-primary flex flex-col p-28 pt-40 gap-4 max-w-3xl justify-center relative h-[596px]"
+                        , HE.onSubmit MsgSubmitForm
+                        ]
+                        [ Html.div
+                            [ HA.class "grid gap-2" ]
+                            [ Element.UI.formInput "Email"
+                            , Element.UI.formInput "Password"
+                            ]
+                        , Html.p
+                            [ HA.class "text-base font-bread text-center font-bold" ]
+                            [ Html.span
+                                [ HA.class "mr-1 underline underline-offset-2 cursor-pointer"
+                                , HE.onClick MsgChangeFormType
+                                ]
+                                [ Html.text "Create an account" ]
+                            , Html.text "to start exploring exhibitions, connect with artists, and receive exclusive updates."
+                            ]
+                        , case model.formState of
+                            Resting ->
+                                Element.UI.buttonSecondary "Sign In"
+
+                            Loading ->
+                                Element.UI.buttonSecondary "Loading . . ."
+
+                            Success ->
+                                Element.UI.buttonSecondary "Success"
+
+                            Error ->
+                                Element.UI.buttonSecondary "Sign In"
+                        ]
+                    ]
+                , Element.UI.bgTextSecondary
+                ]
+
+        Register ->
+            Html.main_
+                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center" ]
+                [ Html.section
+                    [ HA.class "grid place-content-center relative" ]
+                    [ Html.h1
+                        [ HA.class "text-sizeBg w-full text-secondary font-logo absolute -top-12 left-0 -translate-y-1/2 text-center text-nowrap z-20" ]
+                        [ Html.text "Register" ]
+                    , Html.form
+                        [ HA.class "bg-primary flex flex-col p-28 pt-40 gap-4 max-w-3xl justify-center relative h-[596px]"
+                        , HE.onSubmit MsgSubmitForm
+                        ]
+                        [ Html.div
+                            [ HA.class "grid gap-2" ]
+                            [ Element.UI.formInput "Email"
+                            , Element.UI.formInput "Password"
+                            , Element.UI.formInput "Repeat Password"
+                            ]
+                        , Html.p
+                            [ HA.class "text-base font-bread text-center font-bold" ]
+                            [ Html.span
+                                [ HA.class "mr-1 underline underline-offset-2 cursor-pointer"
+                                , HE.onClick MsgChangeFormType
+                                ]
+                                [ Html.text "Log in" ]
+                            , Html.text "to continue discovering and engaging with inspiring art collections."
+                            ]
+                        , case model.formState of
+                            Resting ->
+                                Element.UI.buttonSecondary "Register"
+
+                            Loading ->
+                                Element.UI.buttonSecondary "Loading . . ."
+
+                            Success ->
+                                Element.UI.buttonSecondary "Success"
+
+                            Error ->
+                                Element.UI.buttonSecondary "Register"
+                        ]
+                    ]
+                , Element.UI.bgTextSecondary
+                ]
+
+
+
+--
