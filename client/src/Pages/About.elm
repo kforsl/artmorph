@@ -1,9 +1,7 @@
-module Pages.AboutPage exposing (..)
+module Pages.About exposing (..)
 
-import Element.Footer exposing (viewFooter)
-import Element.Header exposing (viewHeader)
-import Element.Newsletter exposing (viewNewsletter)
-import Element.UI
+import Components.Newsletter
+ 
 import Html exposing (Html)
 import Html.Attributes as HA
 
@@ -15,34 +13,31 @@ type alias Model =
 
 initModel : Model
 initModel =
-    { title = "About"
+    { title = "About Page"
     }
 
 
 type Msg
-    = MsgSignUpToNewsletter
+    = MsgDummy
 
 
-update : Msg -> Model -> ( Model, Cmd msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MsgSignUpToNewsletter ->
+        MsgDummy ->
             ( model, Cmd.none )
 
 
 view : Model -> Html Msg
-view _ =
-    Html.main_
-        [ HA.class "bg-bgLight" ]
-        [ viewHeader
-        , viewHero
+view model =
+    Html.div []
+        [ viewHero
         , viewAbout
         , viewArtists
         , viewExhibitions
         , viewSpotlight
         , viewContact
-        , viewNewsletter MsgSignUpToNewsletter
-        , viewFooter
+        , Components.Newsletter.view
         ]
 
 
@@ -95,7 +90,9 @@ viewAbout =
         [ HA.class "max-w-maxWidth m-auto py-8 grid grid-cols-2 border-b-2 border-black" ]
         [ Html.section
             [ HA.class "p-4" ]
-            [ Element.UI.titleDark "The Vision Behind ArtMorph"
+            [ Html.h2
+                [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
+                [ Html.text "The Vision Behind ArtMorph" ]
             , Html.p
                 [ HA.class "font-bread text-base mb-2" ]
                 [ Html.text "ArtMorph was born from a passion for bridging the timeless beauty of traditional art with the endless possibilities of digital expression. Founded in [Year], our gallery was envisioned as a space where artists and art lovers could explore the evolution of creativity. From classical brushstrokes to digital masterpieces, we celebrate the transformation of art and its ability to inspire, challenge, and connect." ]
@@ -117,11 +114,33 @@ viewArtists : Html msg
 viewArtists =
     Html.article
         [ HA.class "max-w-maxWidth m-auto py-8 grid grid-cols-3 gap-x-8" ]
-        [ Element.UI.titleDark "Meet the Creators Behind the Art"
+        [ Html.h2
+            [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
+            [ Html.text "Meet the Creators Behind the Art" ]
         , Html.ul
             [ HA.class "flex overflow-hidden justify-between" ]
-            [ Element.UI.viewArtistCard
-            , Element.UI.viewArtistCard
+            [ Html.article
+                [ HA.class "max-w-44 grid gap-0.5" ]
+                [ Html.a
+                    [ HA.href "/artist"
+                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+                    ]
+                    [ Html.text "Name of artist" ]
+                , Html.img
+                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                    []
+                ]
+            , Html.article
+                [ HA.class "max-w-44 grid gap-0.5" ]
+                [ Html.a
+                    [ HA.href "/artist"
+                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+                    ]
+                    [ Html.text "Name of artist" ]
+                , Html.img
+                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                    []
+                ]
             ]
         , Html.section
             [ HA.class "col-span-2" ]
@@ -141,7 +160,9 @@ viewExhibitions =
         [ HA.class "pt-32 bg-bgDark relative z-0" ]
         [ Html.div
             [ HA.class "max-w-maxWidth m-auto grid grid-cols-2" ]
-            [ Element.UI.titlePrimary "Exploring Creativity Through Exhibitions"
+            [ Html.h2
+                [ HA.class "font-title text-3xl mb-4 text-primary col-span-full" ]
+                [ Html.text "Exploring Creativity Through Exhibitions" ]
             , Html.figure
                 []
                 [ Html.img
@@ -184,7 +205,9 @@ viewSpotlight =
         [ HA.class "py-32 bg-bgDark relative z-0" ]
         [ Html.article
             [ HA.class "max-w-maxWidth m-auto" ]
-            [ Element.UI.titlePrimary "ArtMorph in the Spotlight"
+            [ Html.h2
+                [ HA.class "font-title text-3xl mb-4 text-primary col-span-full" ]
+                [ Html.text "ArtMorph in the Spotlight" ]
             , Html.ul
                 [ HA.class "grid grid-cols-3" ]
                 [ viewSpotlightQuote """ "ArtMorph is a breath of fresh air in the art world. It’s a place where tradition meets innovation, and the results are stunning." """ "Art Insider Magazine"
@@ -214,7 +237,9 @@ viewContact =
         [ HA.class "max-w-maxWidth m-auto py-8 grid grid-cols-2 gap-x-8" ]
         [ Html.section
             [ HA.class "px-11 grid gap-4" ]
-            [ Element.UI.titleDark "Let’s Get in Touch"
+            [ Html.h2
+                [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
+                [ Html.text "Let’s Get in Touch" ]
             , Html.p
                 [ HA.class "font-bread text-base text-textDark mb-8" ]
                 [ Html.text "We’d love to hear from you! Whether you’re an artist looking to collaborate, a collector with inquiries, or someone who simply loves art, don’t hesitate to reach out."
@@ -276,13 +301,25 @@ viewContact =
             [ Html.h3
                 [ HA.class "font-title text-3xl text-center" ]
                 [ Html.text "Contact Form:" ]
-            , Element.UI.formInput "Name:"
-            , Element.UI.formInput "Email:"
+            , Html.label []
+                [ Html.text "Name:"
+                , Html.input
+                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                    []
+                ]
+            , Html.label []
+                [ Html.text "Email:"
+                , Html.input
+                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                    []
+                ]
             , Html.label
                 []
                 [ Html.text "Message:"
                 , Html.textarea [ HA.class "w-full rounded-lg resize-none h-44 pl-2 pt-2" ] []
                 ]
-            , Element.UI.buttonSecondary "Send Message"
+            , Html.button
+                [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                [ Html.text "Send Message" ]
             ]
         ]

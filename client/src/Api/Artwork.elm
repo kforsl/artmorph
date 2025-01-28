@@ -1,25 +1,17 @@
-module Data.Artwork exposing (..)
+module Api.Artwork exposing (..)
 
-import Data.Artist exposing (Artist, artistDecoder)
+import Api.Artist exposing (Artist, artistDecoder)
 import Http
 import Json.Decode as JD exposing (Decoder)
 
 
 type alias Model =
-    { artwork : List Artwork
-    , artworkById : List Artwork
-    , artworkByStyle : List Artwork
-    , artworkByMedium : List Artwork
-    }
+    List Artwork
 
 
 initModel : Model
 initModel =
-    { artwork = []
-    , artworkById = []
-    , artworkByMedium = []
-    , artworkByStyle = []
-    }
+    []
 
 
 type alias ApiResponse =
@@ -42,10 +34,13 @@ type alias Artwork =
 
 type Msg
     = FetchArtwork (Result Http.Error ApiResponse)
-    | FetchArtworkById (Result Http.Error ApiResponse)
-    | FetchArtworkByStyle (Result Http.Error ApiResponse)
-    | FetchArtworkByMedium (Result Http.Error ApiResponse)
-    | FetchArtworkByArtist (Result Http.Error ApiResponse)
+
+
+
+-- | FetchArtworkById (Result Http.Error ApiResponse)
+-- | FetchArtworkByStyle (Result Http.Error ApiResponse)
+-- | FetchArtworkByMedium (Result Http.Error ApiResponse)
+-- | FetchArtworkByArtist (Result Http.Error ApiResponse)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -54,28 +49,32 @@ update msg model =
         FetchArtwork result ->
             case result of
                 Ok data ->
-                    ( { model | artwork = data.data }, Cmd.none )
+                    ( data.data, Cmd.none )
 
                 Err error ->
                     ( model, Cmd.none )
 
-        FetchArtworkById result ->
-            ( model, Cmd.none )
 
-        FetchArtworkByStyle result ->
-            ( model, Cmd.none )
 
-        FetchArtworkByMedium result ->
-            ( model, Cmd.none )
+-- FetchArtworkById result ->
+--     ( model, Cmd.none )
+-- FetchArtworkByStyle result ->
+--     ( model, Cmd.none )
+-- FetchArtworkByMedium result ->
+--     ( model, Cmd.none )
+-- FetchArtworkByArtist result ->
+--     ( model, Cmd.none )
 
-        FetchArtworkByArtist result ->
-            ( model, Cmd.none )
+
+baseUrl : String
+baseUrl =
+    "https://artmorph-api.onrender.com"
 
 
 fetchArtwork : Cmd Msg
 fetchArtwork =
     Http.get
-        { url = "http://localhost:8080/api/artwork"
+        { url = baseUrl ++ "/api/artwork"
         , expect = Http.expectJson FetchArtwork apiResponseDecoder
         }
 
@@ -83,32 +82,32 @@ fetchArtwork =
 fetchArtworkById : String -> Cmd Msg
 fetchArtworkById id =
     Http.get
-        { url = "http://localhost:8080/api/artwork/" ++ id
-        , expect = Http.expectJson FetchArtworkById apiResponseDecoder
+        { url = baseUrl ++ "/api/artwork/" ++ id
+        , expect = Http.expectJson FetchArtwork apiResponseDecoder
         }
 
 
 fetchArtworkByStyle : String -> Cmd Msg
 fetchArtworkByStyle style =
     Http.get
-        { url = "http://localhost:8080/api/artwork/" ++ style
-        , expect = Http.expectJson FetchArtworkByStyle apiResponseDecoder
+        { url = baseUrl ++ "/api/artwork/" ++ style
+        , expect = Http.expectJson FetchArtwork apiResponseDecoder
         }
 
 
 fetchArtworkByMedium : String -> Cmd Msg
 fetchArtworkByMedium medium =
     Http.get
-        { url = "http://localhost:8080/api/artwork/" ++ medium
-        , expect = Http.expectJson FetchArtworkByMedium apiResponseDecoder
+        { url = baseUrl ++ "/api/artwork/" ++ medium
+        , expect = Http.expectJson FetchArtwork apiResponseDecoder
         }
 
 
 fetchArtworkByArtist : String -> Cmd Msg
 fetchArtworkByArtist artist =
     Http.get
-        { url = "http://localhost:8080/api/artwork/artist" ++ artist
-        , expect = Http.expectJson FetchArtworkByArtist apiResponseDecoder
+        { url = baseUrl ++ "/api/artwork/artist" ++ artist
+        , expect = Http.expectJson FetchArtwork apiResponseDecoder
         }
 
 

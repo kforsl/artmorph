@@ -1,12 +1,12 @@
-module Element.Newsletter exposing (..)
+module Components.Newsletter exposing (view)
 
 import Html exposing (Html)
 import Html.Attributes as HA
 import Html.Events as HE
 
 
-viewNewsletter : msg -> Html msg
-viewNewsletter msg =
+view : Html msg
+view =
     Html.article
         [ HA.class "max-w-maxWidth m-auto py-16 grid grid-cols-2 gap-4" ]
         [ Html.h2
@@ -27,7 +27,7 @@ viewNewsletter msg =
                 [ Html.text "Stay updated with the latest exhibitions, featured artists, and exclusive content delivered straight to your inbox." ]
             , Html.form
                 [ HA.class " w-full flex gap-4 pb-4"
-                , HE.onSubmit msg
+                -- , HE.onSubmit msg
                 ]
                 [ Html.input
                     [ HA.class "w-full rounded-lg pl-2 py-2" ]

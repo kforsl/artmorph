@@ -1,58 +1,50 @@
-module Pages.HomePage exposing (..)
+module Pages.Home exposing (..)
 
-import Element.Footer exposing (viewFooter)
-import Element.Header exposing (viewHeader)
-import Element.Newsletter exposing (viewNewsletter)
-import Element.UI
+import Api.Artist exposing (Artist)
+import Api.Artwork exposing (Artwork)
+import Api.Exhibitions exposing (Exhibition)
+import Components.Newsletter
 import Html exposing (Html)
 import Html.Attributes as HA
 
 
 type alias Model =
     { title : String
+    , artistData : List Artist
+    , artworkData : List Artwork
+    , exhibitionData : List Exhibition
     }
 
 
 initModel : Model
 initModel =
-    { title = "About"
+    { title = "Home Page"
+    , artistData = []
+    , artworkData = []
+    , exhibitionData = []
     }
 
 
 type Msg
-    = MsgSignUpToNewsletter
-    | MsgFetchExhibitions
-    | MsgFetchArtists
-    | MsgFetch
+    = MsgDummy
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MsgSignUpToNewsletter ->
-            ( model, Cmd.none )
-
-        MsgFetchExhibitions ->
-            ( model, Cmd.none )
-
-        MsgFetchArtists ->
-            ( model, Cmd.none )
-
-        MsgFetch ->
+        MsgDummy ->
             ( model, Cmd.none )
 
 
 view : Model -> Html Msg
-view _ =
+view model =
     Html.main_ [ HA.class "bg-bgLight" ]
-        [ viewHeader
-        , viewHero
+        [ viewHero
         , viewWelcome
         , viewExhibitions
         , viewPictureOfTheMonth
         , viewArtist
-        , viewNewsletter MsgSignUpToNewsletter
-        , viewFooter
+        , Components.Newsletter.view
         ]
 
 
@@ -60,7 +52,7 @@ viewHero : Html msg
 viewHero =
     Html.section
         [ HA.class " bg-bgDark relative z-0" ]
-        [ Element.UI.bgTextSecondary
+        [ bgTextSecondary
         , Html.div
             [ HA.class "max-w-maxWidth m-auto grid gap-20 grid-cols-2 pt-24" ]
             [ Html.figure
@@ -106,7 +98,9 @@ viewWelcome =
             ]
         , Html.section
             [ HA.class "p-4" ]
-            [ Element.UI.titleDark "Welcome to Artmorph"
+            [ Html.h2
+                [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
+                [ Html.text "Welcome to Artmorph" ]
             , Html.p
                 [ HA.class "font-bread text-base mb-2" ]
                 [ Html.text "Where tradition meets innovation, and art takes on new forms. We are a digital platform celebrating the evolution of creativity, from timeless brushstrokes to cutting-edge digital masterpieces. Explore a gallery where boundaries fade, and imagination thrives in both physical and virtual spaces." ]
@@ -129,7 +123,9 @@ viewExhibitions =
         [ HA.class "max-w-maxWidth m-auto py-16" ]
         [ Html.section
             [ HA.class "flex justify-between" ]
-            [ Element.UI.titleDark "Featured Exhibitions"
+            [ Html.h2
+                [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
+                [ Html.text "Featured Exhibitions" ]
             , viewFilterExhibition
             ]
         , Html.ul
@@ -168,7 +164,11 @@ viewExhibitionCard =
             , HA.class "max-w-96"
             ]
             []
-        , Element.UI.link "/exhibition" "Title "
+        , Html.a
+            [ HA.href "/exhibition"
+            , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+            ]
+            [ Html.text "Title " ]
         ]
 
 
@@ -176,7 +176,7 @@ viewPictureOfTheMonth : Html msg
 viewPictureOfTheMonth =
     Html.section
         [ HA.class "bg-bgDark py-16 relative z-0" ]
-        [ Element.UI.bgTextSecondary
+        [ bgTextSecondary
         , Html.div
             [ HA.class "max-w-maxWidth m-auto" ]
             [ Html.h2
@@ -201,14 +201,89 @@ viewArtist : Html msg
 viewArtist =
     Html.section
         [ HA.class "max-w-maxWidth m-auto py-16 border-b-2 border-black" ]
-        [ Element.UI.titleDark "The Minds Behind the Masterpieces"
+        [ Html.h2
+            [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
+            [ Html.text "The Minds Behind the Masterpieces" ]
         , Html.ul
             [ HA.class "flex overflow-hidden justify-between" ]
-            [ Element.UI.viewArtistCard
-            , Element.UI.viewArtistCard
-            , Element.UI.viewArtistCard
-            , Element.UI.viewArtistCard
-            , Element.UI.viewArtistCard
-            , Element.UI.viewArtistCard
+            [ Html.article
+                [ HA.class "max-w-44 grid gap-0.5" ]
+                [ Html.a
+                    [ HA.href "/artist"
+                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+                    ]
+                    [ Html.text "Name of artist" ]
+                , Html.img
+                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                    []
+                ]
+            , Html.article
+                [ HA.class "max-w-44 grid gap-0.5" ]
+                [ Html.a
+                    [ HA.href "/artist"
+                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+                    ]
+                    [ Html.text "Name of artist" ]
+                , Html.img
+                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                    []
+                ]
+            , Html.article
+                [ HA.class "max-w-44 grid gap-0.5" ]
+                [ Html.a
+                    [ HA.href "/artist"
+                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+                    ]
+                    [ Html.text "Name of artist" ]
+                , Html.img
+                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                    []
+                ]
+            , Html.article
+                [ HA.class "max-w-44 grid gap-0.5" ]
+                [ Html.a
+                    [ HA.href "/artist"
+                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+                    ]
+                    [ Html.text "Name of artist" ]
+                , Html.img
+                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                    []
+                ]
+            , Html.article
+                [ HA.class "max-w-44 grid gap-0.5" ]
+                [ Html.a
+                    [ HA.href "/artist"
+                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+                    ]
+                    [ Html.text "Name of artist" ]
+                , Html.img
+                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                    []
+                ]
+            , Html.article
+                [ HA.class "max-w-44 grid gap-0.5" ]
+                [ Html.a
+                    [ HA.href "/artist"
+                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+                    ]
+                    [ Html.text "Name of artist" ]
+                , Html.img
+                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                    []
+                ]
             ]
+        ]
+
+
+bgTextSecondary : Html msg
+bgTextSecondary =
+    Html.figure
+        [ HA.class "absolute bottom-0 w-full -z-[1]" ]
+        [ Html.h5
+            [ HA.class "text-secondary text-center text-5xl font-title text-nowrap" ]
+            [ Html.text "The Art of Transformation — Beyond Boundaries. " ]
+        , Html.h6
+            [ HA.class "text-secondary text-center text-sizeBg leading-none font-logo pb-4 z-0" ]
+            [ Html.text "ArtMorph" ]
         ]

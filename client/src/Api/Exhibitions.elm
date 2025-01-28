@@ -1,25 +1,17 @@
-module Data.Exhibitions exposing (..)
+module Api.Exhibitions exposing (..)
 
-import Data.Artwork exposing (Artwork, artworkDecoder)
+import Api.Artwork exposing (Artwork)
 import Http
 import Json.Decode as JD exposing (Decoder)
 
 
 type alias Model =
-    { exhibition : List Exhibition
-    , exhibitionById : List Exhibition
-    , exhibitionByStyle : List Exhibition
-    , exhibitionByMedium : List Exhibition
-    }
+    List Exhibition
 
 
 initModel : Model
 initModel =
-    { exhibition = []
-    , exhibitionById = []
-    , exhibitionByMedium = []
-    , exhibitionByStyle = []
-    }
+    []
 
 
 type alias ApiResponse =
@@ -33,7 +25,7 @@ type alias Exhibition =
     , title : String
     , description : String
     , thumbnailUrl : String
-    , artworks : List Artwork
+    , artworks : List ExhibitionArtwork
     , mediums : List String
     , styles : List String
     , createdAt : String
@@ -53,7 +45,7 @@ update msg model =
         GetExhibition result ->
             case result of
                 Ok data ->
-                    ( { model | exhibition = data.data }, Cmd.none )
+                    ( data.data, Cmd.none )
 
                 Err error ->
                     ( model, Cmd.none )
@@ -68,10 +60,15 @@ update msg model =
             ( model, Cmd.none )
 
 
+baseUrl : String
+baseUrl =
+    "https://artmorph-api.onrender.com"
+
+
 fetchExhibition : Cmd Msg
 fetchExhibition =
     Http.get
-        { url = "http://localhost:8080/api/exhibition"
+        { url = baseUrl ++ "/api/exhibition"
         , expect = Http.expectJson GetExhibition apiResponseDecoder
         }
 
@@ -79,24 +76,24 @@ fetchExhibition =
 fetchExhibitionById : String -> Cmd Msg
 fetchExhibitionById id =
     Http.get
-        { url = "http://localhost:8080/api/exhibition/" ++ id
-        , expect = Http.expectJson GetExhibitionById apiResponseDecoder
+        { url = baseUrl ++ "/api/exhibition/" ++ id
+        , expect = Http.expectJson GetExhibition apiResponseDecoder
         }
 
 
 fetchExhibitionByStyle : String -> Cmd Msg
 fetchExhibitionByStyle style =
     Http.get
-        { url = "http://localhost:8080/api/exhibition/" ++ style
-        , expect = Http.expectJson GetExhibitionByStyle apiResponseDecoder
+        { url = baseUrl ++ "/api/exhibition/" ++ style
+        , expect = Http.expectJson GetExhibition apiResponseDecoder
         }
 
 
 fetchExhibitionByMedium : String -> Cmd Msg
 fetchExhibitionByMedium medium =
     Http.get
-        { url = "http://localhost:8080/api/exhibition/" ++ medium
-        , expect = Http.expectJson GetExhibitionByMedium apiResponseDecoder
+        { url = baseUrl ++ "/api/exhibition/" ++ medium
+        , expect = Http.expectJson GetExhibition apiResponseDecoder
         }
 
 
@@ -107,7 +104,32 @@ exhibitionDecoder =
         (JD.field "title" JD.string)
         (JD.field "description" JD.string)
         (JD.field "thumbnailUrl" JD.string)
-        (JD.field "artworks" (JD.list artworkDecoder))
+        (JD.field "artworks" (JD.list exhibitionArtworkDecoder))
+        (JD.field "mediums" (JD.list JD.string))
+        (JD.field "styles" (JD.list JD.string))
+        (JD.field "createdAt" JD.string)
+
+
+type alias ExhibitionArtwork =
+    { id : String
+    , title : String
+    , description : String
+    , artist : String
+    , imageUrl : String
+    , mediums : List String
+    , styles : List String
+    , createdAt : String
+    }
+
+
+exhibitionArtworkDecoder : Decoder ExhibitionArtwork
+exhibitionArtworkDecoder =
+    JD.map8 ExhibitionArtwork
+        (JD.field "_id" JD.string)
+        (JD.field "title" JD.string)
+        (JD.field "description" JD.string)
+        (JD.field "artist" JD.string)
+        (JD.field "imageUrl" JD.string)
         (JD.field "mediums" (JD.list JD.string))
         (JD.field "styles" (JD.list JD.string))
         (JD.field "createdAt" JD.string)

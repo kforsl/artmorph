@@ -1,12 +1,11 @@
-module Element.Footer exposing (viewFooter)
+module Components.Footer exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes as HA
 
-
-viewFooter : Html msg
-viewFooter =
-    Html.footer
+view : Html msg 
+view = 
+     Html.footer
         [ HA.class "mt-32 p-8 bg-bgDark min-h-72 max-w-full grid auto-rows-max place-content-between grid-cols-1" ]
         [ Html.section
             [ HA.class "max-w-maxWidth m-auto w-full" ]

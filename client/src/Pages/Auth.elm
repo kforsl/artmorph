@@ -1,6 +1,6 @@
-module Pages.AuthPage exposing (..)
+module Pages.Auth exposing (..)
 
-import Element.UI
+ 
 import Html exposing (Html)
 import Html.Attributes as HA
 import Html.Events as HE
@@ -28,7 +28,7 @@ type FormState
 
 initModel : Model
 initModel =
-    { formType = Register
+    { formType = Login
     , formState = Resting
     }
 
@@ -89,8 +89,18 @@ view model =
                         ]
                         [ Html.div
                             [ HA.class "grid gap-2" ]
-                            [ Element.UI.formInput "Email"
-                            , Element.UI.formInput "Password"
+                            [ Html.label []
+                                [ Html.text "Email"
+                                , Html.input
+                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    []
+                                ]
+                            , Html.label []
+                                [ Html.text "Password"
+                                , Html.input
+                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    []
+                                ]
                             ]
                         , Html.p
                             [ HA.class "text-base font-bread text-center font-bold" ]
@@ -103,19 +113,27 @@ view model =
                             ]
                         , case model.formState of
                             Resting ->
-                                Element.UI.buttonSecondary "Sign In"
+                                Html.button
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ Html.text "Sign In" ]
 
                             Loading ->
-                                Element.UI.buttonSecondary "Loading . . ."
+                                Html.button
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ Html.text "Loading . . ." ]
 
                             Success ->
-                                Element.UI.buttonSecondary "Success"
+                                Html.button
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ Html.text "Success" ]
 
                             Error ->
-                                Element.UI.buttonSecondary "Sign In"
+                                Html.button
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ Html.text "Sign In" ]
                         ]
                     ]
-                , Element.UI.bgTextSecondary
+                , bgTextSecondary
                 ]
 
         Register ->
@@ -132,9 +150,24 @@ view model =
                         ]
                         [ Html.div
                             [ HA.class "grid gap-2" ]
-                            [ Element.UI.formInput "Email"
-                            , Element.UI.formInput "Password"
-                            , Element.UI.formInput "Repeat Password"
+                            [ Html.label []
+                                [ Html.text "Email"
+                                , Html.input
+                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    []
+                                ]
+                            , Html.label []
+                                [ Html.text "Password"
+                                , Html.input
+                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    []
+                                ]
+                            , Html.label []
+                                [ Html.text "Repeat Password"
+                                , Html.input
+                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    []
+                                ]
                             ]
                         , Html.p
                             [ HA.class "text-base font-bread text-center font-bold" ]
@@ -147,21 +180,39 @@ view model =
                             ]
                         , case model.formState of
                             Resting ->
-                                Element.UI.buttonSecondary "Register"
+                                Html.button
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ Html.text "Register" ]
 
                             Loading ->
-                                Element.UI.buttonSecondary "Loading . . ."
+                                Html.button
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ Html.text "Loading . . ." ]
 
                             Success ->
-                                Element.UI.buttonSecondary "Success"
+                                Html.button
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ Html.text "Success" ]
 
                             Error ->
-                                Element.UI.buttonSecondary "Register"
+                                Html.button
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ Html.text "Register" ]
                         ]
                     ]
-                , Element.UI.bgTextSecondary
+                , bgTextSecondary
                 ]
 
 
+bgTextSecondary : Html msg
+bgTextSecondary =
+    Html.figure
+        [ HA.class "absolute bottom-0 w-full -z-[1]" ]
+        [ Html.h5
+            [ HA.class "text-secondary text-center text-5xl font-title text-nowrap" ]
+            [ Html.text "The Art of Transformation — Beyond Boundaries. " ]
+        , Html.h6
+            [ HA.class "text-secondary text-center text-sizeBg leading-none font-logo pb-4 z-0" ]
+            [ Html.text "ArtMorph" ]
+        ]
 
---

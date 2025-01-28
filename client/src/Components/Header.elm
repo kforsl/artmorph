@@ -1,11 +1,11 @@
-module Element.Header exposing (..)
+module Components.Header exposing (view)
 
 import Html exposing (Html)
 import Html.Attributes as HA
 
 
-viewHeader : Html msg
-viewHeader =
+view : Html msg
+view =
     Html.header
         [ HA.class "bg-bgDark sticky top-0 w-full z-50" ]
         [ Html.div
@@ -26,9 +26,11 @@ viewNavigation =
             [ HA.class "grid grid-cols-3 auto-cols-max" ]
             [ viewLink "/" "Home"
             , viewLink "/about" "About"
-            , viewLink "/exhibition" "Exhibitions"
-            , viewLink "/artist" "Artist"
-            , viewLink "/artwork" "Artwork"
+            , viewLink "/exhibitions" "Exhibitions"
+            , viewLink "/exhibitions/id" "Exhibition id"
+            , viewLink "/artists" "Artist"
+            , viewLink "/artists/id" "Artist id"
+            , viewLink "/artwork/id" "Artwork"
             , viewLink "/auth" "Login"
             ]
         ]

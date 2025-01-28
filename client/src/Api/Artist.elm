@@ -1,24 +1,16 @@
-module Data.Artist exposing (..)
+module Api.Artist exposing (..)
 
 import Http
 import Json.Decode as JD exposing (Decoder)
 
 
 type alias Model =
-    { artists : List Artist
-    , artistsById : List Artist
-    , artistsByStyle : List Artist
-    , artistsByMedium : List Artist
-    }
+    List Artist
 
 
 initModel : Model
 initModel =
-    { artists = []
-    , artistsById = []
-    , artistsByMedium = []
-    , artistsByStyle = []
-    }
+    []
 
 
 type alias ApiResponse =
@@ -40,9 +32,12 @@ type alias Artist =
 
 type Msg
     = FetchArtist (Result Http.Error ApiResponse)
-    | FetchArtistById (Result Http.Error ApiResponse)
-    | FetchArtistByStyle (Result Http.Error ApiResponse)
-    | FetchArtistByMedium (Result Http.Error ApiResponse)
+
+
+
+--     | FetchArtistById (Result Http.Error ApiResponse)
+--     | FetchArtistByStyle (Result Http.Error ApiResponse)
+--     | FetchArtistByMedium (Result Http.Error ApiResponse)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -51,25 +46,42 @@ update msg model =
         FetchArtist result ->
             case result of
                 Ok data ->
-                    ( { model | artists = data.data }, Cmd.none )
+                    ( data.data, Cmd.none )
 
-                Err error ->
+                Err _ ->
                     ( model, Cmd.none )
 
-        FetchArtistById result ->
-            ( model, Cmd.none )
 
-        FetchArtistByStyle result ->
-            ( model, Cmd.none )
 
-        FetchArtistByMedium result ->
-            ( model, Cmd.none )
+--         FetchArtistById result ->
+--             case result of
+--                 Ok data ->
+--                     ( { model | artists = data.data }, Cmd.none )
+--                 Err _ ->
+--                     ( model, Cmd.none )
+--         FetchArtistByStyle result ->
+--             case result of
+--                 Ok data ->
+--                     ( { model | artists = data.data }, Cmd.none )
+--                 Err _ ->
+--                     ( model, Cmd.none )
+--         FetchArtistByMedium result ->
+--             case result of
+--                 Ok data ->
+--                     ( { model | artists = data.data }, Cmd.none )
+--                 Err _ ->
+--                     ( model, Cmd.none )
+
+
+baseUrl : String
+baseUrl =
+    "https://artmorph-api.onrender.com"
 
 
 fetchArtists : Cmd Msg
 fetchArtists =
     Http.get
-        { url = "http://localhost:8080/api/artist"
+        { url = baseUrl ++ "/api/artist"
         , expect = Http.expectJson FetchArtist apiResponseDecoder
         }
 
@@ -77,24 +89,24 @@ fetchArtists =
 fetchArtistsById : String -> Cmd Msg
 fetchArtistsById id =
     Http.get
-        { url = "http://localhost:8080/api/artist/" ++ id
-        , expect = Http.expectJson FetchArtistById apiResponseDecoder
+        { url = baseUrl ++ "/api/artist/" ++ id
+        , expect = Http.expectJson FetchArtist apiResponseDecoder
         }
 
 
 fetchArtistsByStyle : String -> Cmd Msg
 fetchArtistsByStyle style =
     Http.get
-        { url = "http://localhost:8080/api/artist/" ++ style
-        , expect = Http.expectJson FetchArtistByStyle apiResponseDecoder
+        { url = baseUrl ++ "/api/artist/" ++ style
+        , expect = Http.expectJson FetchArtist apiResponseDecoder
         }
 
 
 fetchArtistsByMedium : String -> Cmd Msg
 fetchArtistsByMedium medium =
     Http.get
-        { url = "http://localhost:8080/api/artist/" ++ medium
-        , expect = Http.expectJson FetchArtistByMedium apiResponseDecoder
+        { url = baseUrl ++ "/api/artist/" ++ medium
+        , expect = Http.expectJson FetchArtist apiResponseDecoder
         }
 
 

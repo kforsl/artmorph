@@ -1,67 +1,94 @@
 module Main exposing (..)
 
+import Api.Artist exposing (Artist)
+import Api.Artwork exposing (Artwork)
+import Api.Exhibitions exposing (Exhibition)
 import Browser
-import Browser.Navigation
-import Data.Artist as Artist
-import Data.Artwork as Artwork
-import Data.Exhibitions as Exhibition
+import Browser.Navigation as Navigation
+import Components.Footer
+import Components.Header
 import Html exposing (Html)
 import Html.Attributes as HA
-import Pages.AboutPage as AboutPage
-import Pages.ArtistPage as ArtistPage
-import Pages.ArtworkPage as ArtworkPage
-import Pages.AuthPage as AuthPage
-import Pages.ExhibitionPage as ExhibitionPage
-import Pages.HomePage as HomePage
+import Html.Extra
+import Pages.About
+import Pages.Artist
+import Pages.Artists
+import Pages.Artwork
+import Pages.Auth
+import Pages.Exhibition
+import Pages.Exhibitions
+import Pages.Home
+import Route
 import Url exposing (Url)
-import Url.Parser
 
 
 type alias Model =
-    { url : Url.Url
-    , navigationKey : Browser.Navigation.Key
-    , modelAboutPage : AboutPage.Model
-    , modelArtistPage : ArtistPage.Model
-    , modelArtworkPage : ArtworkPage.Model
-    , modelAuthPage : AuthPage.Model
-    , modelExhibitionPage : ExhibitionPage.Model
-    , modelHomePage : HomePage.Model
-    , dataArtist : Artist.Model
-    , dataArtwork : Artwork.Model
-    , dataExhibit : Exhibition.Model
+    { url : Url
+    , navigationKey : Navigation.Key
+    , sharedArtistsData : Api.Artist.Model
+    , sharedArtworkData : Api.Artwork.Model
+    , sharedExhibitionData : Api.Exhibitions.Model
+    , modelAboutPage : Pages.About.Model
+    , modelArtistPage : Pages.Artist.Model
+    , modelArtistsPage : Pages.Artists.Model
+    , modelArtworkPage : Pages.Artwork.Model
+    , modelAuthPage : Pages.Auth.Model
+    , modelExhibitionPage : Pages.Exhibition.Model
+    , modelExhibitionsPage : Pages.Exhibitions.Model
+    , modelHomePage : Pages.Home.Model
     }
 
 
-init : () -> Url -> Browser.Navigation.Key -> ( Model, Cmd Msg )
+type alias ApiResponse =
+    { message : String
+    , data : List Artist
+    }
+
+
+type alias SharedData =
+    { artists : List Artist
+    , artwork : List Artwork
+    , exhibition : List Exhibition
+    }
+
+
+init : () -> Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url navigationKey =
-    ( initModel url navigationKey, Cmd.none )
+    ( initModel url navigationKey, Cmd.batch [ Cmd.map MsgFetchArtistData Api.Artist.fetchArtists, Cmd.map MsgFetchArtworkData Api.Artwork.fetchArtwork, Cmd.map MsgFetchExhibitionData Api.Exhibitions.fetchExhibition  ] )
 
 
-initModel : Url -> Browser.Navigation.Key -> Model
+initModel : Url -> Navigation.Key -> Model
 initModel url navigationKey =
     { url = url
     , navigationKey = navigationKey
-    , modelAboutPage = AboutPage.initModel
-    , modelArtistPage = ArtistPage.initModel
-    , modelArtworkPage = ArtworkPage.initModel
-    , modelAuthPage = AuthPage.initModel
-    , modelExhibitionPage = ExhibitionPage.initModel
-    , modelHomePage = HomePage.initModel
-    , dataArtist = Artist.initModel
-    , dataArtwork = Artwork.initModel
-    , dataExhibit = Exhibition.initModel
+    , sharedArtistsData = Api.Artist.initModel
+    , sharedArtworkData = Api.Artwork.initModel
+    , sharedExhibitionData = Api.Exhibitions.initModel
+    , modelAboutPage = Pages.About.initModel
+    , modelArtistPage = Pages.Artist.initModel
+    , modelArtistsPage = Pages.Artists.initModel
+    , modelArtworkPage = Pages.Artwork.initModel
+    , modelAuthPage = Pages.Auth.initModel
+    , modelExhibitionPage = Pages.Exhibition.initModel
+    , modelExhibitionsPage = Pages.Exhibitions.initModel
+    , modelHomePage = Pages.Home.initModel
     }
 
 
 type Msg
-    = MsgUrlChange Url.Url
-    | MsgUrlRequest Browser.UrlRequest
-    | MsgAuthPage AuthPage.Msg
-    | MsgAboutPage AboutPage.Msg
-    | MsgHomePage HomePage.Msg
-    | MsgDataArtist Artist.Msg
-    | MsgDataArtwork Artwork.Msg
-    | MsgDataExhibition Exhibition.Msg
+    = MsgUrlChange Url
+    | MsgUrlRequested Browser.UrlRequest
+    | MsgFetchArtistData Api.Artist.Msg
+    | MsgFetchArtworkData Api.Artwork.Msg
+    | MsgFetchExhibitionData Api.Exhibitions.Msg
+    | MsgAboutPage Pages.About.Msg
+    | MsgArtistPage Pages.Artist.Msg
+    | MsgArtistsPage Pages.Artists.Msg
+    | MsgArtworkPage Pages.Artwork.Msg
+    | MsgAuthPage Pages.Auth.Msg
+    | MsgExhibitionPage Pages.Exhibition.Msg
+    | MsgExhibitionsPage Pages.Exhibitions.Msg
+    | MsgHomePage Pages.Home.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -70,53 +97,97 @@ update msg model =
         MsgUrlChange url ->
             ( { model | url = url }, Cmd.none )
 
-        MsgUrlRequest urlRequest ->
+        MsgUrlRequested urlRequest ->
             case urlRequest of
                 Browser.Internal url ->
                     ( model
-                    , Browser.Navigation.pushUrl
+                    , Navigation.pushUrl
                         model.navigationKey
                         (Url.toString url)
                     )
 
                 Browser.External url ->
-                    ( model, Browser.Navigation.load url )
+                    ( model
+                    , Navigation.load url
+                    )
+
+        MsgFetchArtistData msgApiArtist ->
+            let
+                ( newArtistData, cmdArtistApi ) =
+                    Api.Artist.update msgApiArtist model.sharedArtistsData
+
+            in
+            ( { model | sharedArtistsData = newArtistData }, Cmd.map MsgFetchArtistData cmdArtistApi )
+
+        MsgFetchArtworkData msgApiArtwork ->
+            let
+                ( newArtworkData, cmdArtworkApi ) =
+                    Api.Artwork.update msgApiArtwork model.sharedArtworkData
+            in
+            ( { model | sharedArtworkData = newArtworkData }, Cmd.map MsgFetchArtworkData cmdArtworkApi )
+
+        MsgFetchExhibitionData msgApiExhibitions ->
+            let
+                ( newExhibitionsData, cmdExhibitionsApi ) =
+                    Api.Exhibitions.update msgApiExhibitions model.sharedExhibitionData
+            in
+            ( { model | sharedExhibitionData = newExhibitionsData }, Cmd.map MsgFetchExhibitionData cmdExhibitionsApi )
+
+        MsgAboutPage msgAboutPage ->
+            let
+                ( newAboutPageModel, cmdAboutPage ) =
+                    Pages.About.update msgAboutPage model.modelAboutPage
+            in
+            ( { model | modelAboutPage = newAboutPageModel }, Cmd.map MsgAboutPage cmdAboutPage )
+
+        MsgArtistPage msgArtistPage ->
+            let
+                ( newArtistPageModel, cmdArtistPage ) =
+                    Pages.Artist.update msgArtistPage model.modelArtistPage
+            in
+            ( { model | modelArtistPage = newArtistPageModel }, Cmd.map MsgArtistPage cmdArtistPage )
+
+        MsgArtistsPage msgArtistsPage ->
+            let
+                ( newArtistsPageModel, cmdArtistsPage ) =
+                    Pages.Artists.update msgArtistsPage model.modelArtistsPage
+            in
+            ( { model | modelArtistsPage = newArtistsPageModel }, Cmd.map MsgArtistsPage cmdArtistsPage )
+
+        MsgArtworkPage msgArtworkPage ->
+            let
+                ( newArtworkPageModel, cmdArtworkPage ) =
+                    Pages.Artwork.update msgArtworkPage model.modelArtworkPage
+            in
+            ( { model | modelArtworkPage = newArtworkPageModel }, Cmd.map MsgArtworkPage cmdArtworkPage )
 
         MsgAuthPage msgAuthPage ->
             let
                 ( newAuthPageModel, cmdAuthPage ) =
-                    AuthPage.update msgAuthPage model.modelAuthPage
+                    Pages.Auth.update msgAuthPage model.modelAuthPage
             in
-            ( { model | modelAuthPage = newAuthPageModel }
-            , Cmd.map MsgAuthPage cmdAuthPage
-            )
+            ( { model | modelAuthPage = newAuthPageModel }, Cmd.map MsgAuthPage cmdAuthPage )
 
-        MsgAboutPage msgAboutPage ->
+        MsgExhibitionPage msgExhibitionPage ->
             let
-                ( newAboutPageModel, cmdAuthPage ) =
-                    AboutPage.update msgAboutPage model.modelAboutPage
+                ( newExhibitionPageModel, cmdExhibitionPage ) =
+                    Pages.Exhibition.update msgExhibitionPage model.modelExhibitionPage
             in
-            ( { model | modelAboutPage = newAboutPageModel }
-            , Cmd.map MsgAuthPage cmdAuthPage
-            )
+            ( { model | modelExhibitionPage = newExhibitionPageModel }, Cmd.map MsgExhibitionPage cmdExhibitionPage )
+
+        MsgExhibitionsPage msgExhibitionsPage ->
+            let
+                ( newExhibitionsPageModel, cmdExhibitionsPage ) =
+                    Pages.Exhibitions.update msgExhibitionsPage model.modelExhibitionsPage
+            in
+            ( { model | modelExhibitionsPage = newExhibitionsPageModel }, Cmd.map MsgExhibitionsPage cmdExhibitionsPage )
 
         MsgHomePage msgHomePage ->
             let
-                ( newHomePageModel, cmdAuthPage ) =
-                    HomePage.update msgHomePage model.modelHomePage
+                ( newHomePageModel, cmdHomePage ) =
+                    Pages.Home.update msgHomePage model.modelHomePage
             in
-            ( { model | modelHomePage = newHomePageModel }
-            , Cmd.map MsgHomePage cmdAuthPage
-            )
-
-        MsgDataArtist _ ->
-            Debug.todo "branch 'MsgDataArtist _' not implemented"
-
-        MsgDataArtwork _ ->
-            Debug.todo "branch 'MsgDataArtwork _' not implemented"
-
-        MsgDataExhibition _ ->
-            Debug.todo "branch 'MsgDataExhibition _' not implemented"
+            ( { model | modelHomePage = newHomePageModel }, Cmd.map MsgHomePage cmdHomePage )
 
 
 subscriptions : Model -> Sub Msg
@@ -131,138 +202,64 @@ onUrlChange url =
 
 onUrlRequest : Browser.UrlRequest -> Msg
 onUrlRequest urlRequest =
-    MsgUrlRequest urlRequest
-
-
-aboutPageParser : Url.Parser.Parser a a
-aboutPageParser =
-    Url.Parser.s "about"
-
-
-artistPageParser : Url.Parser.Parser a a
-artistPageParser =
-    Url.Parser.s "artist"
-
-
-artworkPageParser : Url.Parser.Parser a a
-artworkPageParser =
-    Url.Parser.s "artwork"
-
-
-authPageParser : Url.Parser.Parser a a
-authPageParser =
-    Url.Parser.s "auth"
-
-
-exhibitionPageParser : Url.Parser.Parser a a
-exhibitionPageParser =
-    Url.Parser.s "exhibition"
-
-
-homePageParser : Url.Parser.Parser a a
-homePageParser =
-    Url.Parser.top
-
-
-type Route
-    = RouteAboutPage
-    | RouteArtistPage
-    | RouteArtworkPage
-    | RouteAuthPage
-    | RouteExhibitionPage
-    | RouteHomePage
-
-
-routerParser : Url.Parser.Parser (Route -> c) c
-routerParser =
-    Url.Parser.oneOf
-        [ Url.Parser.map RouteAboutPage aboutPageParser
-        , Url.Parser.map RouteArtistPage artistPageParser
-        , Url.Parser.map RouteArtworkPage artworkPageParser
-        , Url.Parser.map RouteAuthPage authPageParser
-        , Url.Parser.map RouteExhibitionPage exhibitionPageParser
-        , Url.Parser.map RouteHomePage homePageParser
-        ]
-
-
-fromUrl : Url.Url -> Maybe Route
-fromUrl url =
-    Url.Parser.parse routerParser url
-
-
-asPath : Route -> String
-asPath route =
-    case route of
-        RouteAboutPage ->
-            "/about"
-
-        RouteArtistPage ->
-            "/artist"
-
-        RouteArtworkPage ->
-            "/artwork"
-
-        RouteAuthPage ->
-            "/auth"
-
-        RouteExhibitionPage ->
-            "/exhibition"
-
-        RouteHomePage ->
-            "/"
+    MsgUrlRequested urlRequest
 
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = getTitle model.url
-    , body = [ viewPage model ]
+    { title = "Artmorph"
+    , body = [ viewContent model ]
     }
 
 
-getTitle : Url -> String
-getTitle url =
-    if String.startsWith "/about" url.path then
-        "About ArtMorph"
+viewContent : Model -> Html Msg
+viewContent model =
+    Html.main_ [ HA.class "bg-bgLight" ]
+        [ Html.Extra.viewIf (isNotAuthPage model.url) Components.Header.view
+        , viewPage model
+        , Html.Extra.viewIf (isNotAuthPage model.url) Components.Footer.view
+        ]
 
-    else if String.startsWith "/artist" url.path then
-        "Artist"
 
-    else if String.startsWith "/artwork" url.path then
-        "Artwork"
+isNotAuthPage : Url -> Bool
+isNotAuthPage url =
+    case Route.fromUrl url of
+        Just Route.RouteAuthPage ->
+            False
 
-    else if String.startsWith "/auth" url.path then
-        "ArtMorph Auth"
-
-    else if String.startsWith "/exhibition" url.path then
-        "Exhibition"
-
-    else
-        "ArtMorph"
+        _ ->
+            True
 
 
 viewPage : Model -> Html Msg
 viewPage model =
-    case fromUrl model.url of
-        Just RouteAboutPage ->
-            Html.map MsgAboutPage (AboutPage.view model.modelAboutPage)
+    case Route.fromUrl model.url of
+        Just Route.RouteAboutPage ->
+            Html.map MsgAboutPage (Pages.About.view model.modelAboutPage)
 
-        Just RouteArtistPage ->
-            ArtistPage.view model.modelArtistPage
+        Just Route.RouteArtistPage ->
+            Html.map MsgArtistPage (Pages.Artist.view model.modelArtistPage)
 
-        Just RouteArtworkPage ->
-            ArtworkPage.view model.modelArtworkPage
+        Just Route.RouteArtistsPage ->
+            Html.map MsgArtistsPage (Pages.Artists.view model.modelArtistsPage)
 
-        Just RouteAuthPage ->
-            Html.map MsgAuthPage (AuthPage.view model.modelAuthPage)
+        Just Route.RouteArtworkPage ->
+            Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage)
 
-        Just RouteExhibitionPage ->
-            ExhibitionPage.view model.modelExhibitionPage
+        Just Route.RouteAuthPage ->
+            Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage)
 
-        Just RouteHomePage ->
-            Html.map MsgHomePage (HomePage.view model.modelHomePage)
+        Just Route.RouteExhibitionPage ->
+            Html.map MsgExhibitionPage (Pages.Exhibition.view model.modelExhibitionPage)
+
+        Just Route.RouteExhibitionsPage ->
+            Html.map MsgExhibitionsPage (Pages.Exhibitions.view model.modelExhibitionsPage)
+
+        Just Route.RouteHomePage ->
+            Html.map MsgHomePage (Pages.Home.view model.modelHomePage)
 
         Nothing ->
-            Html.div [] [ Html.h1 [ HA.class "text-center" ] [ Html.text "Error" ] ]
+            Html.text "Not Found 404"
 
 
 main : Program () Model Msg
