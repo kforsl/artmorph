@@ -1,19 +1,19 @@
 module Pages.About exposing (..)
 
+import Api.Artist exposing (Artist)
 import Components.Newsletter
- 
 import Html exposing (Html)
 import Html.Attributes as HA
 
 
 type alias Model =
-    { title : String
+    { artistData : List Artist
     }
 
 
 initModel : Model
 initModel =
-    { title = "About Page"
+    { artistData = []
     }
 
 
@@ -33,7 +33,7 @@ view model =
     Html.div []
         [ viewHero
         , viewAbout
-        , viewArtists
+        , viewArtists model.artistData
         , viewExhibitions
         , viewSpotlight
         , viewContact
@@ -110,8 +110,8 @@ viewAbout =
         ]
 
 
-viewArtists : Html msg
-viewArtists =
+viewArtists : Api.Artist.Model -> Html msg
+viewArtists artists =
     Html.article
         [ HA.class "max-w-maxWidth m-auto py-8 grid grid-cols-3 gap-x-8" ]
         [ Html.h2
@@ -119,29 +119,7 @@ viewArtists =
             [ Html.text "Meet the Creators Behind the Art" ]
         , Html.ul
             [ HA.class "flex overflow-hidden justify-between" ]
-            [ Html.article
-                [ HA.class "max-w-44 grid gap-0.5" ]
-                [ Html.a
-                    [ HA.href "/artist"
-                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
-                    ]
-                    [ Html.text "Name of artist" ]
-                , Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
-                    []
-                ]
-            , Html.article
-                [ HA.class "max-w-44 grid gap-0.5" ]
-                [ Html.a
-                    [ HA.href "/artist"
-                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
-                    ]
-                    [ Html.text "Name of artist" ]
-                , Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
-                    []
-                ]
-            ]
+            (List.indexedMap viewArtistCard artists)
         , Html.section
             [ HA.class "col-span-2" ]
             [ Html.p
@@ -152,6 +130,25 @@ viewArtists =
                 [ Html.text "Explore their journeys, techniques, and inspirations as you dive into the world of creativity through their art. → Take a look at all our Creators" ]
             ]
         ]
+
+
+viewArtistCard : Int -> Artist -> Html msg
+viewArtistCard x artist =
+    if x < 2 then
+        Html.article
+            [ HA.class "max-w-44 grid gap-0.5" ]
+            [ Html.a
+                [ HA.href ("/artists/" ++ artist.id)
+                , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+                ]
+                [ Html.text artist.name ]
+            , Html.img
+                [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                []
+            ]
+
+    else
+        Html.text ""
 
 
 viewExhibitions : Html msg

@@ -26,8 +26,8 @@ update msg model =
             (model, Cmd.none)
 
 
-view : Model -> Html Msg
-view model =
+view : Model -> String  -> Html Msg
+view model id =
     Html.div [  HA.class "max-w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1 " ]
-        [ Html.text model.title
+        [ Html.text (model.title ++ " " ++ id)
         ]

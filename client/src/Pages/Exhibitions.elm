@@ -1,17 +1,18 @@
 module Pages.Exhibitions exposing (..)
 
+import Api.Exhibitions exposing (Exhibition)
 import Html exposing (Html)
 import Html.Attributes as HA
 
 
 type alias Model =
-    { title : String
+    { exhibitionData : List Exhibition
     }
 
 
 initModel : Model
 initModel =
-    { title = "Exhibitions Page"
+    { exhibitionData = []
     }
 
 
@@ -23,11 +24,11 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         MsgDummy ->
-            (model, Cmd.none)
+            ( model, Cmd.none )
 
 
 view : Model -> Html Msg
 view model =
-    Html.div [  HA.class "max-w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1 " ]
-        [ Html.text model.title
+    Html.div [ HA.class "max-w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1 " ]
+        [ Html.text "All Exhibitions Page"
         ]

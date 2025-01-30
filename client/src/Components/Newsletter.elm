@@ -39,15 +39,15 @@ view =
             , Html.nav
                 [ HA.class "flex justify-around" ]
                 [ Html.a
-                    [ HA.href "/exhibition"
+                    [ HA.href "/exhibitions"
                     , HA.class "font-title text-base mb-2 overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
                     ]
-                    [ Html.text "Start Exploring" ]
+                    [ Html.text "Start Exploring Exhibitions" ]
                 , Html.a
-                    [ HA.href "/contact"
+                    [ HA.href "/artists"
                     , HA.class "font-title text-base mb-2 overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
                     ]
-                    [ Html.text "Start Exploring" ]
+                    [ Html.text "Check out our creators" ]
                 ]
             ]
         ]

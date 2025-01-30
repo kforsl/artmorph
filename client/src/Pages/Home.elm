@@ -6,20 +6,19 @@ import Api.Exhibitions exposing (Exhibition)
 import Components.Newsletter
 import Html exposing (Html)
 import Html.Attributes as HA
+import Maybe exposing (withDefault)
 
 
 type alias Model =
-    { title : String
-    , artistData : List Artist
-    , artworkData : List Artwork
-    , exhibitionData : List Exhibition
+    { artistData : Api.Artist.Model
+    , artworkData : Api.Artwork.Model
+    , exhibitionData : Api.Exhibitions.Model
     }
 
 
 initModel : Model
 initModel =
-    { title = "Home Page"
-    , artistData = []
+    { artistData = []
     , artworkData = []
     , exhibitionData = []
     }
@@ -41,9 +40,9 @@ view model =
     Html.main_ [ HA.class "bg-bgLight" ]
         [ viewHero
         , viewWelcome
-        , viewExhibitions
-        , viewPictureOfTheMonth
-        , viewArtist
+        , viewExhibitions model.exhibitionData
+        , viewPictureOfTheMonth model.artworkData
+        , viewArtist model.artistData
         , Components.Newsletter.view
         ]
 
@@ -117,8 +116,8 @@ viewWelcome =
         ]
 
 
-viewExhibitions : Html msg
-viewExhibitions =
+viewExhibitions : Api.Exhibitions.Model -> Html msg
+viewExhibitions exhibitions = 
     Html.article
         [ HA.class "max-w-maxWidth m-auto py-16" ]
         [ Html.section
@@ -126,25 +125,18 @@ viewExhibitions =
             [ Html.h2
                 [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
                 [ Html.text "Featured Exhibitions" ]
-            , viewFilterExhibition
+            , Html.a
+                [ HA.href "/exhibitions"
+                , HA.class "place-self-center text-nowrap text-base h-fit py-2.5 px-4 bg-primary rounded-2xl font-bold"
+                ]
+                [ Html.text "View all exhibitions" ]
             ]
         , Html.ul
-            [ HA.class "flex gap-4 overflow-hidden py-8" ]
-            [ viewExhibitionCard
-            , viewExhibitionCard
-            , viewExhibitionCard
-            , viewExhibitionCard
-            ]
-        ]
-
-
-viewFilterExhibition : Html msg
-viewFilterExhibition =
-    Html.ul [ HA.class "flex gap-4" ]
-        [ viewFilterButton "Digital"
-        , viewFilterButton "Olja"
-        , viewFilterButton "Akryl"
-        , viewFilterButton "Akvarell"
+            [ HA.class "flex gap-4 overflow-x-scroll py-8" ]
+            (List.map
+                viewExhibitionCard
+                exhibitions
+            )
         ]
 
 
@@ -155,50 +147,59 @@ viewFilterButton btnText =
         [ Html.text btnText ]
 
 
-viewExhibitionCard : Html msg
-viewExhibitionCard =
+viewExhibitionCard : Exhibition -> Html msg
+viewExhibitionCard exhibition =
     Html.li
         [ HA.class "grid gap-0.5" ]
         [ Html.img
-            [ HA.src "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            , HA.class "max-w-96"
+            [ HA.src exhibition.thumbnailUrl
+            , HA.class "max-w-96 aspect-square object-cover"
             ]
             []
         , Html.a
-            [ HA.href "/exhibition"
+            [ HA.href ("/exhibitions/" ++ exhibition.id)
             , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
             ]
-            [ Html.text "Title " ]
+            [ Html.text exhibition.title ]
         ]
 
 
-viewPictureOfTheMonth : Html msg
-viewPictureOfTheMonth =
-    Html.section
-        [ HA.class "bg-bgDark py-16 relative z-0" ]
-        [ bgTextSecondary
-        , Html.div
-            [ HA.class "max-w-maxWidth m-auto" ]
-            [ Html.h2
-                [ HA.class "font-title text-3xl mb-8 text-primary text-center" ]
-                [ Html.text "Picture of the month" ]
-            , Html.img
-                [ HA.src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                , HA.class "mb-8 max-w-96 m-auto"
+viewPictureOfTheMonth : Api.Artwork.Model -> Html msg
+viewPictureOfTheMonth artworks =
+    let
+        pictureOfTheMonth =
+            List.head artworks
+    in
+    case pictureOfTheMonth of
+        Just artwork ->
+            Html.section
+                [ HA.class "bg-bgDark py-16 relative z-0" ]
+                [ bgTextSecondary
+                , Html.div
+                    [ HA.class "max-w-maxWidth m-auto" ]
+                    [ Html.h2
+                        [ HA.class "font-title text-3xl mb-8 text-primary text-center" ]
+                        [ Html.text "Picture of the month" ]
+                    , Html.img
+                        [ HA.src artwork.imageUrl
+                        , HA.class "mb-8 max-w-96 m-auto"
+                        ]
+                        []
+                    , Html.h3
+                        [ HA.class "font-bread text-xl mb-4 text-primary text-center" ]
+                        [ Html.text artwork.title ]
+                    , Html.h4
+                        [ HA.class "font-bread text-xl text-primary text-center" ]
+                        [ Html.text ("Created by " ++ artwork.artist.name) ]
+                    ]
                 ]
-                []
-            , Html.h3
-                [ HA.class "font-bread text-xl mb-4 text-primary text-center" ]
-                [ Html.text "Title of the artwork" ]
-            , Html.h4
-                [ HA.class "font-bread text-xl text-primary text-center" ]
-                [ Html.text "Created by ArtistName" ]
-            ]
-        ]
+
+        Nothing ->
+            Html.text ""
 
 
-viewArtist : Html msg
-viewArtist =
+viewArtist : Api.Artist.Model -> Html msg
+viewArtist artists =
     Html.section
         [ HA.class "max-w-maxWidth m-auto py-16 border-b-2 border-black" ]
         [ Html.h2
@@ -206,73 +207,22 @@ viewArtist =
             [ Html.text "The Minds Behind the Masterpieces" ]
         , Html.ul
             [ HA.class "flex overflow-hidden justify-between" ]
-            [ Html.article
-                [ HA.class "max-w-44 grid gap-0.5" ]
-                [ Html.a
-                    [ HA.href "/artist"
-                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
-                    ]
-                    [ Html.text "Name of artist" ]
-                , Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
-                    []
-                ]
-            , Html.article
-                [ HA.class "max-w-44 grid gap-0.5" ]
-                [ Html.a
-                    [ HA.href "/artist"
-                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
-                    ]
-                    [ Html.text "Name of artist" ]
-                , Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
-                    []
-                ]
-            , Html.article
-                [ HA.class "max-w-44 grid gap-0.5" ]
-                [ Html.a
-                    [ HA.href "/artist"
-                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
-                    ]
-                    [ Html.text "Name of artist" ]
-                , Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
-                    []
-                ]
-            , Html.article
-                [ HA.class "max-w-44 grid gap-0.5" ]
-                [ Html.a
-                    [ HA.href "/artist"
-                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
-                    ]
-                    [ Html.text "Name of artist" ]
-                , Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
-                    []
-                ]
-            , Html.article
-                [ HA.class "max-w-44 grid gap-0.5" ]
-                [ Html.a
-                    [ HA.href "/artist"
-                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
-                    ]
-                    [ Html.text "Name of artist" ]
-                , Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
-                    []
-                ]
-            , Html.article
-                [ HA.class "max-w-44 grid gap-0.5" ]
-                [ Html.a
-                    [ HA.href "/artist"
-                    , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
-                    ]
-                    [ Html.text "Name of artist" ]
-                , Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
-                    []
-                ]
+            (List.map viewArtistCard artists)
+        ]
+
+
+viewArtistCard : Artist -> Html msg
+viewArtistCard artist =
+    Html.article
+        [ HA.class "max-w-44 grid gap-0.5" ]
+        [ Html.a
+            [ HA.href ("/artists/" ++ artist.id)
+            , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
             ]
+            [ Html.text artist.name ]
+        , Html.img
+            [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+            []
         ]
 
 

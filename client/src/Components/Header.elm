@@ -26,11 +26,6 @@ viewNavigation =
             [ HA.class "grid grid-cols-3 auto-cols-max" ]
             [ viewLink "/" "Home"
             , viewLink "/about" "About"
-            , viewLink "/exhibitions" "Exhibitions"
-            , viewLink "/exhibitions/id" "Exhibition id"
-            , viewLink "/artists" "Artist"
-            , viewLink "/artists/id" "Artist id"
-            , viewLink "/artwork/id" "Artwork"
             , viewLink "/auth" "Login"
             ]
         ]

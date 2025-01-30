@@ -6,72 +6,48 @@ import Url.Parser exposing ((</>))
 
 type Route
     = RouteAboutPage
-    | RouteArtistPage
+    | RouteArtistPage ArtistId
     | RouteArtistsPage
-    | RouteArtworkPage
+    | RouteArtworkPage ArtworkId
     | RouteAuthPage
-    | RouteExhibitionPage
+    | RouteExhibitionPage ExhibitionId
     | RouteExhibitionsPage
     | RouteHomePage
 
 
-aboutPageParser : Url.Parser.Parser a a
-aboutPageParser =
-    Url.Parser.s "about"
+type alias ArtistId =
+    String
 
 
-artistPageParser : Url.Parser.Parser a a
-artistPageParser =
-    Url.Parser.s "artists" </> Url.Parser.s "id"
+type alias ArtworkId =
+    String
 
 
-artistsPageParser : Url.Parser.Parser a a
-artistsPageParser =
-    Url.Parser.s "artists"
+type alias ExhibitionId =
+    String
 
 
-artworkPageParser : Url.Parser.Parser a a
-artworkPageParser =
-    Url.Parser.s "artwork" </> Url.Parser.s "id"
-
-
-authPageParser : Url.Parser.Parser a a
-authPageParser =
-    Url.Parser.s "auth"
-
-
-exhibitionPageParser : Url.Parser.Parser a a
-exhibitionPageParser =
-    Url.Parser.s "exhibitions" </> Url.Parser.s "id"
-
-
-exhibitionsPageParser : Url.Parser.Parser a a
-exhibitionsPageParser =
-    Url.Parser.s "exhibitions"
-
-
-homePageParser : Url.Parser.Parser a a
-homePageParser =
-    Url.Parser.top
-
-
-routerParser : Url.Parser.Parser (Route -> c) c
+routerParser : Url.Parser.Parser (Route -> c ) c
 routerParser =
     Url.Parser.oneOf
-        [ Url.Parser.map RouteAboutPage aboutPageParser
-        , Url.Parser.map RouteArtistPage artistPageParser
-        , Url.Parser.map RouteArtistsPage artistsPageParser
-        , Url.Parser.map RouteArtworkPage artworkPageParser
-        , Url.Parser.map RouteAuthPage authPageParser
-        , Url.Parser.map RouteExhibitionPage exhibitionPageParser
-        , Url.Parser.map RouteExhibitionsPage exhibitionsPageParser
-        , Url.Parser.map RouteHomePage homePageParser
+        [ Url.Parser.map RouteAboutPage ( Url.Parser.s "about" )
+        , Url.Parser.map RouteArtistPage (Url.Parser.s "artists" </> Url.Parser.string)
+        , Url.Parser.map RouteArtistsPage (Url.Parser.s "artists")
+        , Url.Parser.map RouteArtworkPage (Url.Parser.s "artwork" </> Url.Parser.string)
+        , Url.Parser.map RouteAuthPage (Url.Parser.s "auth")
+        , Url.Parser.map RouteExhibitionPage (Url.Parser.s "exhibitions" </> Url.Parser.string)
+        , Url.Parser.map RouteExhibitionsPage (Url.Parser.s "exhibitions")
+        , Url.Parser.map RouteHomePage Url.Parser.top
         ]
 
 
-fromUrl : Url.Url -> Maybe Route
+fromUrl : Url -> Maybe Route
 fromUrl url =
-    Url.Parser.parse routerParser url
+    -- Url.Parser.parse routerParser url
+    let
+        parsedRoute = Url.Parser.parse routerParser url
+    in
+    Debug.log "Parsed Route: " parsedRoute
 
 
 asPath : Route -> String
@@ -80,20 +56,20 @@ asPath route =
         RouteAboutPage ->
             "/about"
 
-        RouteArtistPage ->
-            "/artists/id"
+        RouteArtistPage id->
+            "/artists/" ++ id
 
         RouteArtistsPage ->
             "/artists"
 
-        RouteArtworkPage ->
-            "/artwork/id"
+        RouteArtworkPage id ->
+            "/artwork/" ++ id
 
         RouteAuthPage ->
-            "auth"
+            "/auth"
 
-        RouteExhibitionPage ->
-            "/exhibitions/id"
+        RouteExhibitionPage id ->
+            "/exhibitions/" ++ id
 
         RouteExhibitionsPage ->
             "/exhibitions"

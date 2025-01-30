@@ -25,9 +25,7 @@ import Url exposing (Url)
 type alias Model =
     { url : Url
     , navigationKey : Navigation.Key
-    , sharedArtistsData : Api.Artist.Model
-    , sharedArtworkData : Api.Artwork.Model
-    , sharedExhibitionData : Api.Exhibitions.Model
+    , isShowingHeaderNFooter : Bool
     , modelAboutPage : Pages.About.Model
     , modelArtistPage : Pages.Artist.Model
     , modelArtistsPage : Pages.Artists.Model
@@ -39,31 +37,16 @@ type alias Model =
     }
 
 
-type alias ApiResponse =
-    { message : String
-    , data : List Artist
-    }
-
-
-type alias SharedData =
-    { artists : List Artist
-    , artwork : List Artwork
-    , exhibition : List Exhibition
-    }
-
-
 init : () -> Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url navigationKey =
-    ( initModel url navigationKey, Cmd.batch [ Cmd.map MsgFetchArtistData Api.Artist.fetchArtists, Cmd.map MsgFetchArtworkData Api.Artwork.fetchArtwork, Cmd.map MsgFetchExhibitionData Api.Exhibitions.fetchExhibition  ] )
+    ( initModel url navigationKey, Cmd.batch [ Cmd.map MsgFetchArtistData Api.Artist.fetchArtists, Cmd.map MsgFetchArtworkData Api.Artwork.fetchArtwork, Cmd.map MsgFetchExhibitionData Api.Exhibitions.fetchExhibition ] )
 
 
 initModel : Url -> Navigation.Key -> Model
 initModel url navigationKey =
     { url = url
     , navigationKey = navigationKey
-    , sharedArtistsData = Api.Artist.initModel
-    , sharedArtworkData = Api.Artwork.initModel
-    , sharedExhibitionData = Api.Exhibitions.initModel
+    , isShowingHeaderNFooter = True
     , modelAboutPage = Pages.About.initModel
     , modelArtistPage = Pages.Artist.initModel
     , modelArtistsPage = Pages.Artists.initModel
@@ -95,7 +78,16 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         MsgUrlChange url ->
-            ( { model | url = url }, Cmd.none )
+            let
+                newIsShowingHeaderNFooter =
+                    url.path /= "/auth"
+            in
+            ( { model
+                | url = url
+                , isShowingHeaderNFooter = newIsShowingHeaderNFooter
+              }
+            , Cmd.none
+            )
 
         MsgUrlRequested urlRequest ->
             case urlRequest of
@@ -114,24 +106,67 @@ update msg model =
         MsgFetchArtistData msgApiArtist ->
             let
                 ( newArtistData, cmdArtistApi ) =
-                    Api.Artist.update msgApiArtist model.sharedArtistsData
+                    Api.Artist.update msgApiArtist Api.Artist.initModel
 
+                updatedHomePageModel =
+                    { artistData = newArtistData
+                    , artworkData = model.modelHomePage.artworkData
+                    , exhibitionData = model.modelHomePage.exhibitionData
+                    }
+
+                updatedArtistPageModel =
+                    { artistData = newArtistData
+                    }
+
+                updatedAboutPageModel =
+                    { artistData = newArtistData }
             in
-            ( { model | sharedArtistsData = newArtistData }, Cmd.map MsgFetchArtistData cmdArtistApi )
+            ( { model
+                | modelHomePage = updatedHomePageModel
+                , modelArtistsPage = updatedArtistPageModel
+                , modelAboutPage = updatedAboutPageModel
+              }
+            , Cmd.map MsgFetchArtistData cmdArtistApi
+            )
 
         MsgFetchArtworkData msgApiArtwork ->
             let
                 ( newArtworkData, cmdArtworkApi ) =
-                    Api.Artwork.update msgApiArtwork model.sharedArtworkData
+                    Api.Artwork.update msgApiArtwork Api.Artwork.initModel
+
+                updatedHomePageModel =
+                    { artistData = model.modelHomePage.artistData
+                    , artworkData = newArtworkData
+                    , exhibitionData = model.modelHomePage.exhibitionData
+                    }
             in
-            ( { model | sharedArtworkData = newArtworkData }, Cmd.map MsgFetchArtworkData cmdArtworkApi )
+            ( { model
+                | modelHomePage = updatedHomePageModel
+              }
+            , Cmd.map MsgFetchArtworkData cmdArtworkApi
+            )
 
         MsgFetchExhibitionData msgApiExhibitions ->
             let
                 ( newExhibitionsData, cmdExhibitionsApi ) =
-                    Api.Exhibitions.update msgApiExhibitions model.sharedExhibitionData
+                    Api.Exhibitions.update msgApiExhibitions Api.Exhibitions.initModel
+
+                updatedHomePageModel =
+                    { artistData = model.modelHomePage.artistData
+                    , artworkData = model.modelHomePage.artworkData
+                    , exhibitionData = newExhibitionsData
+                    }
+
+                updatedExhibitionsPageModel =
+                    { exhibitionData = newExhibitionsData
+                    }
             in
-            ( { model | sharedExhibitionData = newExhibitionsData }, Cmd.map MsgFetchExhibitionData cmdExhibitionsApi )
+            ( { model
+                | modelHomePage = updatedHomePageModel
+                , modelExhibitionsPage = updatedExhibitionsPageModel
+              }
+            , Cmd.map MsgFetchExhibitionData cmdExhibitionsApi
+            )
 
         MsgAboutPage msgAboutPage ->
             let
@@ -215,42 +250,32 @@ view model =
 viewContent : Model -> Html Msg
 viewContent model =
     Html.main_ [ HA.class "bg-bgLight" ]
-        [ Html.Extra.viewIf (isNotAuthPage model.url) Components.Header.view
+        [ Html.Extra.viewIf model.isShowingHeaderNFooter Components.Header.view
         , viewPage model
-        , Html.Extra.viewIf (isNotAuthPage model.url) Components.Footer.view
+        , Html.Extra.viewIf model.isShowingHeaderNFooter Components.Footer.view
         ]
 
 
-isNotAuthPage : Url -> Bool
-isNotAuthPage url =
-    case Route.fromUrl url of
-        Just Route.RouteAuthPage ->
-            False
-
-        _ ->
-            True
-
-
 viewPage : Model -> Html Msg
-viewPage model =
+viewPage model=
     case Route.fromUrl model.url of
         Just Route.RouteAboutPage ->
             Html.map MsgAboutPage (Pages.About.view model.modelAboutPage)
 
-        Just Route.RouteArtistPage ->
-            Html.map MsgArtistPage (Pages.Artist.view model.modelArtistPage)
+        Just (Route.RouteArtistPage id) ->
+            Html.map MsgArtistPage (Pages.Artist.view model.modelArtistPage id)
 
         Just Route.RouteArtistsPage ->
             Html.map MsgArtistsPage (Pages.Artists.view model.modelArtistsPage)
 
-        Just Route.RouteArtworkPage ->
-            Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage)
+        Just (Route.RouteArtworkPage id) ->
+            Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage id)
 
         Just Route.RouteAuthPage ->
-            Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage)
+            Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage )
 
-        Just Route.RouteExhibitionPage ->
-            Html.map MsgExhibitionPage (Pages.Exhibition.view model.modelExhibitionPage)
+        Just (Route.RouteExhibitionPage id) ->
+            Html.map MsgExhibitionPage (Pages.Exhibition.view model.modelExhibitionPage id)
 
         Just Route.RouteExhibitionsPage ->
             Html.map MsgExhibitionsPage (Pages.Exhibitions.view model.modelExhibitionsPage)
