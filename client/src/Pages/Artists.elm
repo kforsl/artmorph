@@ -6,7 +6,7 @@ import Html.Attributes as HA
 
 
 type alias Model =
-    { artistData : Api.Artist.Model
+    { artistData : List Artist
     }
 
 
@@ -29,6 +29,27 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    Html.div [ HA.class "max-w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1 " ]
-        [ Html.text "All Artist Page"
+    Html.main_
+        [ HA.class "bg-bgLight" ]
+        [ viewArtist model
+        ]
+
+
+viewArtist : Model -> Html Msg
+viewArtist model =
+    Html.section
+        [ HA.class "max-w-maxWidth m-auto" ]
+        (List.map
+            viewArtistCard
+            model.artistData
+        )
+
+
+viewArtistCard : Artist -> Html Msg
+viewArtistCard artist =
+    Html.article
+        []
+        [ Html.img [ HA.src artist.profileImgUrl ] []
+        , Html.h2 [] [ Html.text artist.name ]
+        , Html.p [] [ Html.text artist.aboutMe ]
         ]

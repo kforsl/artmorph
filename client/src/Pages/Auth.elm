@@ -53,16 +53,16 @@ update msg model =
                     ( { model | formType = Login }, Cmd.none )
 
         MsgSubmitForm ->
-            ( { model | formState = Loading }, sendToSelfWithDelay 2000 MsgSubmitError )
+            ( { model | formState = Loading }, sendToSelfWithDelay 2000 MsgSubmitSuccess )
 
         MsgSubmitError ->
-            ( { model | formState = Error }, sendToSelfWithDelay 4000 MsgSubmitResting )
+            ( { model | formState = Error },  Cmd.none)
 
         MsgSubmitResting ->
             ( { model | formState = Resting }, Cmd.none )
 
         MsgSubmitSuccess ->
-            ( { model | formState = Success }, Cmd.none )
+            ( { model | formState = Success }, sendToSelfWithDelay 4000 MsgSubmitResting )
 
 
 sendToSelfWithDelay : Float -> msg -> Cmd msg

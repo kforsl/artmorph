@@ -164,6 +164,7 @@ update msg model =
             ( { model
                 | modelHomePage = updatedHomePageModel
                 , modelExhibitionsPage = updatedExhibitionsPageModel
+                , modelExhibitionPage = updatedExhibitionsPageModel
               }
             , Cmd.map MsgFetchExhibitionData cmdExhibitionsApi
             )
@@ -257,7 +258,7 @@ viewContent model =
 
 
 viewPage : Model -> Html Msg
-viewPage model=
+viewPage model =
     case Route.fromUrl model.url of
         Just Route.RouteAboutPage ->
             Html.map MsgAboutPage (Pages.About.view model.modelAboutPage)
@@ -272,7 +273,7 @@ viewPage model=
             Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage id)
 
         Just Route.RouteAuthPage ->
-            Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage )
+            Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage)
 
         Just (Route.RouteExhibitionPage id) ->
             Html.map MsgExhibitionPage (Pages.Exhibition.view model.modelExhibitionPage id)

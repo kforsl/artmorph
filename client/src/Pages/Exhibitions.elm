@@ -29,6 +29,26 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    Html.div [ HA.class "max-w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1 " ]
-        [ Html.text "All Exhibitions Page"
+    Html.main_
+        [ HA.class "bg-bgLight" ]
+        [ viewExhibition model
+        ]
+
+
+viewExhibition : Model -> Html Msg
+viewExhibition model =
+    Html.section
+        [ HA.class "max-w-maxWidth m-auto" ]
+        (List.map
+            viewExhibitionCard
+            model.exhibitionData
+        )
+
+
+viewExhibitionCard : Exhibition -> Html Msg
+viewExhibitionCard exhibition =
+    Html.article
+        []
+        [ Html.img [ HA.src exhibition.thumbnailUrl ] []
+        , Html.h2 [] [ Html.text exhibition.title ]
         ]

@@ -6,13 +6,12 @@ import Api.Exhibitions exposing (Exhibition)
 import Components.Newsletter
 import Html exposing (Html)
 import Html.Attributes as HA
-import Maybe exposing (withDefault)
 
 
 type alias Model =
-    { artistData : Api.Artist.Model
-    , artworkData : Api.Artwork.Model
-    , exhibitionData : Api.Exhibitions.Model
+    { artistData : List Artist
+    , artworkData : List Artwork
+    , exhibitionData : List Exhibition
     }
 
 
@@ -117,7 +116,7 @@ viewWelcome =
 
 
 viewExhibitions : Api.Exhibitions.Model -> Html msg
-viewExhibitions exhibitions = 
+viewExhibitions exhibitions =
     Html.article
         [ HA.class "max-w-maxWidth m-auto py-16" ]
         [ Html.section

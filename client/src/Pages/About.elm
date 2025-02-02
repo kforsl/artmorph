@@ -138,7 +138,7 @@ viewArtistCard x artist =
         Html.article
             [ HA.class "max-w-44 grid gap-0.5" ]
             [ Html.a
-                [ HA.href ("/artists/" ++ artist.id)
+                [ HA.href ("/artist/" ++ artist.id)
                 , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
                 ]
                 [ Html.text artist.name ]
