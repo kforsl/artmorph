@@ -175,7 +175,7 @@ viewPictureOfTheMonth artworks =
                 [ HA.class "bg-bgDark py-16 relative z-0" ]
                 [ bgTextSecondary
                 , Html.div
-                    [ HA.class "max-w-maxWidth m-auto" ]
+                    [ HA.class "max-w-maxWidth m-auto grid place-content-center" ]
                     [ Html.h2
                         [ HA.class "font-title text-3xl mb-8 text-primary text-center" ]
                         [ Html.text "Picture of the month" ]
@@ -184,11 +184,15 @@ viewPictureOfTheMonth artworks =
                         , HA.class "mb-8 max-w-96 m-auto"
                         ]
                         []
-                    , Html.h3
-                        [ HA.class "font-bread text-xl mb-4 text-primary text-center" ]
+                    , Html.a
+                        [ HA.href ("/artwork/" ++ artwork.id)
+                        , HA.class "font-bread text-xl underline underline-offset-2 cursor-pointer text-primary mb-4 text-center"
+                        ]
                         [ Html.text artwork.title ]
-                    , Html.h4
-                        [ HA.class "font-bread text-xl text-primary text-center" ]
+                    , Html.a
+                        [ HA.href ("/artists/" ++ artwork.artist.id)
+                        , HA.class "font-bread text-xl text-primary mb-4 text-center underline underline-offset-2 cursor-pointer"
+                        ]
                         [ Html.text ("Created by " ++ artwork.artist.name) ]
                     ]
                 ]

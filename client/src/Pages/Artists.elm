@@ -47,8 +47,8 @@ viewArtist model =
 
 viewArtistCard : Artist -> Html Msg
 viewArtistCard artist =
-    Html.article
-        []
+    Html.a
+        [ HA.href ("/artists/" ++ artist.id) ]
         [ Html.img [ HA.src artist.profileImgUrl ] []
         , Html.h2 [] [ Html.text artist.name ]
         , Html.p [] [ Html.text artist.aboutMe ]

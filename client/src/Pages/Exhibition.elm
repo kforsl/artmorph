@@ -95,7 +95,7 @@ viewArtworkCard artwork =
     Html.article
         [ HA.class "max-w-44 grid gap-0.5" ]
         [ Html.a
-            [ HA.href ("/artists/" ++ artwork.id)
+            [ HA.href ("/artwork/" ++ artwork.id)
             , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
             ]
             [ Html.text artwork.title ]

@@ -114,8 +114,13 @@ update msg model =
                     , exhibitionData = model.modelHomePage.exhibitionData
                     }
 
+                updatedArtistsPageModel =
+                    { artistData = newArtistData
+                    }
+
                 updatedArtistPageModel =
                     { artistData = newArtistData
+                    , artworkData = model.modelArtistPage.artworkData
                     }
 
                 updatedAboutPageModel =
@@ -123,7 +128,8 @@ update msg model =
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
-                , modelArtistsPage = updatedArtistPageModel
+                , modelArtistsPage = updatedArtistsPageModel
+                , modelArtistPage = updatedArtistPageModel
                 , modelAboutPage = updatedAboutPageModel
               }
             , Cmd.map MsgFetchArtistData cmdArtistApi
@@ -139,9 +145,20 @@ update msg model =
                     , artworkData = newArtworkData
                     , exhibitionData = model.modelHomePage.exhibitionData
                     }
+
+                updatedArtistPageModel =
+                    { artistData = model.modelArtistPage.artistData
+                    , artworkData = newArtworkData
+                    }
+
+                updatedArtworkPageModel =
+                    { artworkData = newArtworkData
+                    }
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
+                , modelArtistPage = updatedArtistPageModel
+                , modelArtworkPage = updatedArtworkPageModel
               }
             , Cmd.map MsgFetchArtworkData cmdArtworkApi
             )

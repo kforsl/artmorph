@@ -50,5 +50,9 @@ viewExhibitionCard exhibition =
     Html.article
         []
         [ Html.img [ HA.src exhibition.thumbnailUrl ] []
-        , Html.h2 [] [ Html.text exhibition.title ]
+        , Html.a
+            [ HA.href ("/exhibitions/" ++ exhibition.id)
+            , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+            ]
+            [ Html.text exhibition.title ]
         ]
