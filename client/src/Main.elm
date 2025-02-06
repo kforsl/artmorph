@@ -26,6 +26,8 @@ type alias Model =
     { url : Url
     , navigationKey : Navigation.Key
     , isShowingHeaderNFooter : Bool
+    , isPageLoading : Bool
+    , isPageError : Bool
     , modelAboutPage : Pages.About.Model
     , modelArtistPage : Pages.Artist.Model
     , modelArtistsPage : Pages.Artists.Model
@@ -39,7 +41,13 @@ type alias Model =
 
 init : () -> Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url navigationKey =
-    ( initModel url navigationKey, Cmd.batch [ Cmd.map MsgFetchArtistData Api.Artist.fetchArtists, Cmd.map MsgFetchArtworkData Api.Artwork.fetchArtwork, Cmd.map MsgFetchExhibitionData Api.Exhibitions.fetchExhibition ] )
+    ( initModel url navigationKey
+    , Cmd.batch 
+        [ Cmd.map MsgFetchArtistData Api.Artist.fetchArtists
+        , Cmd.map MsgFetchArtworkData Api.Artwork.fetchArtwork
+        , Cmd.map MsgFetchExhibitionData Api.Exhibitions.fetchExhibition 
+        ] 
+    )
 
 
 initModel : Url -> Navigation.Key -> Model
@@ -47,6 +55,8 @@ initModel url navigationKey =
     { url = url
     , navigationKey = navigationKey
     , isShowingHeaderNFooter = True
+    , isPageLoading = True
+    , isPageError = False
     , modelAboutPage = Pages.About.initModel
     , modelArtistPage = Pages.Artist.initModel
     , modelArtistsPage = Pages.Artists.initModel
@@ -125,12 +135,21 @@ update msg model =
 
                 updatedAboutPageModel =
                     { artistData = newArtistData }
+
+                isPageLoading =
+                    List.length newArtistData
+                        == 0
+                        && List.length model.modelArtistPage.artworkData
+                        == 0
+                        && List.length model.modelHomePage.exhibitionData
+                        == 0
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
                 , modelArtistsPage = updatedArtistsPageModel
                 , modelArtistPage = updatedArtistPageModel
                 , modelAboutPage = updatedAboutPageModel
+                , isPageLoading = isPageLoading
               }
             , Cmd.map MsgFetchArtistData cmdArtistApi
             )
@@ -154,11 +173,20 @@ update msg model =
                 updatedArtworkPageModel =
                     { artworkData = newArtworkData
                     }
+
+                isPageLoading =
+                    List.length model.modelHomePage.artistData
+                        == 0
+                        && List.length newArtworkData
+                        == 0
+                        && List.length model.modelHomePage.exhibitionData
+                        == 0
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
                 , modelArtistPage = updatedArtistPageModel
                 , modelArtworkPage = updatedArtworkPageModel
+                , isPageLoading = isPageLoading
               }
             , Cmd.map MsgFetchArtworkData cmdArtworkApi
             )
@@ -177,11 +205,20 @@ update msg model =
                 updatedExhibitionsPageModel =
                     { exhibitionData = newExhibitionsData
                     }
+
+                isPageLoading =
+                    List.length model.modelHomePage.artistData
+                        == 0
+                        && List.length model.modelArtistPage.artworkData
+                        == 0
+                        && List.length newExhibitionsData
+                        == 0
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
                 , modelExhibitionsPage = updatedExhibitionsPageModel
                 , modelExhibitionPage = updatedExhibitionsPageModel
+                , isPageLoading = isPageLoading
               }
             , Cmd.map MsgFetchExhibitionData cmdExhibitionsApi
             )
@@ -276,33 +313,41 @@ viewContent model =
 
 viewPage : Model -> Html Msg
 viewPage model =
-    case Route.fromUrl model.url of
-        Just Route.RouteAboutPage ->
-            Html.map MsgAboutPage (Pages.About.view model.modelAboutPage)
+    case ( model.isPageLoading, model.isPageError ) of
+        ( True, False ) ->
+            Html.text "Loading"
 
-        Just (Route.RouteArtistPage id) ->
-            Html.map MsgArtistPage (Pages.Artist.view model.modelArtistPage id)
+        ( False, True ) ->
+            Html.text "Error"
 
-        Just Route.RouteArtistsPage ->
-            Html.map MsgArtistsPage (Pages.Artists.view model.modelArtistsPage)
+        _ ->
+            case Route.fromUrl model.url of
+                Just Route.RouteAboutPage ->
+                    Html.map MsgAboutPage (Pages.About.view model.modelAboutPage)
 
-        Just (Route.RouteArtworkPage id) ->
-            Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage id)
+                Just (Route.RouteArtistPage id) ->
+                    Html.map MsgArtistPage (Pages.Artist.view model.modelArtistPage id)
 
-        Just Route.RouteAuthPage ->
-            Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage)
+                Just Route.RouteArtistsPage ->
+                    Html.map MsgArtistsPage (Pages.Artists.view model.modelArtistsPage)
 
-        Just (Route.RouteExhibitionPage id) ->
-            Html.map MsgExhibitionPage (Pages.Exhibition.view model.modelExhibitionPage id)
+                Just (Route.RouteArtworkPage id) ->
+                    Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage id)
 
-        Just Route.RouteExhibitionsPage ->
-            Html.map MsgExhibitionsPage (Pages.Exhibitions.view model.modelExhibitionsPage)
+                Just Route.RouteAuthPage ->
+                    Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage)
 
-        Just Route.RouteHomePage ->
-            Html.map MsgHomePage (Pages.Home.view model.modelHomePage)
+                Just (Route.RouteExhibitionPage id) ->
+                    Html.map MsgExhibitionPage (Pages.Exhibition.view model.modelExhibitionPage id)
 
-        Nothing ->
-            Html.text "Not Found 404"
+                Just Route.RouteExhibitionsPage ->
+                    Html.map MsgExhibitionsPage (Pages.Exhibitions.view model.modelExhibitionsPage)
+
+                Just Route.RouteHomePage ->
+                    Html.map MsgHomePage (Pages.Home.view model.modelHomePage)
+
+                Nothing ->
+                    Html.text "Not Found 404"
 
 
 main : Program () Model Msg
