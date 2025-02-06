@@ -43,11 +43,7 @@ routerParser =
 
 fromUrl : Url -> Maybe Route
 fromUrl url =
-    -- Url.Parser.parse routerParser url
-    let
-        parsedRoute = Url.Parser.parse routerParser url
-    in
-    Debug.log "Parsed Route: " parsedRoute
+    Url.Parser.parse routerParser url
 
 
 asPath : Route -> String
