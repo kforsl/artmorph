@@ -49,9 +49,8 @@ view model =
 viewHero : Html msg
 viewHero =
     Html.section
-        [ HA.class " bg-bgDark relative z-0" ]
-        [ bgTextSecondary
-        , Html.div
+        [ HA.class " bg-bgDark relative z-0 bg-text" ]
+        [ Html.div
             [ HA.class "max-w-maxWidth m-auto grid gap-20 grid-cols-2 pt-24" ]
             [ Html.figure
                 [ HA.class "relative max-w-md" ]
@@ -102,15 +101,11 @@ viewWelcome =
             , Html.p
                 [ HA.class "font-bread text-base mb-2" ]
                 [ Html.text "Where tradition meets innovation, and art takes on new forms. We are a digital platform celebrating the evolution of creativity, from timeless brushstrokes to cutting-edge digital masterpieces. Explore a gallery where boundaries fade, and imagination thrives in both physical and virtual spaces." ]
-            , Html.p
-                [ HA.class "font-bread text-base" ]
-                [ Html.text "Discover more about our vision and journey → "
-                , Html.a
+            ,  Html.a
                     [ HA.href "/about"
                     , HA.class "font-bread underline underline-offset-2 text-primary cursor-pointer text-base"
                     ]
-                    [ Html.text "Read more about us" ]
-                ]
+                    [ Html.text "Discover more about our vision and journey → Read more about us" ]
             ]
         ]
 
@@ -172,9 +167,8 @@ viewPictureOfTheMonth artworks =
     case pictureOfTheMonth of
         Just artwork ->
             Html.section
-                [ HA.class "bg-bgDark py-16 relative z-0" ]
-                [ bgTextSecondary
-                , Html.div
+                [ HA.class "bg-bgDark py-16 relative z-0 bg-text" ]
+                [ Html.div
                     [ HA.class "max-w-maxWidth m-auto grid place-content-center" ]
                     [ Html.h2
                         [ HA.class "font-title text-3xl mb-8 text-primary text-center" ]
@@ -226,17 +220,4 @@ viewArtistCard artist =
         , Html.img
             [ HA.src "https://images.unsplash.com/photo-1587116288118-56068e06763d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
             []
-        ]
-
-
-bgTextSecondary : Html msg
-bgTextSecondary =
-    Html.figure
-        [ HA.class "absolute bottom-0 w-full -z-[1]" ]
-        [ Html.h5
-            [ HA.class "text-secondary text-center text-5xl font-title text-nowrap" ]
-            [ Html.text "The Art of Transformation — Beyond Boundaries. " ]
-        , Html.h6
-            [ HA.class "text-secondary text-center text-sizeBg leading-none font-logo pb-4 z-0" ]
-            [ Html.text "ArtMorph" ]
         ]

@@ -8,7 +8,7 @@ import Html.Events as HE
 view : Html msg
 view =
     Html.article
-        [ HA.class "max-w-maxWidth m-auto py-16 grid grid-cols-2 gap-4" ]
+        [ HA.class "max-w-maxWidth m-auto pt-16 pb-48 grid grid-cols-2 gap-4 bg-light-text" ]
         [ Html.h2
             [ HA.class "font-title text-3xl col-span-full" ]
             [ Html.text "Your Journey Into Art Begins Here" ]
