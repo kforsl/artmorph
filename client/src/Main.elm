@@ -25,7 +25,7 @@ import Url exposing (Url)
 type alias Model =
     { url : Url
     , navigationKey : Navigation.Key
-    , isShowingHeaderNFooter : Bool
+    , isHeaderShowing : Bool
     , isPageLoading : Bool
     , isPageError : Bool
     , modelAboutPage : Pages.About.Model
@@ -54,7 +54,7 @@ initModel : Url -> Navigation.Key -> Model
 initModel url navigationKey =
     { url = url
     , navigationKey = navigationKey
-    , isShowingHeaderNFooter = True
+    , isHeaderShowing = True
     , isPageLoading = True
     , isPageError = False
     , modelAboutPage = Pages.About.initModel
@@ -89,12 +89,12 @@ update msg model =
     case msg of
         MsgUrlChange url ->
             let
-                newIsShowingHeaderNFooter =
+                newIsHeaderShowing =
                     url.path /= "/auth"
             in
             ( { model
                 | url = url
-                , isShowingHeaderNFooter = newIsShowingHeaderNFooter
+                , isHeaderShowing = newIsHeaderShowing
               }
             , Cmd.none
             )
@@ -305,9 +305,9 @@ view model =
 viewContent : Model -> Html Msg
 viewContent model =
     Html.main_ [ HA.class "bg-bgLight" ]
-        [ Html.Extra.viewIf model.isShowingHeaderNFooter Components.Header.view
+        [ Html.Extra.viewIf model.isHeaderShowing Components.Header.view
         , viewPage model
-        , Html.Extra.viewIf model.isShowingHeaderNFooter Components.Footer.view
+        , Components.Footer.view
         ]
 
 
