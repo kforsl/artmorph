@@ -11,17 +11,17 @@ module.exports = {
                 bgLight: '#F4F0E6',
                 bgDark: '#283127',
             },
-            spacing : {
-                maxWidth : "1180px"
+            spacing: {
+                maxWidth: "1180px"
             },
-            fontFamily : {
-                logo : "Megrim", 
-                title: "Aboreto", 
-                bread : "Inter"
+            fontFamily: {
+                logo: "Megrim",
+                title: "Aboreto",
+                bread: "Inter"
             },
-            fontSize : {
-                sizeBg : "304px"
-            }
+            fontSize: {
+                sizeBg: "304px"
+            },
         },
     },
     plugins: [],

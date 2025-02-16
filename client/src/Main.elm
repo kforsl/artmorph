@@ -19,6 +19,8 @@ import Pages.Exhibition
 import Pages.Exhibitions
 import Pages.Home
 import Route
+import Svg exposing (Svg)
+import Svg.Attributes as SA
 import Url exposing (Url)
 
 
@@ -42,11 +44,11 @@ type alias Model =
 init : () -> Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url navigationKey =
     ( initModel url navigationKey
-    , Cmd.batch 
+    , Cmd.batch
         [ Cmd.map MsgFetchArtistData Api.Artist.fetchArtists
         , Cmd.map MsgFetchArtworkData Api.Artwork.fetchArtwork
-        , Cmd.map MsgFetchExhibitionData Api.Exhibitions.fetchExhibition 
-        ] 
+        , Cmd.map MsgFetchExhibitionData Api.Exhibitions.fetchExhibition
+        ]
     )
 
 
@@ -54,7 +56,7 @@ initModel : Url -> Navigation.Key -> Model
 initModel url navigationKey =
     { url = url
     , navigationKey = navigationKey
-    , isHeaderShowing = True
+    , isHeaderShowing = False
     , isPageLoading = True
     , isPageError = False
     , modelAboutPage = Pages.About.initModel
@@ -315,10 +317,10 @@ viewPage : Model -> Html Msg
 viewPage model =
     case ( model.isPageLoading, model.isPageError ) of
         ( True, False ) ->
-            Html.text "Loading"
+            viewLoading
 
         ( False, True ) ->
-            Html.text "Error"
+            viewError model
 
         _ ->
             case Route.fromUrl model.url of
@@ -348,6 +350,36 @@ viewPage model =
 
                 Nothing ->
                     Html.text "Not Found 404"
+
+
+viewLoading : Html Msg
+viewLoading =
+    let
+        svgLoader : Html msg
+        svgLoader =
+            Svg.svg
+                [ SA.width "156"
+                , SA.height "218"
+                , SA.viewBox "0 0 156 218"
+                , SA.fill "none"
+                ]
+                [ Svg.path
+                    [ SA.d "M5 215.5L78 14L149 209.5H30.5"
+                    , SA.stroke "#EC5001"
+                    , SA.strokeWidth "9"
+                    , SA.class "loading"
+                    ]
+                    []
+                ]
+    in
+    Html.main_ [ HA.class "min-h-full grid place-content-center bg-bgDark" ]
+        [ svgLoader
+        ]
+
+
+viewError : Model -> Html Msg
+viewError model =
+    Html.div [] [ Html.text "Error" ]
 
 
 main : Program () Model Msg
