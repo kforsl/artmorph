@@ -44,11 +44,11 @@ view model =
 viewHero : Html msg
 viewHero =
     Html.section
-        [ HA.class "bg-bgDark relative z-0" ]
+        [ HA.class "bg-bgDark relative z-0 h-5/6" ]
         [ Html.div
-            [ HA.class "max-w-maxWidth m-auto grid gap-20 grid-cols-7 pt-24" ]
+            [ HA.class "h-full max-w-maxWidth m-auto grid gap-20 grid-cols-7 pt-24" ]
             [ Html.figure
-                [ HA.class "col-span-3" ]
+                [ HA.class "col-span-3 grid place-content-end" ]
                 [ Html.img
                     [ HA.src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
                     []
@@ -58,7 +58,7 @@ viewHero =
                 [ Html.h2
                     [ HA.class "text-5xl font-title text-primary flex flex-col gap-6 " ]
                     [ Html.span
-                        [ HA.class "font-logo" ]
+                        [ HA.class "font-logo text-7xl" ]
                         [ Html.text "About Artmorph" ]
                     , Html.span
                         [ HA.class "text-right" ]
@@ -68,9 +68,9 @@ viewHero =
                         [ Html.text "From Canvas to Code" ]
                     ]
                 , Html.h3
-                    [ HA.class "absolute top-1/2 -z-[1] left-0 text-5xl font-title text-secondary flex flex-col gap-6 text-nowrap " ]
+                    [ HA.class "absolute top-1/2 -z-[1] right-0 text-5xl font-title text-secondary flex flex-col gap-6 text-nowrap " ]
                     [ Html.span
-                        []
+                        [ HA.class "text-right"]
                         [ Html.text "Blending tradition with " ]
                     , Html.span
                         [ HA.class "text-right pl-16" ]
