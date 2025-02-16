@@ -56,12 +56,12 @@ viewHero =
             [ Html.figure
                 [ HA.class "relative grid place-content-end after:h-1/3 after:w-screen after:absolute after:bg-primary after:bottom-1/4 after:-right-2/3 after:opacity-25" ]
                 [ Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-hero.png"
                     , HA.class " bg-contain overflow-hidden"
                     ]
                     []
                 , Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-secondary-hero.png"
                     , HA.class "ml-4 absolute bottom-0 left-full w-3/5 z-10"
                     ]
                     []
@@ -90,23 +90,23 @@ viewWelcome =
             []
             [ Html.img
                 [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/welcome.png"
-                , HA.class "w-full aspect-video"
+                , HA.class ""
                 ]
                 []
             ]
         , Html.section
             [ HA.class "p-4" ]
             [ Html.h2
-                [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
+                [ HA.class "font-title text-4xl mb-8 text-textDark col-span-full" ]
                 [ Html.text "Welcome to Artmorph" ]
             , Html.p
-                [ HA.class "font-bread text-base mb-2" ]
-                [ Html.text "Where tradition meets innovation, and art takes on new forms. We are a digital platform celebrating the evolution of creativity, from timeless brushstrokes to cutting-edge digital masterpieces. Explore a gallery where boundaries fade, and imagination thrives in both physical and virtual spaces." ]
+                [ HA.class "font-bread text-base mb-8" ]
+                [ Html.text "Art is a living, breathing force—constantly shifting, transforming, and telling new stories. At Artmorph, we curate immersive online exhibitions that celebrate this evolution. From the echoes of history to the boundless realms of imagination, each collection invites you to see the world through a new artistic lens. Explore, experience, and let creativity reshape your perspective." ]
             , Html.a
                 [ HA.href "/about"
                 , HA.class "font-bread underline underline-offset-2 text-primary cursor-pointer text-base"
                 ]
-                [ Html.text "Discover more about our vision and journey → Read more about us" ]
+                [ Html.text "Discover More About Us" ]
             ]
         ]
 
@@ -163,7 +163,7 @@ viewPictureOfTheMonth : List Artwork -> Html msg
 viewPictureOfTheMonth artworks =
     let
         pictureOfTheMonth =
-            Array.get 41 (Array.fromList artworks)
+            Array.get 13 (Array.fromList artworks)
     in
     case pictureOfTheMonth of
         Just artwork ->

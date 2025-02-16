@@ -14,17 +14,17 @@ view =
             [ Html.text "Your Journey Into Art Begins Here" ]
         , Html.img
             [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/newsletter.png"
-            , HA.class "max-w-full aspect-video"
+            , HA.class "max-w-full"
             ]
             []
         , Html.section
             [ HA.class "py-4" ]
             [ Html.h3
                 [ HA.class "font-bread font-medium text-xl leading-relaxed mb-4" ]
-                [ Html.text "Whether you’re a collector, an admirer, or an artist, ArtMorph is a space for discovery and connection. Let’s shape the future of art together." ]
+                [ Html.text "Stay Inspired – Get the Latest from Artmorph" ]
             , Html.p
                 [ HA.class "font-bread text-base font-regular leading-normal mb-4" ]
-                [ Html.text "Stay updated with the latest exhibitions, featured artists, and exclusive content delivered straight to your inbox." ]
+                [ Html.text "Art is always evolving, and so is Artmorph. Be the first to discover new exhibitions, featured artists, and exclusive insights into the world of digital curation. Sign up for our newsletter and let inspiration find you." ]
             , Html.form
                 [ HA.class " w-full flex gap-4 pb-4"
                 -- , HE.onSubmit msg
