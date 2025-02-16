@@ -13,7 +13,7 @@ view =
             [ HA.class "font-title text-3xl col-span-full" ]
             [ Html.text "Your Journey Into Art Begins Here" ]
         , Html.img
-            [ HA.src "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/newsletter.png"
             , HA.class "max-w-full aspect-video"
             ]
             []
