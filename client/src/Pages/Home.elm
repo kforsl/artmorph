@@ -3,6 +3,7 @@ module Pages.Home exposing (..)
 import Api.Artist exposing (Artist)
 import Api.Artwork exposing (Artwork)
 import Api.Exhibitions exposing (Exhibition)
+import Array
 import Components.Newsletter
 import Html exposing (Html)
 import Html.Attributes as HA
@@ -49,11 +50,11 @@ view model =
 viewHero : Html msg
 viewHero =
     Html.section
-        [ HA.class " bg-bgDark relative z-0 bg-text" ]
+        [ HA.class " bg-bgDark relative z-0 h-5/6 bg-text" ]
         [ Html.div
-            [ HA.class "max-w-maxWidth m-auto grid gap-20 grid-cols-2 pt-24" ]
+            [ HA.class "max-w-maxWidth h-full m-auto grid gap-20 grid-cols-2 pt-24 " ]
             [ Html.figure
-                [ HA.class "relative max-w-md" ]
+                [ HA.class "relative grid place-content-end after:h-1/3 after:w-screen after:absolute after:bg-primary after:bottom-1/4 after:-right-2/3 after:opacity-25" ]
                 [ Html.img
                     [ HA.src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     , HA.class " bg-contain overflow-hidden"
@@ -61,7 +62,7 @@ viewHero =
                     []
                 , Html.img
                     [ HA.src "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    , HA.class "ml-4 absolute bottom-0 left-full max-w-60"
+                    , HA.class "ml-4 absolute bottom-0 left-full w-3/5 z-10"
                     ]
                     []
                 ]
@@ -88,7 +89,7 @@ viewWelcome =
         [ Html.figure
             []
             [ Html.img
-                [ HA.src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/welcome.png"
                 , HA.class "w-full aspect-video"
                 ]
                 []
@@ -101,11 +102,11 @@ viewWelcome =
             , Html.p
                 [ HA.class "font-bread text-base mb-2" ]
                 [ Html.text "Where tradition meets innovation, and art takes on new forms. We are a digital platform celebrating the evolution of creativity, from timeless brushstrokes to cutting-edge digital masterpieces. Explore a gallery where boundaries fade, and imagination thrives in both physical and virtual spaces." ]
-            ,  Html.a
-                    [ HA.href "/about"
-                    , HA.class "font-bread underline underline-offset-2 text-primary cursor-pointer text-base"
-                    ]
-                    [ Html.text "Discover more about our vision and journey → Read more about us" ]
+            , Html.a
+                [ HA.href "/about"
+                , HA.class "font-bread underline underline-offset-2 text-primary cursor-pointer text-base"
+                ]
+                [ Html.text "Discover more about our vision and journey → Read more about us" ]
             ]
         ]
 
@@ -147,7 +148,7 @@ viewExhibitionCard exhibition =
         [ HA.class "grid gap-0.5" ]
         [ Html.img
             [ HA.src exhibition.thumbnailUrl
-            , HA.class "max-w-96 aspect-square object-cover"
+            , HA.class "max-w-96 aspect-square object-cover object-top"
             ]
             []
         , Html.a
@@ -158,11 +159,11 @@ viewExhibitionCard exhibition =
         ]
 
 
-viewPictureOfTheMonth : Api.Artwork.Model -> Html msg
+viewPictureOfTheMonth : List Artwork -> Html msg
 viewPictureOfTheMonth artworks =
     let
         pictureOfTheMonth =
-            List.head artworks
+            Array.get 41 (Array.fromList artworks)
     in
     case pictureOfTheMonth of
         Just artwork ->
