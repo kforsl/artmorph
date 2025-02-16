@@ -50,7 +50,7 @@ viewHero =
             [ Html.figure
                 [ HA.class "col-span-3 grid place-content-end" ]
                 [ Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ]
+                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-hero.png" ]
                     []
                 ]
             , Html.section
@@ -102,8 +102,8 @@ viewAbout =
             ]
         , Html.figure []
             [ Html.img
-                [ HA.src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                , HA.class "h-full aspect-video"
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about.png"
+                , HA.class "h-full"
                 ]
                 []
             ]
@@ -163,8 +163,8 @@ viewExhibitions =
             , Html.figure
                 []
                 [ Html.img
-                    [ HA.src "https://images.unsplash.com/photo-1682680215210-d385fa4ea8a5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    , HA.class "h-full aspect-video"
+                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-exhibition.png"
+                    , HA.class "h-full"
                     ]
                     []
                 ]
