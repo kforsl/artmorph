@@ -41,98 +41,104 @@ view model =
         ]
 
 
-viewHero : Html msg
+viewHero : Html Msg
 viewHero =
     Html.section
-        [ HA.class "bg-bgDark relative z-0 h-5/6" ]
+        [ HA.class "bg-bgDark relative z-0 h-3/4 bg-text" ]
         [ Html.div
-            [ HA.class "h-full max-w-maxWidth m-auto grid gap-20 grid-cols-7 pt-24" ]
+            [ HA.class "h-full max-w-maxWidth m-auto grid grid-cols-12 gap-8 pt-24" ]
             [ Html.figure
-                [ HA.class "col-span-3 grid place-content-end" ]
+                [ HA.class "col-span-5 grid place-content-end" ]
                 [ Html.img
-                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-hero.png" ]
+                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-hero.png"
+                    , HA.class "rounded"
+                    ]
                     []
                 ]
             , Html.section
-                [ HA.class "col-span-4 relative" ]
+                [ HA.class "col-span-7 relative" ]
                 [ Html.h2
-                    [ HA.class "text-5xl font-title text-primary flex flex-col gap-6 " ]
+                    [ HA.class "text-5xl font-title text-primary flex flex-col justify-end gap-6 h-1/2 " ]
                     [ Html.span
-                        [ HA.class "font-logo text-7xl" ]
+                        [ HA.class "font-logo text-7xl text-right" ]
                         [ Html.text "About Artmorph" ]
                     , Html.span
-                        [ HA.class "text-right" ]
-                        [ Html.text "Transforming Art," ]
-                    , Html.span
                         [ HA.class "text-center" ]
-                        [ Html.text "From Canvas to Code" ]
-                    ]
-                , Html.h3
-                    [ HA.class "absolute top-1/2 -z-[1] right-0 text-5xl font-title text-secondary flex flex-col gap-6 text-nowrap " ]
-                    [ Html.span
-                        [ HA.class "text-right"]
-                        [ Html.text "Blending tradition with " ]
+                        [ Html.text "Where every stroke" ]
                     , Html.span
-                        [ HA.class "text-right pl-16" ]
-                        [ Html.text "innovation to showcase" ]
-                    , Html.span
-                        [ HA.class "text-center" ]
-                        [ Html.text "art in all its forms." ]
+                        [ HA.class "" ]
+                        [ Html.text "Tells a new story" ]
                     ]
+
+                -- , Html.h3
+                --     [ HA.class "absolute top-1/2 -z-[1] right-0 text-5xl font-title text-secondary flex flex-col gap-6 text-nowrap " ]
+                --     [ Html.span
+                --         [ HA.class "text-right"]
+                --         [ Html.text "Blending tradition with " ]
+                --     , Html.span
+                --         [ HA.class "text-right pl-16" ]
+                --         [ Html.text "innovation to showcase" ]
+                --     , Html.span
+                --         [ HA.class "text-center" ]
+                --         [ Html.text "art in all its forms." ]
+                --     ]
                 ]
             ]
         ]
 
 
-viewAbout : Html msg
+viewAbout : Html Msg
 viewAbout =
     Html.article
-        [ HA.class "max-w-maxWidth m-auto py-8 grid grid-cols-2 border-b-2 border-black" ]
+        [ HA.class "max-w-maxWidth m-auto py-16 grid grid-cols-12 border-b-2 border-black" ]
         [ Html.section
-            [ HA.class "p-4" ]
+            [ HA.class "p-4 col-span-7" ]
             [ Html.h2
-                [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
+                [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full " ]
                 [ Html.text "The Vision Behind ArtMorph" ]
             , Html.p
-                [ HA.class "font-bread text-base mb-2" ]
-                [ Html.text "ArtMorph was born from a passion for bridging the timeless beauty of traditional art with the endless possibilities of digital expression. Founded in [Year], our gallery was envisioned as a space where artists and art lovers could explore the evolution of creativity. From classical brushstrokes to digital masterpieces, we celebrate the transformation of art and its ability to inspire, challenge, and connect." ]
+                [ HA.class "font-bread text-base mb-2 leading-7" ]
+                [ Html.text "Art is constantly evolving. It transforms, reinvents itself, and tells new stories with each passing era. At Artmorph, we believe in capturing these moments of change—curating digital exhibitions that explore art’s endless possibilities." ]
             , Html.p
-                [ HA.class "font-bread text-base mb-2" ]
-                [ Html.text """Our mission is simple—to honor tradition while embracing innovation. By showcasing art that spans mediums and styles, we aim to spark curiosity, conversation, and appreciation for the ever-changing world of artistic expression. Whether you’re an artist, collector, or admirer, ArtMorph is your gateway to a world where creativity knows no boundaries.""" ]
+                [ HA.class "font-bread text-base mb-2 leading-7" ]
+                [ Html.text """Our platform is more than a gallery; it’s a living, breathing space where artists and audiences connect across time, culture, and imagination. Through carefully curated themes, Artmorph showcases how creativity transcends boundaries, offering a unique journey through the worlds of transformation, history, nature, the supernatural, and beyond.""" ]
+            , Html.p
+                [ HA.class "font-bread text-base mb-2 leading-7" ]
+                [ Html.text """Every piece featured here is a reflection of this vision—a celebration of artistic evolution in all its forms. Welcome to Artmorph, where art never stays still.""" ]
             ]
-        , Html.figure []
-            [ Html.img
-                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about.png"
-                , HA.class "h-full"
-                ]
-                []
+        , Html.img
+            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about.png"
+            , HA.class "h-full col-span-5"
             ]
+            []
         ]
 
 
-viewArtists : Api.Artist.Model -> Html msg
+viewArtists : List Artist -> Html Msg
 viewArtists artists =
     Html.article
         [ HA.class "max-w-maxWidth m-auto py-8 grid grid-cols-3 gap-x-8" ]
         [ Html.h2
             [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
-            [ Html.text "Meet the Creators Behind the Art" ]
+            [ Html.text "Meet the Visionaries Behind Artmorph" ]
         , Html.ul
             [ HA.class "flex overflow-hidden justify-between" ]
             (List.indexedMap viewArtistCard artists)
         , Html.section
-            [ HA.class "col-span-2" ]
+            [ HA.class "col-span-2 flex flex-col justify-center" ]
             [ Html.p
-                [ HA.class "font-bread text-base mb-2" ]
-                [ Html.text "ArtMorph collaborates with a diverse group of artists, each with a unique story to tell. From painters and sculptors to digital illustrators and multimedia creators, our gallery highlights talents who dare to push the boundaries of their craft." ]
-            , Html.p
-                [ HA.class "font-bread text-base mb-2" ]
-                [ Html.text "Explore their journeys, techniques, and inspirations as you dive into the world of creativity through their art. → Take a look at all our Creators" ]
+                [ HA.class "font-bread text-base mb-4 leading-7" ]
+                [ Html.text "Artmorph is shaped by the vision of talented artists who explore transformation, history, nature, and the unknown through their work. Each artist brings their own unique approach, style, and storytelling to the exhibitions. Discover the creatives behind the collections and explore their artistic worlds." ]
+            , Html.a
+                [ HA.class "font-bread text-base mb-2 text-primary underline underline-offset-2"
+                , HA.href "/artists"
+                ]
+                [ Html.text " Discover the creatives behind the collections and explore their artistic worlds." ]
             ]
         ]
 
 
-viewArtistCard : Int -> Artist -> Html msg
+viewArtistCard : Int -> Artist -> Html Msg
 viewArtistCard x artist =
     if x < 2 then
         Html.article
@@ -151,28 +157,25 @@ viewArtistCard x artist =
         Html.text ""
 
 
-viewExhibitions : Html msg
+viewExhibitions : Html Msg
 viewExhibitions =
     Html.section
-        [ HA.class "pt-32 bg-bgDark relative z-0" ]
+        [ HA.class "pt-16 bg-bgDark relative z-0" ]
         [ Html.div
-            [ HA.class "max-w-maxWidth m-auto grid grid-cols-2" ]
+            [ HA.class "max-w-maxWidth m-auto grid grid-col-12" ]
             [ Html.h2
-                [ HA.class "font-title text-3xl mb-4 text-primary col-span-full" ]
+                [ HA.class "font-title text-3xl mb-4 text-primary col-span-12" ]
                 [ Html.text "Exploring Creativity Through Exhibitions" ]
-            , Html.figure
-                []
-                [ Html.img
+            , Html.img
                     [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-exhibition.png"
-                    , HA.class "h-full"
+                    , HA.class "h-full col-span-5"
                     ]
                     []
-                ]
             , Html.section
-                [ HA.class "p-4 text-textLight" ]
+                [ HA.class "p-4 text-textLight col-span-7" ]
                 [ Html.p
-                    [ HA.class "font-bread text-base mb-4" ]
-                    [ Html.text "Our exhibitions are designed to take you on a journey through transformation—both artistic and emotional. We curate collections that explore themes of evolution, identity, and innovation, blending traditional art forms with contemporary techniques." ]
+                    [ HA.class "font-bread text-base mb-4 leading-7" ]
+                    [ Html.text "Step into a world where art transforms, history whispers, nature comes alive, and the unseen takes shape. Each Artmorph exhibition is a curated collection that explores unique themes and artistic expressions. Immerse yourself in creativity and discover stories told through brushstrokes, textures, and imagination." ]
                 , Html.ul
                     [ HA.class "list-disc mb-4 ml-8 leading-relaxed" ]
                     [ Html.h3
@@ -180,66 +183,86 @@ viewExhibitions =
                         [ Html.text "Current Highlights:" ]
                     , Html.li
                         [ HA.class "ml-8" ]
-                        [ Html.text "'Pixels & Paint' – A showcase of works that fuse digital design with classical artistry." ]
+                        [ Html.text "“Metamorphosis: The Art of Transformation”" ]
                     , Html.li
                         [ HA.class "ml-8" ]
-                        [ Html.text "'Metamorphosis' – An exploration of change and growth through mixed-media installations." ]
+                        [ Html.text "“Whispers Through Time: Art Echoing History”" ]
                     , Html.li
                         [ HA.class "ml-8" ]
-                        [ Html.text "'Echoes of Tradition' – Celebrating timeless techniques reimagined for the modern age." ]
+                        [ Html.text "“Nature Reimagined: The Soul of the Wild”" ]
                     ]
                 , Html.p
                     [ HA.class "font-bread text-base mb-2" ]
-                    [ Html.text "Whether you’re here to admire, learn, or collect, our exhibitions promise an unforgettable experience." ]
+                    [ Html.text "Immerse yourself in captivating themes and explore the artistic worlds within each exhibition." ]
                 ]
             ]
         ]
 
 
-viewSpotlight : Html msg
+viewSpotlight : Html Msg
 viewSpotlight =
     Html.section
-        [ HA.class "py-32 bg-bgDark relative z-0" ]
+        [ HA.class "pt-8 pb-16 bg-bgDark relative z-0" ]
         [ Html.article
             [ HA.class "max-w-maxWidth m-auto" ]
             [ Html.h2
                 [ HA.class "font-title text-3xl mb-4 text-primary col-span-full" ]
                 [ Html.text "ArtMorph in the Spotlight" ]
             , Html.ul
-                [ HA.class "grid grid-cols-3" ]
-                [ viewSpotlightQuote """ "ArtMorph is a breath of fresh air in the art world. It’s a place where tradition meets innovation, and the results are stunning." """ "Art Insider Magazine"
-                , viewSpotlightQuote """ "This gallery doesn’t just showcase art—it tells a story of transformation and connection." """ "Creative Review"
-                , viewSpotlightQuote """ "Visiting ArtMorph felt like stepping into the future of art. Inspiring and thought-provoking." """ "Gallery Visitor"
+                [ HA.class "grid grid-cols-4 grid-rows-5 gap-4" ]
+                [ Html.li
+                    [ HA.class "text-primary font-title grid row-start-1 col-start-1 row-span-2" ]
+                    [ Html.p
+                        [ HA.class "mb-4" ]
+                        [ Html.text """A breathtaking fusion of creativity and storytelling. Each exhibition feels like stepping into another world.""" ]
+                    , Html.p
+                        [ HA.class "text-right content-end" ]
+                        [ Html.text ("– " ++ "Sofia L., Art Enthusiast") ]
+                    ]
+                , Html.li
+                    [ HA.class "text-primary font-title grid row-start-2 col-start-2 row-span-2" ]
+                    [ Html.p
+                        [ HA.class "mb-4" ]
+                        [ Html.text """“Artmorph is a beautifully curated space that brings digital art to life. A must-visit for anyone who loves contemporary art!”""" ]
+                    , Html.p
+                        [ HA.class "text-right content-end" ]
+                        [ Html.text ("– " ++ "Gallery Review Weekly") ]
+                    ]
+                , Html.li
+                    [ HA.class "text-primary font-title grid row-start-3 col-start-3 row-span-2" ]
+                    [ Html.p
+                        [ HA.class "mb-4" ]
+                        [ Html.text """ "A mesmerizing experience that showcases the power of visual storytelling. The themes are thought-provoking and immersive." """ ]
+                    , Html.p
+                        [ HA.class "text-right content-end" ]
+                        [ Html.text ("– " ++ "Mark R., Digital Artist") ]
+                    ]
+                , Html.li
+                    [ HA.class "text-primary font-title grid row-start-4 col-start-4 row-span-2" ]
+                    [ Html.p
+                        [ HA.class "mb-4" ]
+                        [ Html.text """ "A masterful blend of tradition and innovation. Every collection offers something unique and deeply moving." """ ]
+                    , Html.p
+                        [ HA.class "text-right content-end" ]
+                        [ Html.text ("– " ++ "Lena K., Art Collector") ]
+                    ]
                 ]
             ]
         ]
 
 
-viewSpotlightQuote : String -> String -> Html msg
-viewSpotlightQuote quote author =
-    Html.li
-        [ HA.class "text-primary font-title p-4 grid" ]
-        [ Html.p
-            [ HA.class "mb-4" ]
-            [ Html.text quote ]
-        , Html.p
-            [ HA.class "text-right content-end" ]
-            [ Html.text ("– " ++ author) ]
-        ]
-
-
-viewContact : Html msg
+viewContact : Html Msg
 viewContact =
     Html.article
-        [ HA.class "max-w-maxWidth m-auto py-8 grid grid-cols-2 gap-x-8" ]
+        [ HA.class "max-w-maxWidth m-auto py-16 grid grid-cols-2 gap-x-8" ]
         [ Html.section
             [ HA.class "px-11 grid gap-4" ]
             [ Html.h2
                 [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
                 [ Html.text "Let’s Get in Touch" ]
             , Html.p
-                [ HA.class "font-bread text-base text-textDark mb-8" ]
-                [ Html.text "We’d love to hear from you! Whether you’re an artist looking to collaborate, a collector with inquiries, or someone who simply loves art, don’t hesitate to reach out."
+                [ HA.class "font-bread text-base text-textDark mb-4 leading-7" ]
+                [ Html.text "Have questions, collaboration ideas, or just want to learn more about Artmorph? We'd love to hear from you! Reach out via email, phone, or visit us at our studio. Fill out the form, and we'll get back to you as soon as possible."
                 ]
             , Html.ul
                 [ HA.class "mb-8" ]
@@ -247,7 +270,7 @@ viewContact =
                     [ HA.class "font-title text-2xl text-center mb-4" ]
                     [ Html.text "Contact Details:" ]
                 , Html.li
-                    [ HA.class "flex gap-4 items-center" ]
+                    [ HA.class "flex gap-4 items-center uppercase" ]
                     [ Html.img
                         [ HA.src "https://cdn-icons-png.flaticon.com/256/646/646094.png"
                         , HA.class "w-8"
@@ -265,7 +288,7 @@ viewContact =
                         ]
                         []
                     , Html.p
-                        [ HA.class "flex flex-col" ]
+                        [ HA.class "flex flex-col uppercase" ]
                         [ Html.span
                             []
                             [ Html.text "45 Artisan Avenue" ]
@@ -290,8 +313,8 @@ viewContact =
                     ]
                 ]
             , Html.p
-                [ HA.class "font-bread text-base text-textDark mb-8" ]
-                [ Html.text "We’re here to answer your questions and keep the conversation about art alive!" ]
+                [ HA.class "font-bread text-base text-textDark leading-7" ]
+                [ Html.text "Art is all about connection. Whether you have a question, a collaboration idea, or just want to say hello—drop us a message. We look forward to hearing from you!" ]
             ]
         , Html.form
             [ HA.class "p-8 bg-primary rounded-2xl flex flex-col gap-4" ]

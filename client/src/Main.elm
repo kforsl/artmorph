@@ -384,7 +384,7 @@ viewLoading =
                     []
                 ]
     in
-    Html.main_ [ HA.class "min-h-full grid place-content-center bg-bgDark" ]
+    Html.main_ [ HA.class "min-h-full grid place-content-center bg-bgDark bg-text" ]
         [ svgLoader
         ]
 
