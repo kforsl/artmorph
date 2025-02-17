@@ -145,6 +145,9 @@ update msg model =
                         == 0
                         && List.length model.modelHomePage.exhibitionData
                         == 0
+                
+                isHeaderShowing =
+                    if not isPageLoading then model.url.path /= "/auth" else False
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
@@ -152,6 +155,7 @@ update msg model =
                 , modelArtistPage = updatedArtistPageModel
                 , modelAboutPage = updatedAboutPageModel
                 , isPageLoading = isPageLoading
+                , isHeaderShowing = isHeaderShowing
               }
             , Cmd.map MsgFetchArtistData cmdArtistApi
             )
@@ -183,12 +187,16 @@ update msg model =
                         == 0
                         && List.length model.modelHomePage.exhibitionData
                         == 0
+
+                isHeaderShowing =
+                    if not isPageLoading then model.url.path /= "/auth" else False
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
                 , modelArtistPage = updatedArtistPageModel
                 , modelArtworkPage = updatedArtworkPageModel
                 , isPageLoading = isPageLoading
+                , isHeaderShowing = isHeaderShowing
               }
             , Cmd.map MsgFetchArtworkData cmdArtworkApi
             )
@@ -215,12 +223,16 @@ update msg model =
                         == 0
                         && List.length newExhibitionsData
                         == 0
+
+                isHeaderShowing =
+                    if not isPageLoading then model.url.path /= "/auth" else False
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
                 , modelExhibitionsPage = updatedExhibitionsPageModel
                 , modelExhibitionPage = updatedExhibitionsPageModel
                 , isPageLoading = isPageLoading
+                , isHeaderShowing = isHeaderShowing
               }
             , Cmd.map MsgFetchExhibitionData cmdExhibitionsApi
             )
