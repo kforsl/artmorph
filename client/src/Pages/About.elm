@@ -172,7 +172,7 @@ viewExhibitions =
                     ]
                     []
             , Html.section
-                [ HA.class "p-4 text-textLight col-span-7" ]
+                [ HA.class "p-12 text-textLight col-span-7" ]
                 [ Html.p
                     [ HA.class "font-bread text-base mb-4 leading-7" ]
                     [ Html.text "Step into a world where art transforms, history whispers, nature comes alive, and the unseen takes shape. Each Artmorph exhibition is a curated collection that explores unique themes and artistic expressions. Immerse yourself in creativity and discover stories told through brushstrokes, textures, and imagination." ]
@@ -216,7 +216,7 @@ viewSpotlight =
                         [ HA.class "mb-4" ]
                         [ Html.text """A breathtaking fusion of creativity and storytelling. Each exhibition feels like stepping into another world.""" ]
                     , Html.p
-                        [ HA.class "text-right content-end" ]
+                        [ HA.class "content-end" ]
                         [ Html.text ("– " ++ "Sofia L., Art Enthusiast") ]
                     ]
                 , Html.li
@@ -225,7 +225,7 @@ viewSpotlight =
                         [ HA.class "mb-4" ]
                         [ Html.text """“Artmorph is a beautifully curated space that brings digital art to life. A must-visit for anyone who loves contemporary art!”""" ]
                     , Html.p
-                        [ HA.class "text-right content-end" ]
+                        [ HA.class "content-end" ]
                         [ Html.text ("– " ++ "Gallery Review Weekly") ]
                     ]
                 , Html.li
@@ -234,7 +234,7 @@ viewSpotlight =
                         [ HA.class "mb-4" ]
                         [ Html.text """ "A mesmerizing experience that showcases the power of visual storytelling. The themes are thought-provoking and immersive." """ ]
                     , Html.p
-                        [ HA.class "text-right content-end" ]
+                        [ HA.class "content-end" ]
                         [ Html.text ("– " ++ "Mark R., Digital Artist") ]
                     ]
                 , Html.li
@@ -243,7 +243,7 @@ viewSpotlight =
                         [ HA.class "mb-4" ]
                         [ Html.text """ "A masterful blend of tradition and innovation. Every collection offers something unique and deeply moving." """ ]
                     , Html.p
-                        [ HA.class "text-right content-end" ]
+                        [ HA.class "content-end" ]
                         [ Html.text ("– " ++ "Lena K., Art Collector") ]
                     ]
                 ]
