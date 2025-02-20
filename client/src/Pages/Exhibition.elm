@@ -42,12 +42,12 @@ view model id =
                 ]
 
         Nothing ->
-            Html.text "Loading... "
+            Html.text "Error Not Found"
 
 
 viewHero : Exhibition -> Html Msg
 viewHero exhibition =
-    Html.section [ HA.class "bg-bgDark relative z-0" ]
+    Html.section [ HA.class "bg-bgDark relative z-0 bg-text" ]
         [ Html.div
             [ HA.class "max-w-maxWidth m-auto flex gap-8 py-24" ]
             [ Html.img [ HA.src exhibition.thumbnailUrl ] []
@@ -55,39 +55,38 @@ viewHero exhibition =
                 [ Html.h2
                     [ HA.class "text-5xl font-title text-primary mb-4" ]
                     [ Html.text exhibition.title ]
-                , Html.h3
-                    [ HA.class "text-2xl font-title text-primary mb-4" ]
-                    [ Html.text ("Created by: " ++ "Artist Name") ]
                 , Html.p
                     [ HA.class "font-bread text-base text-textLight mb-8" ]
                     [ Html.text exhibition.description ]
-                , Html.section [ HA.class "flex justify-between" ]
-                    [ Html.h4
-                        [ HA.class "text-3xl font-title text-primary mb-4" ]
-                        [ Html.text "Styles" ]
-                    , Html.ul
-                        []
-                        (List.map viewListItem exhibition.styles)
-                    , Html.h4
-                        [ HA.class "text-3xl font-title text-primary mb-4" ]
-                        [ Html.text "Mediums" ]
-                    , Html.ul
-                        []
-                        (List.map viewListItem exhibition.mediums)
+                , Html.section [ HA.class "flex justify-evenly" ]
+                    [ viewList "Styles" exhibition.styles
+                    , viewList "Mediums" exhibition.mediums
                     ]
                 ]
             ]
         ]
 
 
-viewListItem : String -> Html Msg
-viewListItem x =
-    Html.li [ HA.class "text-textLight" ] [ Html.text x ]
+viewList : String -> List String -> Html Msg
+viewList label list =
+    Html.ul
+        [ HA.class "flex flex-col gap-2" ]
+        (Html.h4
+            [ HA.class "text-3xl mb-4 font-title font-semibold text-primary" ]
+            [ Html.text label ]
+            :: List.map viewListChip list
+        )
+
+viewListChip : String -> Html Msg
+viewListChip label =
+    Html.li
+        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit text-xs font-bread" ]
+        [ Html.text label ]
 
 
 viewArtworks : List Api.Exhibitions.ExhibitionArtwork -> Html Msg
 viewArtworks artworks =
-    Html.section [ HA.class " max-w-maxWidth m-auto py-24 flex flex-wrap gap-4" ] (List.map viewArtworkCard artworks)
+    Html.section [ HA.class " max-w-maxWidth m-auto py-24 grid grid-cols-2 gap-4" ] (List.map viewArtworkCard artworks)
 
 
 viewArtworkCard : Api.Exhibitions.ExhibitionArtwork -> Html msg
