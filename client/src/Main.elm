@@ -128,6 +128,7 @@ update msg model =
 
                 updatedArtistsPageModel =
                     { artistData = newArtistData
+                    , artworkData = model.modelArtistsPage.artworkData
                     }
 
                 updatedArtistPageModel =
@@ -175,6 +176,11 @@ update msg model =
                     { artistData = model.modelArtistPage.artistData
                     , artworkData = newArtworkData
                     }
+                updatedArtistsPageModel =
+                    { artistData = model.modelArtistsPage.artistData
+                    , artworkData = newArtworkData
+                    }
+
 
                 updatedArtworkPageModel =
                     { artworkData = newArtworkData
@@ -195,6 +201,7 @@ update msg model =
                 | modelHomePage = updatedHomePageModel
                 , modelArtistPage = updatedArtistPageModel
                 , modelArtworkPage = updatedArtworkPageModel
+                , modelArtistsPage = updatedArtistsPageModel
                 , isPageLoading = isPageLoading
                 , isHeaderShowing = isHeaderShowing
               }
