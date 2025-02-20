@@ -49,7 +49,7 @@ view model id =
                 ]
 
         Nothing ->
-            Html.text "Loading. . . "
+            Html.text "Error Not Found"
 
 viewArtwork : Artwork -> Html Msg
 viewArtwork artwork =

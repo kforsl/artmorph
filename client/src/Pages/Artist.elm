@@ -48,7 +48,7 @@ view model id =
                 ]
 
         Nothing ->
-            Html.text "Loading... "
+            Html.text "Error Not Found"
 
 
 viewArtistInformation : Artist -> Html msg
