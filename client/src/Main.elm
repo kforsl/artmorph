@@ -368,7 +368,7 @@ viewPage model =
                     Html.map MsgHomePage (Pages.Home.view model.modelHomePage)
 
                 Nothing ->
-                    Html.text "Not Found 404"
+                   viewPageNotFound 
 
 
 viewLoading : Html Msg
@@ -399,6 +399,10 @@ viewLoading =
 viewError : Model -> Html Msg
 viewError model =
     Html.div [] [ Html.text "Error" ]
+
+viewPageNotFound : Html Msg 
+viewPageNotFound = 
+    Html.div [] [ Html.text "Page not found"]
 
 
 main : Program () Model Msg
