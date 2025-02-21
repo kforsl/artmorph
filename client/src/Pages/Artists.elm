@@ -69,7 +69,7 @@ viewArtistCard artist artworks =
             ]
         , viewArtistPreviewImages artist.id artworks 
         , Html.a
-            [ HA.href ("/artist/" ++ artist.id)
+            [ HA.href ("/artists/" ++ artist.id)
             , HA.class "absolute p-4 top-0 left-0 h-full w-full"
             ]
             []
