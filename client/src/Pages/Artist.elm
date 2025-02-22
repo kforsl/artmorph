@@ -51,7 +51,7 @@ view model id =
             Html.text "Error Not Found"
 
 
-viewArtistInformation : Artist -> Html msg
+viewArtistInformation : Artist -> Html Msg
 viewArtistInformation artist =
     Html.section [ HA.class "bg-bgDark relative z-0" ]
         [ Html.div
@@ -61,71 +61,108 @@ viewArtistInformation artist =
                 [ Html.h2
                     [ HA.class "text-5xl font-title text-primary mb-4" ]
                     [ Html.text artist.name ]
-                , Html.h3
-                    [ HA.class "text-2xl font-title text-primary mb-4" ]
-                    [ Html.text ("Created by: " ++ "Artist Name") ]
                 , Html.p
                     [ HA.class "font-bread text-base text-textLight mb-8" ]
                     [ Html.text artist.aboutMe ]
-                , Html.section [ HA.class "flex justify-between" ]
-                    [ Html.h4
-                        [ HA.class "text-3xl font-title text-primary mb-4" ]
-                        [ Html.text "Styles" ]
-                    , Html.ul
-                        []
-                        (List.map viewListItem artist.styles)
-                    , Html.h4
-                        [ HA.class "text-3xl font-title text-primary mb-4" ]
-                        [ Html.text "Mediums" ]
-                    , Html.ul
-                        []
-                        (List.map viewListItem artist.mediums)
+                , Html.section
+                    [ HA.class "flex justify-between" ]
+                    [ viewList "Styles" artist.styles
+                    , viewList "Mediums" artist.mediums
                     ]
                 ]
             ]
         ]
 
 
-viewListItem : String -> Html msg
-viewListItem x =
-    Html.li [ HA.class "text-textLight" ] [ Html.text x ]
+viewList : String -> List String -> Html Msg
+viewList label list =
+    Html.ul
+        [ HA.class "flex flex-col gap-2" ]
+        (Html.h4
+            [ HA.class "text-2xl mb-4 font-title font-semibold text-primary" ]
+            [ Html.text label ]
+            :: List.map viewListChip list
+        )
 
 
-viewArtworks : List Artwork -> Html msg
+viewListChip : String -> Html Msg
+viewListChip label =
+    Html.li
+        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit text-xs font-bread" ]
+        [ Html.text label ]
+
+
+viewArtworks : List Artwork -> Html Msg
 viewArtworks artworks =
-    Html.section [ HA.class "flex" ]
-        (List.map viewArtworkCard artworks)
+    Html.section
+        [ HA.class " max-w-maxWidth m-auto py-24 grid grid-cols-2 gap-8" ]
+        (List.indexedMap viewArtworkCard artworks)
 
 
-viewArtworkCard : Artwork -> Html msg
-viewArtworkCard artwork =
-    Html.article []
-        [ Html.img [ HA.src artwork.imageUrl ] []
+viewArtworkCard : Int -> Artwork -> Html Msg
+viewArtworkCard x artwork =
+    Html.article
+        [ HA.class ("grid grid-cols-2 gap-4 relative row-span-2 row-start-" ++ String.fromInt (x + 1))
+        ]
+        [ Html.section
+            [ HA.href ("/artwork/" ++ artwork.id)
+            , HA.class "grid justify-between"
+            , HA.classList
+                [ ( "order-1", modBy 2 x == 1 )
+                ]
+            ]
+            [ Html.h2
+                [ HA.class "text-xl font-title font-semibold" ]
+                [ Html.text artwork.title ]
+            , Html.p
+                [ HA.class "font-bread text-sm h-56 overflow-clip" ]
+                [ Html.text artwork.description ]
+            , Html.h3
+                [ HA.class "text-lg font-title underline text-center"
+                ]
+                [ Html.text "view Artwork" ]
+            ]
+        , Html.img
+            [ HA.src artwork.imageUrl
+            ]
+            []
         , Html.a
             [ HA.href ("/artwork/" ++ artwork.id)
-            , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+            , HA.class "absolute top-0 left-0 h-full w-full p-2"
             ]
-            [ Html.text artwork.title ]
+            []
         ]
 
 
 viewOtherArtists : List Artist -> Html Msg
 viewOtherArtists artists =
-    Html.section [ HA.class " max-w-maxWidth m-auto py-24 flex flex-wrap gap-4" ] (List.map viewArtistCard artists)
+    Html.section
+        [ HA.class "max-w-maxWidth w-full m-auto py-16 border-b-2 border-black" ]
+        [ Html.h2
+            [ HA.class "font-title text-4xl mb-8 text-textDark col-span-full" ]
+            [ Html.text "The Minds Behind the Masterpieces" ]
+        , Html.ul
+            [ HA.class "flex overflow-hidden justify-between" ]
+            (List.map viewArtistCard artists)
+        ]
 
 
-viewArtistCard : Artist -> Html msg
+viewArtistCard : Artist -> Html Msg
 viewArtistCard artist =
-    Html.li
-        [ HA.class "grid gap-0.5" ]
-        [ Html.img
+    Html.article
+        [ HA.class "max-w-44 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
+        [ Html.h3
+            [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2"
+            ]
+            [ Html.text artist.name ]
+        , Html.img
             [ HA.src artist.profileImgUrl
-            , HA.class "max-w-96 aspect-square object-cover"
+            , HA.class "rounded"
             ]
             []
         , Html.a
             [ HA.href ("/artists/" ++ artist.id)
-            , HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer"
+            , HA.class "h-full w-full absolute top-0 left-0"
             ]
-            [ Html.text artist.name ]
+            []
         ]
