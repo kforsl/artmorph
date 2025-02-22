@@ -1,9 +1,10 @@
 module Main exposing (..)
 
-import Api.Artist exposing (Artist)
-import Api.Artwork exposing (Artwork)
-import Api.Exhibitions exposing (Exhibition)
+import Api.Artist
+import Api.Artwork
+import Api.Exhibitions
 import Browser
+import Browser.Dom exposing (setViewport)
 import Browser.Navigation as Navigation
 import Components.Footer
 import Components.Header
@@ -21,6 +22,7 @@ import Pages.Home
 import Route
 import Svg exposing (Svg)
 import Svg.Attributes as SA
+import Task
 import Url exposing (Url)
 
 
@@ -71,7 +73,8 @@ initModel url navigationKey =
 
 
 type Msg
-    = MsgUrlChange Url
+    = None
+    | MsgUrlChange Url
     | MsgUrlRequested Browser.UrlRequest
     | MsgFetchArtistData Api.Artist.Msg
     | MsgFetchArtworkData Api.Artwork.Msg
@@ -89,16 +92,28 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        None -> 
+            ( model
+            , Cmd.none
+            )
+
         MsgUrlChange url ->
             let
+                scrollCmd =
+                    setViewport 0 0
+                        |> Task.perform (always None)
+
                 newIsHeaderShowing =
                     url.path /= "/auth"
             in
             ( { model
                 | url = url
                 , isHeaderShowing = newIsHeaderShowing
+                , isPageLoading = False
               }
-            , Cmd.none
+            , Cmd.batch
+                [ scrollCmd
+                ]
             )
 
         MsgUrlRequested urlRequest ->
@@ -139,6 +154,11 @@ update msg model =
                 updatedAboutPageModel =
                     { artistData = newArtistData }
 
+                updatedExhibitionModel =
+                    { artistData = newArtistData
+                    , exhibitionData = model.modelExhibitionPage.exhibitionData
+                    }
+
                 isPageLoading =
                     List.length newArtistData
                         == 0
@@ -146,15 +166,20 @@ update msg model =
                         == 0
                         && List.length model.modelHomePage.exhibitionData
                         == 0
-                
+
                 isHeaderShowing =
-                    if not isPageLoading then model.url.path /= "/auth" else False
+                    if not isPageLoading then
+                        model.url.path /= "/auth"
+
+                    else
+                        False
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
                 , modelArtistsPage = updatedArtistsPageModel
                 , modelArtistPage = updatedArtistPageModel
                 , modelAboutPage = updatedAboutPageModel
+                , modelExhibitionPage = updatedExhibitionModel
                 , isPageLoading = isPageLoading
                 , isHeaderShowing = isHeaderShowing
               }
@@ -176,11 +201,11 @@ update msg model =
                     { artistData = model.modelArtistPage.artistData
                     , artworkData = newArtworkData
                     }
+
                 updatedArtistsPageModel =
                     { artistData = model.modelArtistsPage.artistData
                     , artworkData = newArtworkData
                     }
-
 
                 updatedArtworkPageModel =
                     { artworkData = newArtworkData
@@ -195,7 +220,11 @@ update msg model =
                         == 0
 
                 isHeaderShowing =
-                    if not isPageLoading then model.url.path /= "/auth" else False
+                    if not isPageLoading then
+                        model.url.path /= "/auth"
+
+                    else
+                        False
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
@@ -223,6 +252,11 @@ update msg model =
                     { exhibitionData = newExhibitionsData
                     }
 
+                updatedExhibitionPageModel =
+                    { exhibitionData = newExhibitionsData
+                    , artistData = model.modelHomePage.artistData
+                    }
+
                 isPageLoading =
                     List.length model.modelHomePage.artistData
                         == 0
@@ -232,12 +266,16 @@ update msg model =
                         == 0
 
                 isHeaderShowing =
-                    if not isPageLoading then model.url.path /= "/auth" else False
+                    if not isPageLoading then
+                        model.url.path /= "/auth"
+
+                    else
+                        False
             in
             ( { model
                 | modelHomePage = updatedHomePageModel
                 , modelExhibitionsPage = updatedExhibitionsPageModel
-                , modelExhibitionPage = updatedExhibitionsPageModel
+                , modelExhibitionPage = updatedExhibitionPageModel
                 , isPageLoading = isPageLoading
                 , isHeaderShowing = isHeaderShowing
               }
@@ -325,15 +363,6 @@ view model =
 
 viewContent : Model -> Html Msg
 viewContent model =
-    Html.main_ [ HA.class "bg-bgLight" ]
-        [ Html.Extra.viewIf model.isHeaderShowing Components.Header.view
-        , viewPage model
-        , Components.Footer.view
-        ]
-
-
-viewPage : Model -> Html Msg
-viewPage model =
     case ( model.isPageLoading, model.isPageError ) of
         ( True, False ) ->
             viewLoading
@@ -342,33 +371,42 @@ viewPage model =
             viewError model
 
         _ ->
-            case Route.fromUrl model.url of
-                Just Route.RouteAboutPage ->
-                    Html.map MsgAboutPage (Pages.About.view model.modelAboutPage)
+            Html.main_ [ HA.class "bg-bgLight" ]
+                [ Html.Extra.viewIf model.isHeaderShowing Components.Header.view
+                , viewPage model
+                , Html.Extra.viewIf (not model.isPageLoading) Components.Footer.view
+                ]
 
-                Just (Route.RouteArtistPage id) ->
-                    Html.map MsgArtistPage (Pages.Artist.view model.modelArtistPage id)
 
-                Just Route.RouteArtistsPage ->
-                    Html.map MsgArtistsPage (Pages.Artists.view model.modelArtistsPage)
+viewPage : Model -> Html Msg
+viewPage model =
+    case Route.fromUrl model.url of
+        Just Route.RouteAboutPage ->
+            Html.map MsgAboutPage (Pages.About.view model.modelAboutPage)
 
-                Just (Route.RouteArtworkPage id) ->
-                    Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage id)
+        Just (Route.RouteArtistPage id) ->
+            Html.map MsgArtistPage (Pages.Artist.view model.modelArtistPage id)
 
-                Just Route.RouteAuthPage ->
-                    Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage)
+        Just Route.RouteArtistsPage ->
+            Html.map MsgArtistsPage (Pages.Artists.view model.modelArtistsPage)
 
-                Just (Route.RouteExhibitionPage id) ->
-                    Html.map MsgExhibitionPage (Pages.Exhibition.view model.modelExhibitionPage id)
+        Just (Route.RouteArtworkPage id) ->
+            Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage id)
 
-                Just Route.RouteExhibitionsPage ->
-                    Html.map MsgExhibitionsPage (Pages.Exhibitions.view model.modelExhibitionsPage)
+        Just Route.RouteAuthPage ->
+            Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage)
 
-                Just Route.RouteHomePage ->
-                    Html.map MsgHomePage (Pages.Home.view model.modelHomePage)
+        Just (Route.RouteExhibitionPage id) ->
+            Html.map MsgExhibitionPage (Pages.Exhibition.view model.modelExhibitionPage id)
 
-                Nothing ->
-                   viewPageNotFound 
+        Just Route.RouteExhibitionsPage ->
+            Html.map MsgExhibitionsPage (Pages.Exhibitions.view model.modelExhibitionsPage)
+
+        Just Route.RouteHomePage ->
+            Html.map MsgHomePage (Pages.Home.view model.modelHomePage)
+
+        Nothing ->
+            viewPageNotFound
 
 
 viewLoading : Html Msg
@@ -400,9 +438,10 @@ viewError : Model -> Html Msg
 viewError model =
     Html.div [] [ Html.text "Error" ]
 
-viewPageNotFound : Html Msg 
-viewPageNotFound = 
-    Html.div [] [ Html.text "Page not found"]
+
+viewPageNotFound : Html Msg
+viewPageNotFound =
+    Html.div [] [ Html.text "Page not found" ]
 
 
 main : Program () Model Msg
