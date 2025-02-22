@@ -65,7 +65,7 @@ update msg model =
             ( { model | formState = Success }, sendToSelfWithDelay 4000 MsgSubmitResting )
 
 
-sendToSelfWithDelay : Float -> msg -> Cmd msg
+sendToSelfWithDelay : Float -> Msg -> Cmd Msg
 sendToSelfWithDelay delay msg =
     Process.sleep delay
         |> Task.map (\_ -> msg)
@@ -204,7 +204,7 @@ view model =
                 ]
 
 
-bgTextSecondary : Html msg
+bgTextSecondary : Html Msg
 bgTextSecondary =
     Html.figure
         [ HA.class "absolute bottom-0 w-full -z-[1]" ]
