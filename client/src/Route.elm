@@ -27,10 +27,10 @@ type alias ExhibitionId =
     String
 
 
-routerParser : Url.Parser.Parser (Route -> c ) c
+routerParser : Url.Parser.Parser (Route -> c) c
 routerParser =
     Url.Parser.oneOf
-        [ Url.Parser.map RouteAboutPage ( Url.Parser.s "about" )
+        [ Url.Parser.map RouteAboutPage (Url.Parser.s "about")
         , Url.Parser.map RouteArtistPage (Url.Parser.s "artists" </> Url.Parser.string)
         , Url.Parser.map RouteArtistsPage (Url.Parser.s "artists")
         , Url.Parser.map RouteArtworkPage (Url.Parser.s "artwork" </> Url.Parser.string)
@@ -52,7 +52,7 @@ asPath route =
         RouteAboutPage ->
             "/about"
 
-        RouteArtistPage id->
+        RouteArtistPage id ->
             "/artists/" ++ id
 
         RouteArtistsPage ->

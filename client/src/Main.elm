@@ -92,7 +92,7 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        None -> 
+        None ->
             ( model
             , Cmd.none
             )
@@ -391,10 +391,10 @@ viewPage model =
             Html.map MsgArtistsPage (Pages.Artists.view model.modelArtistsPage)
 
         Just (Route.RouteArtworkPage id) ->
-            Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage id)
+            Html.map MsgArtworkPage (Pages.Artwork.view model.modelArtworkPage id model.navigationKey)
 
         Just Route.RouteAuthPage ->
-            Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage)
+            Html.map MsgAuthPage (Pages.Auth.view model.modelAuthPage model.navigationKey)
 
         Just (Route.RouteExhibitionPage id) ->
             Html.map MsgExhibitionPage (Pages.Exhibition.view model.modelExhibitionPage id)

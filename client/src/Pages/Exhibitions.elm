@@ -17,13 +17,13 @@ initModel =
 
 
 type Msg
-    = MsgDummy
+    = None
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MsgDummy ->
+        None ->
             ( model, Cmd.none )
 
 
@@ -38,7 +38,7 @@ view model =
 viewExhibition : Model -> Html Msg
 viewExhibition model =
     Html.section
-        [ HA.class "max-w-maxWidth m-auto flex flex-col gap-8 py-16" ]
+        [ HA.class "max-w-maxWidth m-auto flex flex-col gap-16 py-24" ]
         (List.map
             viewExhibitionCard
             model.exhibitionData
@@ -48,7 +48,7 @@ viewExhibition model =
 viewExhibitionCard : Exhibition -> Html Msg
 viewExhibitionCard exhibition =
     Html.article
-        [ HA.class "grid grid-cols-12 p-4 rounded bg-bgLight relative"
+        [ HA.class "grid grid-cols-12 p-4 rounded bg-bgLight relative group hover:opacity-80 focus-within:opacity-80"
         ]
         [ Html.img
             [ HA.src exhibition.thumbnailUrl
@@ -59,7 +59,7 @@ viewExhibitionCard exhibition =
             [ HA.class "p-4 col-span-4 grid grid-cols-2 gap-4"
             ]
             [ Html.h2
-                [ HA.class "text-3xl col-span-full" ]
+                [ HA.class "text-3xl col-span-full group-hover:text-primary group-focus-within:text-primary" ]
                 [ Html.text exhibition.title ]
             , viewExhibitionList "Styles" exhibition.styles
             , viewExhibitionList "Mediums" exhibition.mediums
@@ -94,12 +94,12 @@ viewExhibitionChip label =
 viewExhibitionPreviewImages : Exhibition -> Html Msg
 viewExhibitionPreviewImages exhibitions =
     let
-        previewArtworks = List.take 2 exhibitions.artworks
-        
-        generateImage artwork = 
+        previewArtworks =
+            List.take 2 exhibitions.artworks
+
+        generateImage artwork =
             Html.img [ HA.src artwork.imageUrl, HA.class "max-w-52 rounded" ] []
     in
     Html.figure
         [ HA.class "col-span-5 grid grid-cols-2 place-content-center" ]
-        (List.map generateImage previewArtworks 
-        )
+        (List.map generateImage previewArtworks)

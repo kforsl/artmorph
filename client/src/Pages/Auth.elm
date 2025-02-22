@@ -1,16 +1,19 @@
 module Pages.Auth exposing (..)
 
- 
+import Browser.Navigation as Navigation
 import Html exposing (Html)
 import Html.Attributes as HA
 import Html.Events as HE
 import Process
+import Svg exposing (Svg)
+import Svg.Attributes as SA
 import Task
 
 
 type alias Model =
     { formType : FormType
     , formState : FormState
+    , navigationKey : Maybe Navigation.Key
     }
 
 
@@ -30,11 +33,13 @@ initModel : Model
 initModel =
     { formType = Login
     , formState = Resting
+    , navigationKey = Nothing
     }
 
 
 type Msg
     = MsgChangeFormType
+    | NavigateBack Navigation.Key
     | MsgSubmitForm
     | MsgSubmitError
     | MsgSubmitResting
@@ -52,11 +57,14 @@ update msg model =
                 Register ->
                     ( { model | formType = Login }, Cmd.none )
 
+        NavigateBack key ->
+            ( model, Navigation.back key 1 )
+
         MsgSubmitForm ->
             ( { model | formState = Loading }, sendToSelfWithDelay 2000 MsgSubmitSuccess )
 
         MsgSubmitError ->
-            ( { model | formState = Error },  Cmd.none)
+            ( { model | formState = Error }, Cmd.none )
 
         MsgSubmitResting ->
             ( { model | formState = Resting }, Cmd.none )
@@ -72,12 +80,12 @@ sendToSelfWithDelay delay msg =
         |> Task.perform identity
 
 
-view : Model -> Html Msg
-view model =
+view : Model -> Navigation.Key -> Html Msg
+view model navigationKey =
     case model.formType of
         Login ->
             Html.main_
-                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center" ]
+                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text" ]
                 [ Html.section
                     [ HA.class "grid place-content-center relative" ]
                     [ Html.h1
@@ -87,7 +95,8 @@ view model =
                         [ HA.class "bg-primary flex flex-col p-28 pt-40 gap-4 max-w-3xl justify-center relative h-[596px]"
                         , HE.onSubmit MsgSubmitForm
                         ]
-                        [ Html.div
+                        [ viewBackBnt navigationKey
+                        , Html.div
                             [ HA.class "grid gap-2" ]
                             [ Html.label []
                                 [ Html.text "Email"
@@ -133,12 +142,11 @@ view model =
                                     [ Html.text "Sign In" ]
                         ]
                     ]
-                , bgTextSecondary
                 ]
 
         Register ->
             Html.main_
-                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center" ]
+                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text" ]
                 [ Html.section
                     [ HA.class "grid place-content-center relative" ]
                     [ Html.h1
@@ -148,7 +156,8 @@ view model =
                         [ HA.class "bg-primary flex flex-col p-28 pt-40 gap-4 max-w-3xl justify-center relative h-[596px]"
                         , HE.onSubmit MsgSubmitForm
                         ]
-                        [ Html.div
+                        [ viewBackBnt navigationKey
+                        , Html.div
                             [ HA.class "grid gap-2" ]
                             [ Html.label []
                                 [ Html.text "Email"
@@ -200,19 +209,27 @@ view model =
                                     [ Html.text "Register" ]
                         ]
                     ]
-                , bgTextSecondary
                 ]
 
 
-bgTextSecondary : Html Msg
-bgTextSecondary =
-    Html.figure
-        [ HA.class "absolute bottom-0 w-full -z-[1]" ]
-        [ Html.h5
-            [ HA.class "text-secondary text-center text-5xl font-title text-nowrap" ]
-            [ Html.text "The Art of Transformation — Beyond Boundaries. " ]
-        , Html.h6
-            [ HA.class "text-secondary text-center text-sizeBg leading-none font-logo pb-4 z-0" ]
-            [ Html.text "ArtMorph" ]
+viewBackBnt : Navigation.Key -> Html Msg
+viewBackBnt navigationKey =
+    Html.a
+        [ HA.class "absolute bottom-8 left-8 p-4 hover:text-textLight focus-within:text-textLight"
+        , NavigateBack navigationKey |> HE.onClick
         ]
-
+        [ Svg.svg
+            [ SA.fill "none"
+            , SA.viewBox "0 0 24 24"
+            , SA.strokeWidth "1.5"
+            , SA.stroke "currentColor"
+            , SA.class "size-10"
+            ]
+            [ Svg.path
+                [ SA.strokeLinecap "round"
+                , SA.strokeLinejoin "round"
+                , SA.d "M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                ]
+                []
+            ]
+        ]

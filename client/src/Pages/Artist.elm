@@ -20,13 +20,13 @@ initModel =
 
 
 type Msg
-    = MsgDummy
+    = None
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MsgDummy ->
+        None ->
             ( model, Cmd.none )
 
 
@@ -57,7 +57,7 @@ viewArtistInformation artist =
         [ Html.div
             [ HA.class "max-w-maxWidth m-auto flex gap-8 py-24" ]
             [ Html.img [ HA.src artist.profileImgUrl ] []
-            , Html.section [ HA.class "flex-grow" ]
+            , Html.section [ HA.class "flex-grow p-4" ]
                 [ Html.h2
                     [ HA.class "text-5xl font-title text-primary mb-4" ]
                     [ Html.text artist.name ]
@@ -102,7 +102,7 @@ viewArtworks artworks =
 viewArtworkCard : Int -> Artwork -> Html Msg
 viewArtworkCard x artwork =
     Html.article
-        [ HA.class ("grid grid-cols-2 gap-4 relative row-span-2 row-start-" ++ String.fromInt (x + 1))
+        [ HA.class ("grid grid-cols-2 gap-4 relative p-2 group hover:opacity-80 focus-within:opacity-80 row-span-2 row-start-" ++ String.fromInt (x + 1))
         ]
         [ Html.section
             [ HA.href ("/artwork/" ++ artwork.id)
@@ -118,7 +118,7 @@ viewArtworkCard x artwork =
                 [ HA.class "font-bread text-sm h-56 overflow-clip" ]
                 [ Html.text artwork.description ]
             , Html.h3
-                [ HA.class "text-lg font-title underline text-center"
+                [ HA.class "text-lg font-title underline text-center group-hover:text-primary group-focus-within:text-primary"
                 ]
                 [ Html.text "view Artwork" ]
             ]
@@ -137,7 +137,7 @@ viewArtworkCard x artwork =
 viewOtherArtists : List Artist -> Html Msg
 viewOtherArtists artists =
     Html.section
-        [ HA.class "max-w-maxWidth w-full m-auto py-16 border-b-2 border-black" ]
+        [ HA.class "max-w-maxWidth w-full m-auto py-16 border-b-2 border-bgDark" ]
         [ Html.h2
             [ HA.class "font-title text-4xl mb-8 text-textDark col-span-full" ]
             [ Html.text "The Minds Behind the Masterpieces" ]

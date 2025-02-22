@@ -25,13 +25,13 @@ initModel =
 
 
 type Msg
-    = MsgDummy
+    = None
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MsgDummy ->
+        None ->
             ( model, Cmd.none )
 
 
@@ -54,7 +54,7 @@ viewHero =
         [ Html.div
             [ HA.class "max-w-maxWidth h-full m-auto grid grid-cols-12 gap-8 pt-24" ]
             [ Html.figure
-                [ HA.class "relative grid items-end col-span-5 after:h-40 after:w-screen after:absolute after:bg-primary after:bottom-1/3 after:-right-2/3 after:opacity-50 after:rounded-sm" ]
+                [ HA.class "relative grid items-end col-span-5 after:h-32 after:w-screen after:absolute after:bg-primary after:bottom-64 after:-right-72 after:opacity-50 after:rounded-sm" ]
                 [ Html.img
                     [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-hero.png"
                     , HA.class " bg-contain overflow-hidden rounded"
@@ -82,7 +82,7 @@ viewHero =
 viewWelcome : Html Msg
 viewWelcome =
     Html.article
-        [ HA.class "max-w-maxWidth m-auto py-16 grid grid-cols-12 border-b-2 border-black" ]
+        [ HA.class "max-w-maxWidth m-auto pt-12 pb-24 grid grid-cols-12 border-b-2 border-bgDark" ]
         [ Html.figure
             [ HA.class "col-span-5" ]
             [ Html.img
@@ -101,7 +101,7 @@ viewWelcome =
                 [ Html.text "Art is a living, breathing force — constantly shifting, transforming, and telling new stories. At Artmorph, we curate immersive online exhibitions that celebrate this evolution. From the echoes of history to the boundless realms of imagination, each collection invites you to see the world through a new artistic lens. Explore, experience, and let creativity reshape your perspective." ]
             , Html.a
                 [ HA.href "/about"
-                , HA.class "font-bread underline underline-offset-2 text-primary cursor-pointer text-base"
+                , HA.class "font-bread underline underline-offset-2 text-primary cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Discover More About Us" ]
             ]
@@ -111,7 +111,7 @@ viewWelcome =
 viewExhibitions : List Exhibition -> Html Msg
 viewExhibitions exhibitions =
     Html.article
-        [ HA.class "max-w-maxWidth m-auto py-16" ]
+        [ HA.class "max-w-maxWidth m-auto py-24" ]
         [ Html.section
             [ HA.class "flex justify-between" ]
             [ Html.h2
@@ -119,7 +119,7 @@ viewExhibitions exhibitions =
                 [ Html.text "Featured Exhibitions" ]
             , Html.a
                 [ HA.href "/exhibitions"
-                , HA.class "place-self-center text-nowrap text-base h-fit py-2.5 px-4 bg-primary rounded-2xl font-bold"
+                , HA.class "place-self-center text-nowrap text-base h-fit py-2.5 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Checkout all our exhibitions" ]
             ]
@@ -135,7 +135,7 @@ viewExhibitions exhibitions =
 viewExhibitionCard : Int -> Exhibition -> Html Msg
 viewExhibitionCard x exhibition =
     Html.li
-        [ HA.class "grid gap-0.5 relative p-1"
+        [ HA.class "grid gap-0.5 relative p-1 hover:opacity-80 focus-within:opacity-80"
         ]
         [ Html.img
             [ HA.src exhibition.thumbnailUrl
@@ -163,9 +163,9 @@ viewPictureOfTheMonth artworks =
     case pictureOfTheMonth of
         Just artwork ->
             Html.section
-                [ HA.class "bg-bgDark py-16 relative z-0 bg-text" ]
+                [ HA.class "bg-bgDark py-24 relative z-0 bg-text" ]
                 [ Html.figure
-                    [ HA.class "max-w-maxWidth m-auto grid place-content-center relative p-1" ]
+                    [ HA.class "max-w-maxWidth m-auto grid place-content-center relative p-1 hover:opacity-80 focus-within:opacity-80" ]
                     [ Html.h2
                         [ HA.class "font-title text-4xl mb-8 text-primary text-center" ]
                         [ Html.text "Picture of the month" ]
@@ -184,7 +184,7 @@ viewPictureOfTheMonth artworks =
                         [ Html.text "Created by ", Html.span [] [ Html.text artwork.artist.name ] ]
                     , Html.a
                         [ HA.href ("/artwork/" ++ artwork.id)
-                        , HA.class "h-full w-full absolute"
+                        , HA.class "h-full w-full absolute "
                         ]
                         []
                     ]
@@ -197,7 +197,7 @@ viewPictureOfTheMonth artworks =
 viewArtist : List Artist -> Html Msg
 viewArtist artists =
     Html.section
-        [ HA.class "max-w-maxWidth m-auto py-16 border-b-2 border-black" ]
+        [ HA.class "max-w-maxWidth m-auto py-24 border-b-2 border-bgDark" ]
         [ Html.h2
             [ HA.class "font-title text-4xl mb-8 text-textDark col-span-full" ]
             [ Html.text "The Minds Behind the Masterpieces" ]

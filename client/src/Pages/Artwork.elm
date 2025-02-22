@@ -2,8 +2,12 @@ module Pages.Artwork exposing (..)
 
 import Api.Artist exposing (Artist)
 import Api.Artwork exposing (Artwork)
+import Browser.Navigation as Navigation
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Events as HE
+import Svg exposing (Svg)
+import Svg.Attributes as SA
 
 
 type alias Model =
@@ -18,18 +22,22 @@ initModel =
 
 
 type Msg
-    = MsgDummy
+    = None
+    | NavigateBack Navigation.Key
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MsgDummy ->
+        None ->
             ( model, Cmd.none )
 
+        NavigateBack key ->
+            ( model, Navigation.back key 1 )
 
-view : Model -> String -> Html Msg
-view model id =
+
+view : Model -> String -> Navigation.Key -> Html Msg
+view model id navigationKey =
     let
         matchingArtwork =
             List.filter (\x -> x.id == id) model.artworkData
@@ -37,7 +45,7 @@ view model id =
     case List.head matchingArtwork of
         Just artwork ->
             Html.main_ [ HA.class "max-w-svw " ]
-                [ viewArtwork artwork
+                [ viewArtwork artwork navigationKey
                 , viewArtworkInformation artwork
                 , viewArtistInformation artwork.artist
                 ]
@@ -46,18 +54,45 @@ view model id =
             Html.text "Error Not Found"
 
 
-viewArtwork : Artwork -> Html Msg
-viewArtwork artwork =
-    Html.figure [ HA.class "relative bg-bgDark h-5/6 z-0 py-16 bg-text" ]
-        [ Html.img
-            [ HA.src artwork.imageUrl, HA.class "h-full mx-auto" ]
-            []
-        , Html.a
-            [ HA.class "absolute top-0 left-0 h-full w-full"
-            , HA.href artwork.imageUrl
-            , HA.target "_blank"
+viewArtwork : Artwork -> Navigation.Key -> Html Msg
+viewArtwork artwork navigationKey =
+    Html.section
+        [ HA.class "bg-bgDark h-5/6 z-0 pt-12 bg-text" ]
+        [ Html.figure [ HA.class "max-w-maxWidth z-0 m-auto relative grid h-full place-items-center" ]
+            [ viewBackBnt navigationKey
+            , Html.a
+                [ HA.class "w-fit       "
+                , HA.href artwork.imageUrl
+                , HA.target "_blank"
+                ]
+                [ Html.img
+                    [ HA.src artwork.imageUrl, HA.class "h-full" ]
+                    []
+                ]
             ]
-            []
+        ]
+
+
+viewBackBnt : Navigation.Key -> Html Msg
+viewBackBnt navigationKey =
+    Html.a
+        [ HA.class "absolute top-0 left-0 p-4 hover:text-primary focus-within:text-primary"
+        , NavigateBack navigationKey |> HE.onClick
+        ]
+        [ Svg.svg
+            [ SA.fill "none"
+            , SA.viewBox "0 0 24 24"
+            , SA.strokeWidth "1.5"
+            , SA.stroke "currentColor"
+            , SA.class "size-10"
+            ]
+            [ Svg.path
+                [ SA.strokeLinecap "round"
+                , SA.strokeLinejoin "round"
+                , SA.d "M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                ]
+                []
+            ]
         ]
 
 

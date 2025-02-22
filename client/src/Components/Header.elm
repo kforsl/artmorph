@@ -36,7 +36,7 @@ viewLink path label =
     Html.li
         []
         [ Html.a
-            [ HA.class "block p-4 text-base font-title text-primary font-bold hover:cursor-pointer hover:underline underline-offset-2"
+            [ HA.class "block p-4 text-base font-title text-primary font-bold hover:cursor-pointer   underline-offset-2 hover:underline focus-within:underline"
             , HA.href path
             ]
             [ Html.text label

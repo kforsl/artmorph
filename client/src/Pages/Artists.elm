@@ -1,9 +1,9 @@
 module Pages.Artists exposing (..)
 
 import Api.Artist exposing (Artist)
+import Api.Artwork exposing (Artwork)
 import Html exposing (Html)
 import Html.Attributes as HA
-import Api.Artwork exposing (Artwork)
 
 
 type alias Model =
@@ -20,13 +20,13 @@ initModel =
 
 
 type Msg
-    = MsgDummy
+    = None
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MsgDummy ->
+        None ->
             ( model, Cmd.none )
 
 
@@ -41,7 +41,7 @@ view model =
 viewArtist : Model -> Html Msg
 viewArtist model =
     Html.section
-        [ HA.class "max-w-maxWidth m-auto flex flex-col gap-8 py-16" ]
+        [ HA.class "max-w-maxWidth m-auto flex flex-col gap-16 py-24" ]
         (List.map
             (\artist -> viewArtistCard artist model.artworkData)
             model.artistData
@@ -51,7 +51,7 @@ viewArtist model =
 viewArtistCard : Artist -> List Artwork -> Html Msg
 viewArtistCard artist artworks =
     Html.article
-        [ HA.class "grid grid-cols-12 p-4 rounded bg-bgLight relative"
+        [ HA.class "grid grid-cols-12 p-4 rounded bg-bgLight relative group hover:opacity-80 focus-within:opacity-80"
         ]
         [ Html.img
             [ HA.src artist.profileImgUrl
@@ -62,12 +62,12 @@ viewArtistCard artist artworks =
             [ HA.class "p-4 col-span-4 grid grid-cols-2 gap-4"
             ]
             [ Html.h2
-                [ HA.class "text-3xl col-span-full" ]
+                [ HA.class "text-3xl col-span-full group-hover:text-primary group-focus-within:text-primary" ]
                 [ Html.text artist.name ]
             , viewArtistList "Styles" artist.styles
             , viewArtistList "Mediums" artist.mediums
             ]
-        , viewArtistPreviewImages artist.id artworks 
+        , viewArtistPreviewImages artist.id artworks
         , Html.a
             [ HA.href ("/artists/" ++ artist.id)
             , HA.class "absolute p-4 top-0 left-0 h-full w-full"
@@ -98,9 +98,10 @@ viewArtistPreviewImages : String -> List Artwork -> Html Msg
 viewArtistPreviewImages artistId artworks =
     let
         previewArtworks : List Artwork
-        previewArtworks = artworks 
-            |> List.filter (\artwork -> artwork.artist.id == artistId )
-            |> List.take 2
+        previewArtworks =
+            artworks
+                |> List.filter (\artwork -> artwork.artist.id == artistId)
+                |> List.take 2
 
         generateImage artwork =
             Html.img [ HA.src artwork.imageUrl, HA.class "max-w-52 rounded" ] []

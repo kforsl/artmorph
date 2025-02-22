@@ -20,13 +20,13 @@ initModel =
 
 
 type Msg
-    = MsgDummy
+    = None
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MsgDummy ->
+        None ->
             ( model, Cmd.none )
 
 
@@ -55,7 +55,7 @@ viewHero exhibition =
         [ Html.div
             [ HA.class "max-w-maxWidth m-auto flex gap-8 py-24" ]
             [ Html.img [ HA.src exhibition.thumbnailUrl ] []
-            , Html.section [ HA.class "flex-grow" ]
+            , Html.section [ HA.class "flex-grow p-4" ]
                 [ Html.h2
                     [ HA.class "text-5xl font-title text-primary mb-4" ]
                     [ Html.text exhibition.title ]
@@ -99,7 +99,7 @@ viewArtworks artworks =
 viewArtworkCard : Int -> ExhibitionArtwork -> Html Msg
 viewArtworkCard x artwork =
     Html.article
-        [ HA.class ("grid grid-cols-2 gap-4 relative row-span-2 row-start-" ++ String.fromInt (x + 1))
+        [ HA.class ("grid grid-cols-2 gap-4 relative  p-2 group hover:opacity-80 focus-within:opacity-80 row-span-2 row-start-" ++ String.fromInt (x + 1))
         ]
         [ Html.section
             [ HA.href ("/artwork/" ++ artwork.id)
@@ -115,7 +115,7 @@ viewArtworkCard x artwork =
                 [ HA.class "font-bread text-sm h-56 overflow-clip" ]
                 [ Html.text artwork.description ]
             , Html.h3
-                [ HA.class "text-lg font-title underline text-center"
+                [ HA.class "text-lg font-title underline text-center group-hover:text-primary group-focus-within:text-primary"
                 ]
                 [ Html.text "view Artwork" ]
             ]
@@ -140,9 +140,9 @@ viewCreatedBy artworks artists =
                 artists
     in
     Html.article
-        [ HA.class "bg-bgDark" ]
+        [ HA.class "bg-bgDark bg-text" ]
         [ Html.section
-            [ HA.class "max-w-maxWidth flex gap-12 m-auto py-16 border-b-2 border-black" ]
+            [ HA.class "max-w-maxWidth flex gap-12 m-auto py-24 border-b-2 border-bgDark" ]
             [ Html.h2
                 [ HA.class "font-title text-textLight text-4xl mb-8 col-span-full" ]
                 [ Html.text "Created by: " ]
@@ -177,15 +177,15 @@ viewArtistCard artist =
 viewOtherExhibitions : List Exhibition -> Html Msg
 viewOtherExhibitions exhibitions =
     Html.article
-        [ HA.class "max-w-maxWidth m-auto py-16" ]
+        [ HA.class "max-w-maxWidth m-auto py-24" ]
         [ Html.section
             [ HA.class "flex justify-between" ]
             [ Html.h2
                 [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
-                [ Html.text "Featured Exhibitions" ]
+                [ Html.text "Other Exhibitions" ]
             , Html.a
                 [ HA.href "/exhibitions"
-                , HA.class "place-self-center text-nowrap text-base h-fit py-2.5 px-4 bg-primary rounded-2xl font-bold"
+                , HA.class "place-self-center text-nowrap text-base h-fit py-2.5 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Checkout all our exhibitions" ]
             ]
@@ -201,7 +201,7 @@ viewOtherExhibitions exhibitions =
 viewExhibitionCard : Int -> Exhibition -> Html Msg
 viewExhibitionCard x exhibition =
     Html.li
-        [ HA.class "grid gap-0.5 relative p-1"
+        [ HA.class "grid gap-0.5 relative p-1 hover:opacity-80 focus-within:opacity-80"
         ]
         [ Html.img
             [ HA.src exhibition.thumbnailUrl
