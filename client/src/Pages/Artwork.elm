@@ -48,9 +48,15 @@ view model id =
 
 viewArtwork : Artwork -> Html Msg
 viewArtwork artwork =
-    Html.figure [ HA.class "bg-bgDark h-5/6 z-0 py-16 bg-text" ]
+    Html.figure [ HA.class "relative bg-bgDark h-5/6 z-0 py-16 bg-text" ]
         [ Html.img
             [ HA.src artwork.imageUrl, HA.class "h-full mx-auto" ]
+            []
+        , Html.a
+            [ HA.class "absolute top-0 left-0 h-full w-full"
+            , HA.href artwork.imageUrl
+            , HA.target "_blank"
+            ]
             []
         ]
 
@@ -80,7 +86,8 @@ viewArtistInformation artist =
     Html.section [ HA.class "bg-bgDark relative z-0 flex justify-center" ]
         [ Html.div
             [ HA.class "max-w-maxWidth m-auto flex gap-8 py-24" ]
-            [ Html.section [ ]
+            [ Html.section
+                []
                 [ Html.h2
                     [ HA.class "text-3xl font-title text-primary mb-4" ]
                     [ Html.text "About the Artist" ]
