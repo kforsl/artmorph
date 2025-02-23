@@ -36,13 +36,6 @@ type Msg
     = FetchArtwork (Result Http.Error ApiResponse)
 
 
-
--- | FetchArtworkById (Result Http.Error ApiResponse)
--- | FetchArtworkByStyle (Result Http.Error ApiResponse)
--- | FetchArtworkByMedium (Result Http.Error ApiResponse)
--- | FetchArtworkByArtist (Result Http.Error ApiResponse)
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -53,17 +46,6 @@ update msg model =
 
                 Err error ->
                     ( model, Cmd.none )
-
-
-
--- FetchArtworkById result ->
---     ( model, Cmd.none )
--- FetchArtworkByStyle result ->
---     ( model, Cmd.none )
--- FetchArtworkByMedium result ->
---     ( model, Cmd.none )
--- FetchArtworkByArtist result ->
---     ( model, Cmd.none )
 
 
 baseUrl : String

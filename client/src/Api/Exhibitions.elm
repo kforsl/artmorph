@@ -34,9 +34,6 @@ type alias Exhibition =
 
 type Msg
     = GetExhibition (Result Http.Error ApiResponse)
-    | GetExhibitionById (Result Http.Error ApiResponse)
-    | GetExhibitionByStyle (Result Http.Error ApiResponse)
-    | GetExhibitionByMedium (Result Http.Error ApiResponse)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -49,15 +46,6 @@ update msg model =
 
                 Err error ->
                     ( model, Cmd.none )
-
-        GetExhibitionById result ->
-            ( model, Cmd.none )
-
-        GetExhibitionByStyle result ->
-            ( model, Cmd.none )
-
-        GetExhibitionByMedium result ->
-            ( model, Cmd.none )
 
 
 baseUrl : String

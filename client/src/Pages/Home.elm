@@ -67,12 +67,12 @@ viewHero =
                     []
                 ]
             , Html.h2
-                [ HA.class "text-5xl font-title col-span-7 text-primary flex flex-col justify-center gap-6 text-nowrap h-1/2" ]
+                [ HA.class "text-5xl col-span-7 text-primary flex flex-col justify-center gap-6 text-nowrap h-1/2" ]
                 [ Html.span
-                    []
+                    [ HA.class "font-title"]
                     [ Html.text "From Past to Future" ]
                 , Html.span
-                    [ HA.class "text-right" ]
+                    [ HA.class "text-right font-title" ]
                     [ Html.text "Imagination Unfolds" ]
                 ]
             ]
@@ -97,11 +97,11 @@ viewWelcome =
                 [ HA.class "font-title text-4xl mb-8 text-textDark col-span-full" ]
                 [ Html.text "Welcome to Artmorph" ]
             , Html.p
-                [ HA.class "font-bread text-base mb-8 leading-7 p-2" ]
+                [ HA.class "  text-base mb-8 leading-7 p-2" ]
                 [ Html.text "Art is a living, breathing force — constantly shifting, transforming, and telling new stories. At Artmorph, we curate immersive online exhibitions that celebrate this evolution. From the echoes of history to the boundless realms of imagination, each collection invites you to see the world through a new artistic lens. Explore, experience, and let creativity reshape your perspective." ]
             , Html.a
                 [ HA.href "/about"
-                , HA.class "font-bread underline underline-offset-2 text-primary cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
+                , HA.class "  underline underline-offset-2 text-primary cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Discover More About Us" ]
             ]
@@ -119,7 +119,7 @@ viewExhibitions exhibitions =
                 [ Html.text "Featured Exhibitions" ]
             , Html.a
                 [ HA.href "/exhibitions"
-                , HA.class "place-self-center text-nowrap text-base h-fit py-2.5 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80"
+                , HA.class "place-self-center text-nowrap text-base h-fit py-2.5 px-4 bg-primary   rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Checkout all our exhibitions" ]
             ]
@@ -175,11 +175,11 @@ viewPictureOfTheMonth artworks =
                         ]
                         []
                     , Html.p
-                        [ HA.class "font-bread text-3xl cursor-pointer text-primary mb-4 text-center"
+                        [ HA.class "  text-3xl cursor-pointer text-primary mb-4 text-center"
                         ]
                         [ Html.text artwork.title ]
                     , Html.p
-                        [ HA.class "font-bread text-xl text-primary mb-4 text-center cursor-pointer"
+                        [ HA.class "  text-xl text-primary mb-4 text-center cursor-pointer"
                         ]
                         [ Html.text "Created by ", Html.span [] [ Html.text artwork.artist.name ] ]
                     , Html.a

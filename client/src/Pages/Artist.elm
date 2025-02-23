@@ -62,7 +62,7 @@ viewArtistInformation artist =
                     [ HA.class "text-5xl font-title text-primary mb-4" ]
                     [ Html.text artist.name ]
                 , Html.p
-                    [ HA.class "font-bread text-base text-textLight mb-8" ]
+                    [ HA.class "  text-base text-textLight mb-8" ]
                     [ Html.text artist.aboutMe ]
                 , Html.section
                     [ HA.class "flex justify-between" ]
@@ -88,7 +88,7 @@ viewList label list =
 viewListChip : String -> Html Msg
 viewListChip label =
     Html.li
-        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit text-xs font-bread" ]
+        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit text-xs  " ]
         [ Html.text label ]
 
 
@@ -115,7 +115,7 @@ viewArtworkCard x artwork =
                 [ HA.class "text-xl font-title font-semibold" ]
                 [ Html.text artwork.title ]
             , Html.p
-                [ HA.class "font-bread text-sm h-56 overflow-clip" ]
+                [ HA.class "  text-sm h-56 overflow-clip" ]
                 [ Html.text artwork.description ]
             , Html.h3
                 [ HA.class "text-lg font-title underline text-center group-hover:text-primary group-focus-within:text-primary"

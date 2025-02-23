@@ -112,7 +112,7 @@ view model navigationKey =
                                 ]
                             ]
                         , Html.p
-                            [ HA.class "text-base font-bread text-center font-bold" ]
+                            [ HA.class "text-base   text-center font-bold" ]
                             [ Html.span
                                 [ HA.class "mr-1 underline underline-offset-2 cursor-pointer"
                                 , HE.onClick MsgChangeFormType
@@ -179,7 +179,7 @@ view model navigationKey =
                                 ]
                             ]
                         , Html.p
-                            [ HA.class "text-base font-bread text-center font-bold" ]
+                            [ HA.class "text-base   text-center font-bold" ]
                             [ Html.span
                                 [ HA.class "mr-1 underline underline-offset-2 cursor-pointer"
                                 , HE.onClick MsgChangeFormType

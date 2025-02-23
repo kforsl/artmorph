@@ -4,6 +4,8 @@ import Api.Artist exposing (Artist)
 import Components.Newsletter
 import Html exposing (Html)
 import Html.Attributes as HA
+import Svg exposing (Svg)
+import Svg.Attributes as SA
 
 
 type alias Model =
@@ -58,15 +60,15 @@ viewHero =
             , Html.section
                 [ HA.class "col-span-7 relative" ]
                 [ Html.h2
-                    [ HA.class "text-5xl font-title text-primary flex flex-col justify-end gap-6 h-1/2 " ]
+                    [ HA.class "text-5xl text-primary flex flex-col justify-end gap-6 h-1/2 " ]
                     [ Html.span
                         [ HA.class "font-logo text-7xl text-right" ]
                         [ Html.text "About Artmorph" ]
                     , Html.span
-                        [ HA.class "text-center" ]
+                        [ HA.class "text-center font-title" ]
                         [ Html.text "Where every stroke" ]
                     , Html.span
-                        [ HA.class "" ]
+                        [ HA.class "font-title" ]
                         [ Html.text "Tells a new story" ]
                     ]
                 ]
@@ -84,13 +86,13 @@ viewAbout =
                 [ HA.class "font-title text-3xl mb-6 text-textDark col-span-full " ]
                 [ Html.text "The Vision Behind ArtMorph" ]
             , Html.p
-                [ HA.class "font-bread text-base mb-4 leading-7" ]
+                [ HA.class "  text-base mb-4 leading-7" ]
                 [ Html.text "Art is constantly evolving. It transforms, reinvents itself, and tells new stories with each passing era. At Artmorph, we believe in capturing these moments of change—curating digital exhibitions that explore art’s endless possibilities." ]
             , Html.p
-                [ HA.class "font-bread text-base mb-4 leading-7" ]
+                [ HA.class "  text-base mb-4 leading-7" ]
                 [ Html.text """Our platform is more than a gallery; it’s a living, breathing space where artists and audiences connect across time, culture, and imagination. Through carefully curated themes, Artmorph showcases how creativity transcends boundaries, offering a unique journey through the worlds of transformation, history, nature, the supernatural, and beyond.""" ]
             , Html.p
-                [ HA.class "font-bread text-base mb-4 leading-7" ]
+                [ HA.class "  text-base mb-4 leading-7" ]
                 [ Html.text """Every piece featured here is a reflection of this vision—a celebration of artistic evolution in all its forms. Welcome to Artmorph, where art never stays still.""" ]
             ]
         , Html.img
@@ -114,10 +116,10 @@ viewArtists artists =
         , Html.section
             [ HA.class "col-span-2 flex flex-col justify-center" ]
             [ Html.p
-                [ HA.class "font-bread text-base mb-4 leading-7" ]
+                [ HA.class "  text-base mb-4 leading-7" ]
                 [ Html.text "Artmorph is shaped by the vision of talented artists who explore transformation, history, nature, and the unknown through their work. Each artist brings their own unique approach, style, and storytelling to the exhibitions. Discover the creatives behind the collections and explore their artistic worlds." ]
             , Html.a
-                [ HA.class "font-bread text-base mb-2 text-primary underline underline-offset-2 hover:opacity-80 focus-within:opacity-80 p-2"
+                [ HA.class "  text-base mb-2 text-primary underline underline-offset-2 hover:opacity-80 focus-within:opacity-80 p-2"
                 , HA.href "/artists"
                 ]
                 [ Html.text " Discover the creatives behind the collections and explore their artistic worlds." ]
@@ -167,7 +169,7 @@ viewExhibitions =
             , Html.section
                 [ HA.class "p-12 text-textLight col-span-7" ]
                 [ Html.p
-                    [ HA.class "font-bread text-base mb-4 leading-7" ]
+                    [ HA.class "  text-base mb-4 leading-7" ]
                     [ Html.text "Step into a world where art transforms, history whispers, nature comes alive, and the unseen takes shape. Each Artmorph exhibition is a curated collection that explores unique themes and artistic expressions. Immerse yourself in creativity and discover stories told through brushstrokes, textures, and imagination." ]
                 , Html.ul
                     [ HA.class "list-disc mb-8 ml-8 leading-relaxed" ]
@@ -185,7 +187,7 @@ viewExhibitions =
                         [ Html.text "“Nature Reimagined: The Soul of the Wild”" ]
                     ]
                 , Html.p
-                    [ HA.class "font-bread text-base mb-2" ]
+                    [ HA.class "  text-base mb-2" ]
                     [ Html.text "Immerse yourself in captivating themes and explore the artistic worlds within each exhibition." ]
                 ]
             ]
@@ -254,32 +256,56 @@ viewContact =
                 [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
                 [ Html.text "Let’s Get in Touch" ]
             , Html.p
-                [ HA.class "font-bread text-base text-textDark mb-4 leading-7" ]
+                [ HA.class "text-base text-textDark mb-4 leading-7" ]
                 [ Html.text "Have questions, collaboration ideas, or just want to learn more about Artmorph? We'd love to hear from you! Reach out via email, phone, or visit us at our studio. Fill out the form, and we'll get back to you as soon as possible."
                 ]
             , Html.ul
-                [ HA.class "mb-8" ]
+                [ HA.class "mb-8 text-sm" ]
                 [ Html.h3
                     [ HA.class "font-title text-2xl text-center mb-4" ]
                     [ Html.text "Contact Details:" ]
                 , Html.li
                     [ HA.class "flex gap-4 items-center uppercase" ]
-                    [ Html.img
-                        [ HA.src "https://cdn-icons-png.flaticon.com/256/646/646094.png"
-                        , HA.class "w-8"
+                    [ Svg.svg
+                        [ SA.fill "none"
+                        , SA.viewBox "0 0 24 24"
+                        , SA.strokeWidth "1.5"
+                        , SA.stroke "currentColor"
+                        , SA.class "size-6"
                         ]
-                        []
+                        [ Svg.path
+                            [ SA.strokeLinecap "round"
+                            , SA.strokeLinejoin "round"
+                            , SA.d "M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                            ]
+                            []
+                        ]
                     , Html.p
                         []
                         [ Html.text "info@artmorph.com" ]
                     ]
                 , Html.li
                     [ HA.class "flex gap-4 items-center justify-self-end" ]
-                    [ Html.img
-                        [ HA.src "https://cdn-icons-png.flaticon.com/512/902/902613.png"
-                        , HA.class "w-8"
+                    [ Svg.svg
+                        [ SA.fill "none"
+                        , SA.viewBox "0 0 24 24"
+                        , SA.strokeWidth "1.5"
+                        , SA.stroke "currentColor"
+                        , SA.class "size-6"
                         ]
-                        []
+                        [ Svg.path
+                            [ SA.strokeLinecap "round"
+                            , SA.strokeLinejoin "round"
+                            , SA.d "M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                            ]
+                            []
+                        , Svg.path
+                            [ SA.strokeLinecap "round"
+                            , SA.strokeLinejoin "round"
+                            , SA.d "M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                            ]
+                            []
+                        ]
                     , Html.p
                         [ HA.class "flex flex-col uppercase" ]
                         [ Html.span
@@ -295,24 +321,33 @@ viewContact =
                     ]
                 , Html.li
                     [ HA.class "flex gap-4 items-center" ]
-                    [ Html.img
-                        [ HA.src "https://www.iconpacks.net/icons/1/free-phone-icon-1-thumb.png"
-                        , HA.class "w-8"
+                    [ Svg.svg
+                        [ SA.fill "none"
+                        , SA.viewBox "0 0 24 24"
+                        , SA.strokeWidth "1.5"
+                        , SA.stroke "currentColor"
+                        , SA.class "size-6"
                         ]
-                        []
+                        [ Svg.path
+                            [ SA.strokeLinecap "round"
+                            , SA.strokeLinejoin "round"
+                            , SA.d "M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
+                            ]
+                            []
+                        ]
                     , Html.p
                         []
                         [ Html.text "+123 456 7890" ]
                     ]
                 ]
             , Html.p
-                [ HA.class "font-bread text-base text-textDark leading-7" ]
+                [ HA.class "  text-base text-textDark leading-7" ]
                 [ Html.text "Art is all about connection. Whether you have a question, a collaboration idea, or just want to say hello—drop us a message. We look forward to hearing from you!" ]
             ]
         , Html.form
             [ HA.class "p-8 bg-primary rounded-2xl flex flex-col gap-4" ]
             [ Html.h3
-                [ HA.class "font-title text-3xl text-center" ]
+                [ HA.class "font-title text-3xl text-center font-semibold" ]
                 [ Html.text "Contact Form:" ]
             , Html.label []
                 [ Html.text "Name:"

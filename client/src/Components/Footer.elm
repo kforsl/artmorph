@@ -14,7 +14,7 @@ view =
                 [ HA.class "text-5xl text-primary font-logo font-medium" ]
                 [ Html.text "ArtMorph" ]
             , Html.p
-                [ HA.class "text-textLight absolute bottom-4 left-8" ]
+                [ HA.class "text-textLight absolute bottom-4 left-1/2 -translate-x-1/2" ]
                 [ Html.text "© Copyright Artmorph - 2025" ]
             ]
         ]

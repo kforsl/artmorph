@@ -87,7 +87,7 @@ type Msg
     | MsgExhibitionPage Pages.Exhibition.Msg
     | MsgExhibitionsPage Pages.Exhibitions.Msg
     | MsgHomePage Pages.Home.Msg
-
+    
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =

@@ -20,10 +20,10 @@ view =
         , Html.section
             [ HA.class "py-4 col-span-7" ]
             [ Html.h3
-                [ HA.class "font-bread font-medium text-xl leading-relaxed mb-8" ]
+                [ HA.class "  font-medium text-xl leading-relaxed mb-8" ]
                 [ Html.text "Stay Inspired – Get the Latest from Artmorph" ]
             , Html.p
-                [ HA.class "font-bread text-base font-regular leading-7 mb-12 " ]
+                [ HA.class "  text-base font-regular leading-7 mb-12 " ]
                 [ Html.text "Art is always evolving, and so is Artmorph. Be the first to discover new exhibitions, featured artists, and exclusive insights into the world of digital curation. Sign up for our newsletter and let inspiration find you." ]
             , Html.form
                 [ HA.class " w-full flex gap-4 pb-4"

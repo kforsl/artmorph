@@ -16,8 +16,7 @@ module.exports = {
             },
             fontFamily: {
                 logo: "Megrim",
-                title: "Aboreto",
-                bread: "Inter"
+                title: "Aboreto"
             },
             fontSize: {
                 sizeBg: "304px"

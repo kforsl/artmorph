@@ -17,6 +17,10 @@
 @tailwind components;
 @tailwind utilities;
 
+main {
+    font-family: "Inter";
+}
+
 .bg-light-text {
     background-image: url(./assets/images/bg-text-light.svg);
     background-position: bottom;
@@ -33,10 +37,8 @@
 
 .bg-footer-text {
     background-image: url(./assets/images/bg-footer-text.svg);
-    /* background-position: 0% 75%; */
     background-repeat: no-repeat;
-    background-position: center 90%;
-    /* background-size: cover; */
+    background-position: center 85%;
 }
 
 .loading {
@@ -46,7 +48,8 @@
 }
 
 @keyframes draw {
-    0%, 100% {
+    0%,
+    100% {
         stroke-dashoffset: 1000;
         opacity: .6;
     }

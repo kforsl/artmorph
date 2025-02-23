@@ -90,7 +90,7 @@ viewArtistList label list =
 viewArtistChip : String -> Html Msg
 viewArtistChip label =
     Html.li
-        [ HA.class "py-2 px-4 rounded-full bg-secondary bg-opacity-25 w-fit text-xs font-bread" ]
+        [ HA.class "py-2 px-4 rounded-full bg-secondary bg-opacity-25 w-fit text-xs  " ]
         [ Html.text label ]
 
 

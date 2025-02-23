@@ -108,7 +108,7 @@ viewArtworkInformation artwork =
                 [ HA.class "text-3xl font-title text-primary mb-4 col-span-full" ]
                 [ Html.text ("Created by: " ++ artwork.artist.name) ]
             , Html.p
-                [ HA.class "font-bread text-base text-textLight mb-8 col-span-2" ]
+                [ HA.class "  text-base text-textLight mb-8 col-span-2" ]
                 [ Html.text artwork.description ]
             , viewList "Styles" artwork.styles
             , viewList "Mediums" artwork.mediums
@@ -127,7 +127,7 @@ viewArtistInformation artist =
                     [ HA.class "text-3xl font-title text-primary mb-4" ]
                     [ Html.text "About the Artist" ]
                 , Html.p
-                    [ HA.class "font-bread text-base text-textLight mb-8 max-w-[50ch]" ]
+                    [ HA.class "  text-base text-textLight mb-8 max-w-[50ch]" ]
                     [ Html.text artist.aboutMe ]
                 ]
             , Html.img [ HA.src artist.profileImgUrl, HA.class "h-80" ] []
@@ -149,5 +149,5 @@ viewList label list =
 viewListChip : String -> Html Msg
 viewListChip label =
     Html.li
-        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit text-xs font-bread" ]
+        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit text-xs  " ]
         [ Html.text label ]

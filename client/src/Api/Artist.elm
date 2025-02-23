@@ -34,12 +34,6 @@ type Msg
     = FetchArtist (Result Http.Error ApiResponse)
 
 
-
---     | FetchArtistById (Result Http.Error ApiResponse)
---     | FetchArtistByStyle (Result Http.Error ApiResponse)
---     | FetchArtistByMedium (Result Http.Error ApiResponse)
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -50,27 +44,6 @@ update msg model =
 
                 Err _ ->
                     ( model, Cmd.none )
-
-
-
---         FetchArtistById result ->
---             case result of
---                 Ok data ->
---                     ( { model | artists = data.data }, Cmd.none )
---                 Err _ ->
---                     ( model, Cmd.none )
---         FetchArtistByStyle result ->
---             case result of
---                 Ok data ->
---                     ( { model | artists = data.data }, Cmd.none )
---                 Err _ ->
---                     ( model, Cmd.none )
---         FetchArtistByMedium result ->
---             case result of
---                 Ok data ->
---                     ( { model | artists = data.data }, Cmd.none )
---                 Err _ ->
---                     ( model, Cmd.none )
 
 
 baseUrl : String
