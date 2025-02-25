@@ -1,12 +1,32 @@
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <link rel="stylesheet" href="index.css" />
-    </head>
-    <body>
-        <main></main>
-        <script type="module" src="./index.js"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+        --color-primary: #EC5001;
+        --color-secondary: #363F34;
+        --color-textLight: #FFFFFF;
+        --color-textDark: #000000;
+        --color-bgLight: #f4f0e6;
+        --color-bgDark: #283127;
+        --spacing-maxWidth: 1180px;
+        --font-logo: "Megrim";
+        --font-title: "Aboreto";
+        --text-sizeBg: 304px;
+      }
+    </style>
+    <script src="elm.js"></script>
+</head>
+
+<body>
+    <script>
+        var app = Elm.Main.init({ flags: null });
+    </script>
+</body>
+
 </html>
