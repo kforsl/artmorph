@@ -101,13 +101,15 @@ view model navigationKey =
                             [ Html.label []
                                 [ Html.text "Email"
                                 , Html.input
-                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" ]
                                     []
                                 ]
                             , Html.label []
                                 [ Html.text "Password"
                                 , Html.input
-                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" 
+                                    , HA.type_ "password"
+                                    ]
                                     []
                                 ]
                             ]
@@ -162,24 +164,28 @@ view model navigationKey =
                             [ Html.label []
                                 [ Html.text "Email"
                                 , Html.input
-                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" ]
                                     []
                                 ]
                             , Html.label []
                                 [ Html.text "Password"
                                 , Html.input
-                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" 
+                                    , HA.type_ "password"
+                                    ]
                                     []
                                 ]
                             , Html.label []
                                 [ Html.text "Repeat Password"
                                 , Html.input
-                                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" 
+                                    , HA.type_ "password"
+                                    ]
                                     []
                                 ]
                             ]
                         , Html.p
-                            [ HA.class "text-base   text-center font-bold" ]
+                            [ HA.class "text-base text-center font-bold" ]
                             [ Html.span
                                 [ HA.class "mr-1 underline underline-offset-2 cursor-pointer"
                                 , HE.onClick MsgChangeFormType

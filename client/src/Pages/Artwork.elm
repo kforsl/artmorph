@@ -76,7 +76,7 @@ viewArtwork artwork navigationKey =
 viewBackBnt : Navigation.Key -> Html Msg
 viewBackBnt navigationKey =
     Html.a
-        [ HA.class "absolute top-0 left-0 p-4 hover:text-primary focus-within:text-primary"
+        [ HA.class "absolute top-0 left-0 p-4 text-secondary hover:text-primary focus-within:text-primary"
         , NavigateBack navigationKey |> HE.onClick
         ]
         [ Svg.svg

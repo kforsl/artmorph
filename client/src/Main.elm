@@ -87,7 +87,7 @@ type Msg
     | MsgExhibitionPage Pages.Exhibition.Msg
     | MsgExhibitionsPage Pages.Exhibitions.Msg
     | MsgHomePage Pages.Home.Msg
-    
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -357,25 +357,27 @@ onUrlRequest urlRequest =
 view : Model -> Browser.Document Msg
 view model =
     { title = "Artmorph"
-    , body = [ viewContent model ]
+    , body =
+        [ viewContent model
+        ]
     }
 
 
 viewContent : Model -> Html Msg
 viewContent model =
-    case ( model.isPageLoading, model.isPageError ) of
-        ( True, False ) ->
-            viewLoading
+    Html.main_ [ HA.class "bg-bgLight" ]
+        [ Html.Extra.viewIf model.isHeaderShowing Components.Header.view
+        , case ( model.isPageLoading, model.isPageError ) of
+            ( True, False ) ->
+                viewLoading
 
-        ( False, True ) ->
-            viewError model
+            ( False, True ) ->
+                viewError model
 
-        _ ->
-            Html.main_ [ HA.class "bg-bgLight" ]
-                [ Html.Extra.viewIf model.isHeaderShowing Components.Header.view
-                , viewPage model
-                , Html.Extra.viewIf (not model.isPageLoading) Components.Footer.view
-                ]
+            _ ->
+                viewPage model
+        , Html.Extra.viewIf (not model.isPageLoading) Components.Footer.view
+        ]
 
 
 viewPage : Model -> Html Msg
@@ -429,7 +431,7 @@ viewLoading =
                     []
                 ]
     in
-    Html.main_ [ HA.class "min-h-full grid place-content-center bg-bgDark bg-text" ]
+    Html.figure [ HA.class "min-h-full grid place-content-center bg-bgDark bg-text" ]
         [ svgLoader
         ]
 

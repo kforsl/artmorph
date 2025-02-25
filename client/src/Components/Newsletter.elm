@@ -31,7 +31,8 @@ view =
                 -- , HE.onSubmit msg
                 ]
                 [ Html.input
-                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                    [ HA.class "w-full bg-textLight rounded-lg pl-2 py-2" 
+                    , HA.placeholder "John.Doe@mail.com"]
                     []
                 , Html.button
                     [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80" ]

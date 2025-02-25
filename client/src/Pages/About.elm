@@ -352,19 +352,19 @@ viewContact =
             , Html.label []
                 [ Html.text "Name:"
                 , Html.input
-                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" ]
                     []
                 ]
             , Html.label []
                 [ Html.text "Email:"
                 , Html.input
-                    [ HA.class "w-full rounded-lg pl-2 py-2" ]
+                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" ]
                     []
                 ]
             , Html.label
                 []
                 [ Html.text "Message:"
-                , Html.textarea [ HA.class "w-full rounded-lg resize-none h-44 pl-2 pt-2" ] []
+                , Html.textarea [ HA.class "w-full bg-bgLight rounded-lg resize-none h-44 pl-2 pt-2" ] []
                 ]
             , Html.button
                 [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80" ]
