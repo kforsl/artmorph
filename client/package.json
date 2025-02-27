@@ -1,0 +1,16 @@
+{
+  "name": "Artmorph",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/elm.js",
+  "scripts": {
+    "dev" : "elm-live src/Main.elm --pushstate --dir=dist -- --output=dist/elm.js --debug",
+    "build": "elm make src/Main.elm --optimize --output=dist/elm.js"
+  },
+  "author": "Kim Forslund",
+  "license": "ISC",
+  "devDependencies": {
+    "elm": "^0.19.1-6",
+    "elm-live": "^4.0.2"
+  }
+} 
