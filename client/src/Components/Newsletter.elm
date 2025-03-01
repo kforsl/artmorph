@@ -8,25 +8,25 @@ import Html.Events as HE
 view : Html msg
 view =
     Html.section
-        [ HA.class "max-w-maxWidth m-auto pt-24 pb-48 grid grid-cols-12 gap-8 bg-light-text" ]
+        [ HA.class "max-w-maxWidth m-auto sm:pt-24 sm:pb-48 grid sm:grid-cols-12 grid-cols-1 gap-8 bg-light-text md:px-4 px-4 py-8" ]
         [ Html.h2
-            [ HA.class "font-title text-4xl col-span-full" ]
+            [ HA.class "font-title sm:text-3xl text-xl col-span-full" ]
             [ Html.text "Your Journey Into Art Begins Here" ]
         , Html.img
             [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/newsletter.png"
-            , HA.class "max-w-full rounded col-span-5"
+            , HA.class "max-w-full rounded sm:col-span-5"
             ]
             []
         , Html.section
-            [ HA.class "py-4 col-span-7" ]
+            [ HA.class "py-4 sm:col-span-7" ]
             [ Html.h3
-                [ HA.class "  font-medium text-xl leading-relaxed mb-8" ]
+                [ HA.class "font-medium sm:text-xl text-lg leading-relaxed sm:mb-8 mb-4" ]
                 [ Html.text "Stay Inspired – Get the Latest from Artmorph" ]
             , Html.p
-                [ HA.class "  text-base font-regular leading-7 mb-12 " ]
+                [ HA.class "sm:text-base text-sm font-regular leading-7 mb-12 " ]
                 [ Html.text "Art is always evolving, and so is Artmorph. Be the first to discover new exhibitions, featured artists, and exclusive insights into the world of digital curation. Sign up for our newsletter and let inspiration find you." ]
             , Html.form
-                [ HA.class " w-full flex gap-4 pb-4"
+                [ HA.class " w-full flex sm:flex-nowrap flex-wrap gap-4 pb-4"
 
                 -- , HE.onSubmit msg
                 ]
