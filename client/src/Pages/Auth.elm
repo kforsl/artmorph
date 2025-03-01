@@ -85,14 +85,14 @@ view model navigationKey =
     case model.formType of
         Login ->
             Html.main_
-                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text" ]
+                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text px-4" ]
                 [ Html.section
                     [ HA.class "grid place-content-center relative" ]
                     [ Html.h1
-                        [ HA.class "text-sizeBg w-full text-secondary font-logo absolute -top-12 left-0 -translate-y-1/2 text-center text-nowrap z-20" ]
+                        [ HA.class "lg:text-sizeBg md:text-[250px] sm:text-[200px] text-[100px] w-full text-secondary font-logo absolute sm:-top-12 top-0 left-0 sm:-translate-y-1/2 text-center text-nowrap z-20" ]
                         [ Html.text "Sign In" ]
                     , Html.form
-                        [ HA.class "bg-primary flex flex-col p-28 pt-40 gap-4 max-w-3xl justify-center relative h-[596px]"
+                        [ HA.class "bg-primary flex flex-col mb:p-28 gap-4 max-w-3xl justify-center relative h-[596px] sm:p-14 p-4 pt-40"
                         , HE.onSubmit MsgSubmitForm
                         ]
                         [ viewBackBnt navigationKey
@@ -107,14 +107,14 @@ view model navigationKey =
                             , Html.label []
                                 [ Html.text "Password"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" 
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
                                     , HA.type_ "password"
                                     ]
                                     []
                                 ]
                             ]
                         , Html.p
-                            [ HA.class "text-base   text-center font-bold" ]
+                            [ HA.class "sm:text-base text-sm text-center font-bold" ]
                             [ Html.span
                                 [ HA.class "mr-1 underline underline-offset-2 cursor-pointer"
                                 , HE.onClick MsgChangeFormType
@@ -170,7 +170,7 @@ view model navigationKey =
                             , Html.label []
                                 [ Html.text "Password"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" 
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
                                     , HA.type_ "password"
                                     ]
                                     []
@@ -178,7 +178,7 @@ view model navigationKey =
                             , Html.label []
                                 [ Html.text "Repeat Password"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" 
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
                                     , HA.type_ "password"
                                     ]
                                     []
