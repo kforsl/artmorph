@@ -57,8 +57,8 @@ view model id navigationKey =
 viewArtwork : Artwork -> Navigation.Key -> Html Msg
 viewArtwork artwork navigationKey =
     Html.section
-        [ HA.class "bg-bgDark h-5/6 z-0 pt-12 bg-text" ]
-        [ Html.figure [ HA.class "max-w-maxWidth z-0 m-auto relative grid h-full place-items-center" ]
+        [ HA.class "bg-bgDark h-fit z-0 px-4 py-8 bg-text" ]
+        [ Html.figure [ HA.class "max-w-maxWidth z-0 m-auto relative grid w-full place-items-center" ]
             [ viewBackBnt navigationKey
             , Html.a
                 [ HA.class "w-fit       "
@@ -100,15 +100,15 @@ viewArtworkInformation : Artwork -> Html Msg
 viewArtworkInformation artwork =
     Html.section [ HA.class "bg-bgDark relative z-0" ]
         [ Html.div
-            [ HA.class "max-w-maxWidth m-auto p-8 grid gap-4 grid-cols-4 justify-items-center" ]
+            [ HA.class "max-w-maxWidth m-auto p-8 grid gap-4 md:grid-cols-4 grid-cols-2 justify-items-center" ]
             [ Html.h2
-                [ HA.class "text-4xl font-title text-primary mb-4 col-span-full" ]
+                [ HA.class "lg:text-4xl sm:text-2xl text-xl font-title text-primary mb-4 col-span-full" ]
                 [ Html.text artwork.title ]
             , Html.h3
-                [ HA.class "text-3xl font-title text-primary mb-4 col-span-full" ]
+                [ HA.class "lg:text-3xl sm:text-xl text-md font-title text-primary mb-4 col-span-full" ]
                 [ Html.text ("Created by: " ++ artwork.artist.name) ]
             , Html.p
-                [ HA.class "  text-base text-textLight mb-8 col-span-2" ]
+                [ HA.class "sm:text-base text-sm text-textLight mb-8 col-span-2" ]
                 [ Html.text artwork.description ]
             , viewList "Styles" artwork.styles
             , viewList "Mediums" artwork.mediums
@@ -120,14 +120,14 @@ viewArtistInformation : Artist -> Html Msg
 viewArtistInformation artist =
     Html.section [ HA.class "bg-bgDark relative z-0 flex justify-center" ]
         [ Html.div
-            [ HA.class "max-w-maxWidth m-auto flex gap-8 py-24" ]
+            [ HA.class "max-w-maxWidth m-auto flex flex-wrap justify-center sm:gap-8 gap-2 sm:py-24 px-4 py-8" ]
             [ Html.section
                 []
                 [ Html.h2
-                    [ HA.class "text-3xl font-title text-primary mb-4" ]
+                    [ HA.class "lg:text-3xl sm:text-2xl text-xl font-title text-primary mb-4" ]
                     [ Html.text "About the Artist" ]
                 , Html.p
-                    [ HA.class "  text-base text-textLight mb-8 max-w-[50ch]" ]
+                    [ HA.class "sm:text-base text-sm text-textLight mb-8 max-w-[50ch]" ]
                     [ Html.text artist.aboutMe ]
                 ]
             , Html.img [ HA.src artist.profileImgUrl, HA.class "h-80" ] []
@@ -138,9 +138,9 @@ viewArtistInformation artist =
 viewList : String -> List String -> Html Msg
 viewList label list =
     Html.ul
-        [ HA.class "flex flex-col gap-2" ]
+        [ HA.class "flex flex-wrap gap-4" ]
         (Html.h4
-            [ HA.class "text-2xl mb-4 font-title font-semibold text-primary" ]
+            [ HA.class "mb-4 font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
             [ Html.text label ]
             :: List.map viewListChip list
         )
@@ -149,5 +149,5 @@ viewList label list =
 viewListChip : String -> Html Msg
 viewListChip label =
     Html.li
-        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit text-xs  " ]
+        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit h-fit sm:text-sm text-xs" ]
         [ Html.text label ]
