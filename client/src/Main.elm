@@ -365,7 +365,7 @@ view model =
 
 viewContent : Model -> Html Msg
 viewContent model =
-    Html.main_ [ HA.class "bg-bgLight" ]
+    Html.div [ HA.class "bg-bgLight" ]
         [ Html.Extra.viewIf model.isHeaderShowing Components.Header.view
         , case ( model.isPageLoading, model.isPageError ) of
             ( True, False ) ->
