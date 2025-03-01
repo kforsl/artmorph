@@ -88,7 +88,7 @@ viewList label list =
 viewListChip : String -> Html Msg
 viewListChip label =
     Html.li
-        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit" ]
+        [ HA.class "py-2 px-4 rounded-full bg-bgLight bg-opacity-25 w-fit h-fit sm:text-sm text-xs" ]
         [ Html.text label ]
 
 
