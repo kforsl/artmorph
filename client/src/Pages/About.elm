@@ -97,7 +97,7 @@ viewAbout =
             ]
         , Html.img
             [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about.png"
-            , HA.class "w-full sm:col-span-5 col-span-6"
+            , HA.class "w-full sm:col-span-5 col-span-6 rounded"
             ]
             []
         ]
