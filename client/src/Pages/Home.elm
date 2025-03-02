@@ -52,24 +52,24 @@ viewHero =
     Html.section
         [ HA.class " bg-bgDark relative z-0 h-3/4 bg-text" ]
         [ Html.div
-            [ HA.class "max-w-maxWidth h-full m-auto grid grid-cols-12 gap-8 pt-24" ]
-            [ Html.figure
-                [ HA.class "relative grid items-end col-span-5 after:h-32 after:w-screen after:absolute after:bg-primary after:bottom-64 after:-right-72 after:opacity-50 after:rounded-sm" ]
-                [ Html.img
-                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-hero.png"
-                    , HA.class " bg-contain overflow-hidden rounded"
-                    ]
-                    []
-                , Html.img
-                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-secondary-hero.png"
-                    , HA.class "absolute bottom-0 left-full ml-4 w-3/5 z-10 rounded"
-                    ]
-                    []
+            [ HA.class "max-w-maxWidth h-full m-auto grid md:grid-cols-12 grid-cols-7 md:grid-rows-2 grid-rows-3 gap-4 px-4" ]
+            [ Html.img
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-hero.png"
+                , HA.class "object-contain max-h-full overflow-hidden rounded md:col-span-5 sm:col-span-4 col-span-6 md:row-start-1 row-span-2 self-end row-start-2 md:col-start-1 col-start-1"
                 ]
+                []
+            , Html.img
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-secondary-hero.png"
+                , HA.class "object-contain z-10 max-h-full rounded md:col-span-3 sm:col-span-2 md:col-start-5 col-start-5 md:row-start-2 row-start-3 w-full col-span-3"
+                ]
+                []
+            , Html.figure
+                [ HA.class "rows-start-2 opacity-50 bg-primary h-1/3 col-start-1 md:row-start-2 row-start-3 md:col-end-8 col-end-7 relative before:absolute before:h-full before:w-full before:-left-full before:bg-primary" ]
+                []
             , Html.h2
-                [ HA.class "text-5xl col-span-7 text-primary flex flex-col justify-center gap-6 text-nowrap h-1/2" ]
+                [ HA.class "lg:text-4xl md:text-2xl text-2xl col-span-7 md:col-start-6 col-start-1 row-start-1 text-primary flex flex-col justify-center gap-6 text-nowrap self-end " ]
                 [ Html.span
-                    [ HA.class "font-title"]
+                    [ HA.class "font-title" ]
                     [ Html.text "From Past to Future" ]
                 , Html.span
                     [ HA.class "text-right font-title" ]
@@ -82,26 +82,23 @@ viewHero =
 viewWelcome : Html Msg
 viewWelcome =
     Html.article
-        [ HA.class "max-w-maxWidth m-auto pt-12 pb-24 grid grid-cols-12 border-b-2 border-bgDark" ]
-        [ Html.figure
-            [ HA.class "col-span-5" ]
-            [ Html.img
-                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/welcome.png"
-                , HA.class "rounded"
-                ]
-                []
+        [ HA.class "max-w-maxWidth m-auto sm:pt-12 sm:pb-24 grid sm:grid-cols-12 sm:gap-0 gap-4 grid-cols-6 border-b-2 border-bgDark md:px-4 px-4 py-8" ]
+        [ Html.img
+            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/welcome.png"
+            , HA.class "w-full sm:col-span-5 col-span-6 rounded"
             ]
+            []
         , Html.section
-            [ HA.class "p-4 col-span-7" ]
+            [ HA.class "sm:p-4 sm:col-span-7 col-span-6" ]
             [ Html.h2
-                [ HA.class "font-title text-4xl mb-8 text-textDark col-span-full" ]
+                [ HA.class "font-title sm:text-3xl text-xl mb-8 text-textDark col-span-full" ]
                 [ Html.text "Welcome to Artmorph" ]
             , Html.p
-                [ HA.class "  text-base mb-8 leading-7 p-2" ]
+                [ HA.class "sm:text-base text-sm sm:mb-4 mb-2 leading-7 p-2" ]
                 [ Html.text "Art is a living, breathing force — constantly shifting, transforming, and telling new stories. At Artmorph, we curate immersive online exhibitions that celebrate this evolution. From the echoes of history to the boundless realms of imagination, each collection invites you to see the world through a new artistic lens. Explore, experience, and let creativity reshape your perspective." ]
             , Html.a
                 [ HA.href "/about"
-                , HA.class "  underline underline-offset-2 text-primary cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
+                , HA.class "underline underline-offset-2 text-primary cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Discover More About Us" ]
             ]
@@ -113,13 +110,13 @@ viewExhibitions exhibitions =
     Html.article
         [ HA.class "max-w-maxWidth m-auto py-24" ]
         [ Html.section
-            [ HA.class "flex justify-between" ]
+            [ HA.class "flex flex-wrap justify-between" ]
             [ Html.h2
-                [ HA.class "font-title text-3xl mb-4 text-textDark col-span-full" ]
+                [ HA.class "font-title md:text-3xl text-2xl mb-4 text-textDark col-span-full" ]
                 [ Html.text "Featured Exhibitions" ]
             , Html.a
                 [ HA.href "/exhibitions"
-                , HA.class "place-self-center text-nowrap text-base h-fit py-2.5 px-4 bg-primary   rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80"
+                , HA.class "place-self-center text-nowrap sm:text-base text-sm h-fit py-2.5 px-4 bg-primary   rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Checkout all our exhibitions" ]
             ]
@@ -163,11 +160,11 @@ viewPictureOfTheMonth artworks =
     case pictureOfTheMonth of
         Just artwork ->
             Html.section
-                [ HA.class "bg-bgDark py-24 relative z-0 bg-text" ]
+                [ HA.class "bg-bgDark sm:py-24 px-4 py-8 relative z-0 bg-text" ]
                 [ Html.figure
                     [ HA.class "max-w-maxWidth m-auto grid place-content-center relative p-1 hover:opacity-80 focus-within:opacity-80" ]
                     [ Html.h2
-                        [ HA.class "font-title text-4xl mb-8 text-primary text-center" ]
+                        [ HA.class "font-title md:text-4xl text-2xl mb-8 text-primary text-center" ]
                         [ Html.text "Picture of the month" ]
                     , Html.img
                         [ HA.src artwork.imageUrl
@@ -175,11 +172,11 @@ viewPictureOfTheMonth artworks =
                         ]
                         []
                     , Html.p
-                        [ HA.class "  text-3xl cursor-pointer text-primary mb-4 text-center"
+                        [ HA.class "md:text-3xl text-xl cursor-pointer text-primary mb-4 text-center"
                         ]
                         [ Html.text artwork.title ]
                     , Html.p
-                        [ HA.class "  text-xl text-primary mb-4 text-center cursor-pointer"
+                        [ HA.class "md:text-xl text-lg text-primary mb-4 text-center cursor-pointer"
                         ]
                         [ Html.text "Created by ", Html.span [] [ Html.text artwork.artist.name ] ]
                     , Html.a
@@ -197,12 +194,12 @@ viewPictureOfTheMonth artworks =
 viewArtist : List Artist -> Html Msg
 viewArtist artists =
     Html.section
-        [ HA.class "max-w-maxWidth m-auto py-24 border-b-2 border-bgDark" ]
+        [ HA.class "max-w-maxWidth w-full m-auto py-16 border-b-2 border-bgDark px-4 py-8" ]
         [ Html.h2
-            [ HA.class "font-title text-4xl mb-8 text-textDark col-span-full" ]
+            [ HA.class "font-title sm:text-3xl text-xl mb-8 text-textDark col-span-full" ]
             [ Html.text "The Minds Behind the Masterpieces" ]
         , Html.ul
-            [ HA.class "flex overflow-hidden justify-between" ]
+            [ HA.class "flex md:flex-nowrap flex-wrap overflow-hidden justify-evenly" ]
             (List.map viewArtistCard artists)
         ]
 
