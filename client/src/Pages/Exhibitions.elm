@@ -38,32 +38,26 @@ view model =
 viewExhibition : Model -> Html Msg
 viewExhibition model =
     Html.section
-        [ HA.class "max-w-maxWidth m-auto flex flex-col gap-16 py-24" ]
-        (List.map
+        [ HA.class ("max-w-maxWidth m-auto grid md:grid-cols-2 lg:gap-8 gap-4 md:py-24 p-4 grid-rows-" ++ String.fromInt (List.length model.exhibitionData + 1)) ]
+        (List.indexedMap
             viewExhibitionCard
             model.exhibitionData
         )
 
 
-viewExhibitionCard : Exhibition -> Html Msg
-viewExhibitionCard exhibition =
+viewExhibitionCard : Int -> Exhibition -> Html Msg
+viewExhibitionCard x exhibition =
     Html.article
-        [ HA.class "grid grid-cols-12 p-4 rounded bg-bgLight relative group hover:opacity-80 focus-within:opacity-80"
+        [ HA.class ("grid grid-cols-12 md:p-4 gap-2 rounded bg-bgLight relative group hover:opacity-80 focus-within:opacity-80 md:row-span-2 md:row-start-" ++ String.fromInt (x + 1))
         ]
         [ Html.img
             [ HA.src exhibition.thumbnailUrl
-            , HA.class "max-w-64 col-span-3 rounded"
+            , HA.class "max-w-64 col-span-4 w-full row-span-2 rounded place-self-center"
             ]
             []
-        , Html.section
-            [ HA.class "p-4 col-span-4 grid grid-cols-2 gap-4"
-            ]
-            [ Html.h2
-                [ HA.class "text-3xl col-span-full group-hover:text-primary group-focus-within:text-primary" ]
-                [ Html.text exhibition.title ]
-            , viewExhibitionList "Styles" exhibition.styles
-            , viewExhibitionList "Mediums" exhibition.mediums
-            ]
+        , Html.h2
+            [ HA.class "md:text-3xl text-xl pt-2 pl-2 col-start-5 col-span-full group-hover:text-primary group-focus-within:text-primary" ]
+            [ Html.text exhibition.title ]
         , viewExhibitionPreviewImages exhibition
         , Html.a
             [ HA.href ("/exhibitions/" ++ exhibition.id)
@@ -73,33 +67,15 @@ viewExhibitionCard exhibition =
         ]
 
 
-viewExhibitionList : String -> List String -> Html Msg
-viewExhibitionList label list =
-    Html.ul
-        [ HA.class "flex flex-col gap-2" ]
-        (Html.h3
-            [ HA.class "text-lg mb-2 font-title font-semibold" ]
-            [ Html.text label ]
-            :: List.map viewExhibitionChip list
-        )
-
-
-viewExhibitionChip : String -> Html Msg
-viewExhibitionChip label =
-    Html.li
-        [ HA.class "py-2 px-4 rounded-full bg-secondary bg-opacity-25 w-fit text-xs text-textLight" ]
-        [ Html.text label ]
-
-
 viewExhibitionPreviewImages : Exhibition -> Html Msg
 viewExhibitionPreviewImages exhibitions =
     let
         previewArtworks =
-            List.take 2 exhibitions.artworks
+            List.take 3 exhibitions.artworks
 
         generateImage artwork =
-            Html.img [ HA.src artwork.imageUrl, HA.class "max-w-52 rounded" ] []
+            Html.img [ HA.src artwork.imageUrl, HA.class "max-w-52 w-full rounded" ] []
     in
     Html.figure
-        [ HA.class "col-span-5 grid grid-cols-2 place-content-center" ]
+        [ HA.class "col-span-full grid gap-2 col-start-5 grid-cols-3 place-content-center md:p-0 p-4" ]
         (List.map generateImage previewArtworks)
