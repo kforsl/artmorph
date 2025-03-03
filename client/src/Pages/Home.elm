@@ -13,6 +13,7 @@ type alias Model =
     { artistData : List Artist
     , artworkData : List Artwork
     , exhibitionData : List Exhibition
+    , newsletterModel : Components.Newsletter.Model
     }
 
 
@@ -21,18 +22,23 @@ initModel =
     { artistData = []
     , artworkData = []
     , exhibitionData = []
+    , newsletterModel = Components.Newsletter.initModel
     }
 
 
 type Msg
-    = None
+    = MsgNewsletterSubmit Components.Newsletter.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        None ->
-            ( model, Cmd.none )
+        MsgNewsletterSubmit msgArtworkPage ->
+            let
+                ( newNewsletterModel, cmdNewsletter ) =
+                    Components.Newsletter.update msgArtworkPage Components.Newsletter.initModel
+            in
+            ( { model | newsletterModel = newNewsletterModel } , Cmd.map MsgNewsletterSubmit cmdNewsletter )
 
 
 view : Model -> Html Msg
@@ -43,7 +49,7 @@ view model =
         , viewExhibitions model.exhibitionData
         , viewPictureOfTheMonth model.artworkData
         , viewArtist model.artistData
-        , Components.Newsletter.view
+        , Html.map MsgNewsletterSubmit (Components.Newsletter.view model.newsletterModel)
         ]
 
 

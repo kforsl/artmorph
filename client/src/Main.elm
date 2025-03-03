@@ -142,6 +142,7 @@ update msg model =
                     { artistData = newArtistData
                     , artworkData = model.modelHomePage.artworkData
                     , exhibitionData = model.modelHomePage.exhibitionData
+                    , newsletterModel = model.modelHomePage.newsletterModel
                     }
 
                 updatedArtistsPageModel =
@@ -155,7 +156,9 @@ update msg model =
                     }
 
                 updatedAboutPageModel =
-                    { artistData = newArtistData }
+                    { artistData = newArtistData
+                    , newsletterModel = model.modelAboutPage.newsletterModel 
+                    }
 
                 updatedExhibitionModel =
                     { artistData = newArtistData
@@ -198,6 +201,7 @@ update msg model =
                     { artistData = model.modelHomePage.artistData
                     , artworkData = newArtworkData
                     , exhibitionData = model.modelHomePage.exhibitionData
+                    , newsletterModel = model.modelHomePage.newsletterModel
                     }
 
                 updatedArtistPageModel =
@@ -249,6 +253,7 @@ update msg model =
                     { artistData = model.modelHomePage.artistData
                     , artworkData = model.modelHomePage.artworkData
                     , exhibitionData = newExhibitionsData
+                    , newsletterModel = model.modelHomePage.newsletterModel
                     }
 
                 updatedExhibitionsPageModel =

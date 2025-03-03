@@ -1,12 +1,62 @@
-module Components.Newsletter exposing (view)
+module Components.Newsletter exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes as HA
 import Html.Events as HE
+import Process
+import Task
 
 
-view : Html msg
-view =
+type alias Model =
+    { formState : FormState
+    }
+
+
+type FormState
+    = Resting
+    | Loading
+    | Success
+    | Error
+
+
+initModel : Model
+initModel =
+    { formState = Resting
+    }
+
+
+type Msg
+    = MsgSubmitForm
+    | MsgSubmitError
+    | MsgSubmitResting
+    | MsgSubmitSuccess
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        MsgSubmitForm ->
+            ( { model | formState = Loading }, sendToSelfWithDelay 2000 MsgSubmitSuccess )
+
+        MsgSubmitError ->
+            ( { model | formState = Error }, Cmd.none )
+
+        MsgSubmitResting ->
+            ( { model | formState = Resting }, Cmd.none )
+
+        MsgSubmitSuccess ->
+            ( { model | formState = Success }, sendToSelfWithDelay 4000 MsgSubmitResting )
+
+
+sendToSelfWithDelay : Float -> Msg -> Cmd Msg
+sendToSelfWithDelay delay msg =
+    Process.sleep delay
+        |> Task.map (\_ -> msg)
+        |> Task.perform identity
+
+
+view : Model -> Html Msg
+view model =
     Html.section
         [ HA.class "max-w-maxWidth m-auto sm:pt-24 sm:pb-48 grid sm:grid-cols-12 grid-cols-1 gap-8 bg-light-text md:px-4 px-4 py-8" ]
         [ Html.h2
@@ -27,16 +77,33 @@ view =
                 [ Html.text "Art is always evolving, and so is Artmorph. Be the first to discover new exhibitions, featured artists, and exclusive insights into the world of digital curation. Sign up for our newsletter and let inspiration find you." ]
             , Html.form
                 [ HA.class " w-full flex sm:flex-nowrap flex-wrap gap-4 pb-4"
-
-                -- , HE.onSubmit msg
+                , HE.onSubmit MsgSubmitForm
                 ]
                 [ Html.input
-                    [ HA.class "w-full bg-textLight rounded-lg pl-2 py-2" 
-                    , HA.placeholder "John.Doe@mail.com"]
+                    [ HA.class "w-full bg-textLight rounded-lg pl-2 py-2"
+                    , HA.placeholder "John.Doe@mail.com"
+                    ]
                     []
-                , Html.button
-                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80" ]
-                    [ Html.text "Subscribe Now" ]
+                , case model.formState of
+                    Resting ->
+                        Html.button
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                            [ Html.text "Subscribe Now" ]
+
+                    Loading ->
+                        Html.button
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold" ]
+                            [ Html.text "Loading . . ." ]
+
+                    Success ->
+                        Html.button
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold" ]
+                            [ Html.text "Success" ]
+
+                    Error ->
+                        Html.button
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                            [ Html.text "Subscribe Now" ]
                 ]
             , Html.nav
                 [ HA.class "flex justify-around" ]

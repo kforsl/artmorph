@@ -10,24 +10,30 @@ import Svg.Attributes as SA
 
 type alias Model =
     { artistData : List Artist
+    , newsletterModel : Components.Newsletter.Model
     }
 
 
 initModel : Model
 initModel =
     { artistData = []
+    , newsletterModel = Components.Newsletter.initModel
     }
 
 
 type Msg
-    = None
+    = MsgNewsletterSubmit Components.Newsletter.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        None ->
-            ( model, Cmd.none )
+        MsgNewsletterSubmit msgArtworkPage ->
+            let
+                ( newNewsletterModel, cmdNewsletter ) =
+                    Components.Newsletter.update msgArtworkPage Components.Newsletter.initModel
+            in
+            ( { model | newsletterModel = newNewsletterModel }, Cmd.map MsgNewsletterSubmit cmdNewsletter )
 
 
 view : Model -> Html Msg
@@ -39,7 +45,7 @@ view model =
         , viewExhibitions
         , viewSpotlight
         , viewContact
-        , Components.Newsletter.view
+        , Html.map MsgNewsletterSubmit (Components.Newsletter.view model.newsletterModel)
         ]
 
 
@@ -174,7 +180,7 @@ viewExhibitions =
                 , Html.ul
                     [ HA.class "sm:text-base text-sm list-disc md:mb-8 md:ml-8 mb-4 ml-4 leading-relaxed" ]
                     [ Html.h3
-                        [ HA.class "text-base"]
+                        [ HA.class "text-base" ]
                         [ Html.text "Current Highlights:" ]
                     , Html.li
                         [ HA.class "ml-8" ]
