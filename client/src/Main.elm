@@ -24,6 +24,7 @@ import Svg exposing (Svg)
 import Svg.Attributes as SA
 import Task
 import Url exposing (Url)
+import Pages.NotFound
 
 
 type alias Model =
@@ -408,7 +409,7 @@ viewPage model =
             Html.map MsgHomePage (Pages.Home.view model.modelHomePage)
 
         Nothing ->
-            viewPageNotFound
+            Pages.NotFound.view
 
 
 viewLoading : Html Msg
