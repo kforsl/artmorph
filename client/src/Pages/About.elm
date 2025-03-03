@@ -4,13 +4,17 @@ import Api.Artist exposing (Artist)
 import Components.Newsletter
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Events as HE
 import Svg exposing (Svg)
 import Svg.Attributes as SA
+import Process
+import Task
 
 
 type alias Model =
     { artistData : List Artist
     , newsletterModel : Components.Newsletter.Model
+    , formState : FormState
     }
 
 
@@ -18,11 +22,21 @@ initModel : Model
 initModel =
     { artistData = []
     , newsletterModel = Components.Newsletter.initModel
+    , formState = Resting
     }
 
+type FormState
+    = Resting
+    | Loading
+    | Success
+    | Error
 
 type Msg
     = MsgNewsletterSubmit Components.Newsletter.Msg
+    | MsgSubmitForm
+    | MsgSubmitError
+    | MsgSubmitResting
+    | MsgSubmitSuccess
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -35,6 +49,25 @@ update msg model =
             in
             ( { model | newsletterModel = newNewsletterModel }, Cmd.map MsgNewsletterSubmit cmdNewsletter )
 
+        MsgSubmitForm ->
+            ( { model | formState = Loading }, sendToSelfWithDelay 2000 MsgSubmitSuccess )
+
+        MsgSubmitError ->
+            ( { model | formState = Error }, Cmd.none )
+
+        MsgSubmitResting ->
+            ( { model | formState = Resting }, Cmd.none )
+
+        MsgSubmitSuccess ->
+            ( { model | formState = Success }, sendToSelfWithDelay 4000 MsgSubmitResting )
+
+
+sendToSelfWithDelay : Float -> Msg -> Cmd Msg
+sendToSelfWithDelay delay msg =
+    Process.sleep delay
+        |> Task.map (\_ -> msg)
+        |> Task.perform identity
+
 
 view : Model -> Html Msg
 view model =
@@ -44,7 +77,7 @@ view model =
         , viewArtists model.artistData
         , viewExhibitions
         , viewSpotlight
-        , viewContact
+        , viewContact model
         , Html.map MsgNewsletterSubmit (Components.Newsletter.view model.newsletterModel)
         ]
 
@@ -252,8 +285,8 @@ viewSpotlight =
         ]
 
 
-viewContact : Html Msg
-viewContact =
+viewContact : Model -> Html Msg
+viewContact model =
     Html.article
         [ HA.class "max-w-maxWidth m-auto sm:py-24 grid sm:grid-cols-2 md:gap-8 gap-4 grid-cols-1 px-4 py-8" ]
         [ Html.section
@@ -351,7 +384,8 @@ viewContact =
                 [ Html.text "Art is all about connection. Whether you have a question, a collaboration idea, or just want to say hello—drop us a message. We look forward to hearing from you!" ]
             ]
         , Html.form
-            [ HA.class "sm:p-8 p-4 bg-primary rounded-2xl flex flex-col gap-4 h-fit md:text-base text-sm" ]
+            [ HA.class "sm:p-8 p-4 bg-primary rounded-2xl flex flex-col gap-4 h-fit md:text-base text-sm" 
+            , HE.onSubmit MsgSubmitForm]
             [ Html.h3
                 [ HA.class "font-title md:text-3xl text-xl text-center font-semibold" ]
                 [ Html.text "Contact Form:" ]
@@ -372,8 +406,25 @@ viewContact =
                 [ Html.text "Message:"
                 , Html.textarea [ HA.class "w-full bg-bgLight rounded-lg resize-none h-44 pl-2 pt-2" ] []
                 ]
-            , Html.button
-                [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80" ]
-                [ Html.text "Send Message" ]
+            , case model.formState of
+                    Resting ->
+                        Html.button
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                            [ Html.text "Send Message" ]
+
+                    Loading ->
+                        Html.button
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                            [ Html.text "Loading . . ." ]
+
+                    Success ->
+                        Html.button
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                            [ Html.text "Success" ]
+
+                    Error ->
+                        Html.button
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                            [ Html.text "Send Message" ]
             ]
         ]

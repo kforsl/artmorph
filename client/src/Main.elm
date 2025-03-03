@@ -158,6 +158,7 @@ update msg model =
                 updatedAboutPageModel =
                     { artistData = newArtistData
                     , newsletterModel = model.modelAboutPage.newsletterModel 
+                    , formState = model.modelAboutPage.formState
                     }
 
                 updatedExhibitionModel =
