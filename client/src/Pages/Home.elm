@@ -64,7 +64,7 @@ viewHero =
                 ]
                 []
             , Html.figure
-                [ HA.class "rows-start-2 opacity-50 bg-primary h-1/3 col-start-1 md:row-start-2 row-start-3 md:col-end-8 col-end-7 relative before:absolute before:h-full before:w-full before:-left-full before:bg-primary" ]
+                [ HA.class "rows-start-2 opacity-50 bg-primary h-1/3 col-start-1 md:row-start-2 row-start-3 md:col-end-8 col-end-7 relative before:absolute before:h-full before:w-screen before:-right-0 before:bg-primary" ]
                 []
             , Html.h2
                 [ HA.class "lg:text-4xl md:text-2xl text-2xl col-span-7 md:col-start-6 col-start-1 row-start-1 text-primary flex flex-col justify-center gap-6 text-nowrap self-end " ]
