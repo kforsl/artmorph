@@ -16,15 +16,15 @@ import Pages.Artist
 import Pages.Artists
 import Pages.Artwork
 import Pages.Auth
+import Pages.Error
 import Pages.Exhibition
 import Pages.Exhibitions
 import Pages.Home
+import Pages.NotFound
 import Route
-import Svg exposing (Svg)
-import Svg.Attributes as SA
 import Task
 import Url exposing (Url)
-import Pages.NotFound
+import Pages.Loading
 
 
 type alias Model =
@@ -41,6 +41,7 @@ type alias Model =
     , modelExhibitionPage : Pages.Exhibition.Model
     , modelExhibitionsPage : Pages.Exhibitions.Model
     , modelHomePage : Pages.Home.Model
+    , modelErrorPage : Pages.Error.Model
     }
 
 
@@ -70,6 +71,7 @@ initModel url navigationKey =
     , modelExhibitionPage = Pages.Exhibition.initModel
     , modelExhibitionsPage = Pages.Exhibitions.initModel
     , modelHomePage = Pages.Home.initModel
+    , modelErrorPage = Pages.Error.initModel
     }
 
 
@@ -370,10 +372,10 @@ viewContent model =
         [ Html.Extra.viewIf model.isHeaderShowing Components.Header.view
         , case ( model.isPageLoading, model.isPageError ) of
             ( True, False ) ->
-                viewLoading
+                Pages.Loading.view
 
             ( False, True ) ->
-                viewError model
+                Pages.Error.view model.modelErrorPage
 
             _ ->
                 viewPage model
@@ -410,41 +412,6 @@ viewPage model =
 
         Nothing ->
             Pages.NotFound.view
-
-
-viewLoading : Html Msg
-viewLoading =
-    let
-        svgLoader : Html msg
-        svgLoader =
-            Svg.svg
-                [ SA.width "156"
-                , SA.height "218"
-                , SA.viewBox "0 0 156 218"
-                , SA.fill "none"
-                ]
-                [ Svg.path
-                    [ SA.d "M5 215.5L78 14L149 209.5H30.5"
-                    , SA.stroke "#EC5001"
-                    , SA.strokeWidth "9"
-                    , SA.class "loading"
-                    ]
-                    []
-                ]
-    in
-    Html.figure [ HA.class "min-h-full grid place-content-center bg-bgDark bg-text" ]
-        [ svgLoader
-        ]
-
-
-viewError : Model -> Html Msg
-viewError model =
-    Html.div [] [ Html.text "Error" ]
-
-
-viewPageNotFound : Html Msg
-viewPageNotFound =
-    Html.div [] [ Html.text "Page not found" ]
 
 
 main : Program () Model Msg
