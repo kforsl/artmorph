@@ -44,9 +44,8 @@ view model id navigationKey =
     in
     case List.head matchingArtwork of
         Just artwork ->
-            Html.main_ [ HA.class "max-w-svw " ]
+            Html.main_ [ HA.class "max-w-svw" ]
                 [ viewArtwork artwork navigationKey
-                , viewArtworkInformation artwork
                 , viewArtistInformation artwork.artist
                 ]
 
@@ -70,6 +69,7 @@ viewArtwork artwork navigationKey =
                     []
                 ]
             ]
+        , viewArtworkInformation artwork
         ]
 
 
@@ -98,7 +98,7 @@ viewBackBnt navigationKey =
 
 viewArtworkInformation : Artwork -> Html Msg
 viewArtworkInformation artwork =
-    Html.section [ HA.class "bg-bgDark relative z-0" ]
+    Html.section [ HA.class "relative z-0" ]
         [ Html.div
             [ HA.class "max-w-maxWidth m-auto p-8 grid gap-4 md:grid-cols-4 grid-cols-2 justify-items-center" ]
             [ Html.h2
