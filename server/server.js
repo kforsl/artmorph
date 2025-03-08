@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-var cors = require('cors')
+const cors = require('cors')
 const helmet = require('helmet');
 
 const app = express();
@@ -31,7 +31,6 @@ app.use(
 app.use(cors({
     credentials: true,
     origin: [
-        'http://localhost:3000',
         'http://localhost:8000',
         'https://d1964um5pbaqp4.cloudfront.net',
     ],
