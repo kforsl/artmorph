@@ -151,14 +151,14 @@ view model navigationKey =
 
         Register ->
             Html.main_
-                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text" ]
+                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text px-4" ]
                 [ Html.section
                     [ HA.class "grid place-content-center relative" ]
                     [ Html.h1
-                        [ HA.class "text-sizeBg w-full text-secondary font-logo absolute -top-12 left-0 -translate-y-1/2 text-center text-nowrap z-20" ]
+                        [ HA.class "lg:text-sizeBg md:text-[250px] sm:text-[200px] text-[100px] w-full text-secondary font-logo absolute sm:-top-12 top-0 left-0 sm:-translate-y-1/2 text-center text-nowrap z-20" ]
                         [ Html.text "Register" ]
                     , Html.form
-                        [ HA.class "bg-primary flex flex-col p-28 pt-40 gap-4 max-w-3xl justify-center relative h-[596px]"
+                        [ HA.class "bg-primary flex flex-col mb:p-28 gap-4 max-w-3xl justify-center relative h-[596px] sm:p-14 p-4 pt-40"
                         , HE.onSubmit MsgSubmitForm
                         ]
                         [ viewBackBnt navigationKey
@@ -192,7 +192,7 @@ view model navigationKey =
                                 ]
                             ]
                         , Html.p
-                            [ HA.class "text-base text-center font-bold" ]
+                            [ HA.class "sm:text-base text-sm text-center font-bold" ]
                             [ Html.span
                                 [ HA.class "mr-1 underline underline-offset-2 cursor-pointer"
                                 , HE.onClick MsgChangeFormType
@@ -203,7 +203,7 @@ view model navigationKey =
                         , case model.formState of
                             Resting ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight cursor-pointer" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                                     [ Html.text "Register" ]
 
                             Loading ->
@@ -218,7 +218,7 @@ view model navigationKey =
 
                             Error ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight cursor-pointer" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                                     [ Html.text "Register" ]
                         ]
                     ]
