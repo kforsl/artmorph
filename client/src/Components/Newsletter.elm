@@ -82,6 +82,7 @@ view model =
                 [ Html.input
                     [ HA.class "w-full bg-textLight rounded-lg pl-2 py-2"
                     , HA.placeholder "John.Doe@mail.com"
+                    , HA.required True
                     ]
                     []
                 , case model.formState of

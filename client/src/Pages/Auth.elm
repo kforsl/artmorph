@@ -101,7 +101,9 @@ view model navigationKey =
                             [ Html.label []
                                 [ Html.text "Email"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" ]
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
+                                    , HA.required True
+                                    ]
                                     []
                                 ]
                             , Html.label []
@@ -109,6 +111,7 @@ view model navigationKey =
                                 , Html.input
                                     [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
                                     , HA.type_ "password"
+                                    , HA.required True
                                     ]
                                     []
                                 ]
@@ -164,7 +167,9 @@ view model navigationKey =
                             [ Html.label []
                                 [ Html.text "Email"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2" ]
+                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
+                                    , HA.required True
+                                    ]
                                     []
                                 ]
                             , Html.label []
@@ -172,6 +177,7 @@ view model navigationKey =
                                 , Html.input
                                     [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
                                     , HA.type_ "password"
+                                    , HA.required True
                                     ]
                                     []
                                 ]
@@ -180,6 +186,7 @@ view model navigationKey =
                                 , Html.input
                                     [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
                                     , HA.type_ "password"
+                                    , HA.required True
                                     ]
                                     []
                                 ]
