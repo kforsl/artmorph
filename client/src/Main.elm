@@ -20,11 +20,11 @@ import Pages.Error
 import Pages.Exhibition
 import Pages.Exhibitions
 import Pages.Home
+import Pages.Loading
 import Pages.NotFound
 import Route
 import Task
 import Url exposing (Url)
-import Pages.Loading
 
 
 type alias Model =
@@ -42,6 +42,7 @@ type alias Model =
     , modelExhibitionsPage : Pages.Exhibitions.Model
     , modelHomePage : Pages.Home.Model
     , modelErrorPage : Pages.Error.Model
+    , modelHeader : Components.Header.Model
     }
 
 
@@ -72,6 +73,7 @@ initModel url navigationKey =
     , modelExhibitionsPage = Pages.Exhibitions.initModel
     , modelHomePage = Pages.Home.initModel
     , modelErrorPage = Pages.Error.initModel
+    , modelHeader = Components.Header.init
     }
 
 
@@ -90,6 +92,7 @@ type Msg
     | MsgExhibitionPage Pages.Exhibition.Msg
     | MsgExhibitionsPage Pages.Exhibitions.Msg
     | MsgHomePage Pages.Home.Msg
+    | MsgHeader Components.Header.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -157,7 +160,7 @@ update msg model =
 
                 updatedAboutPageModel =
                     { artistData = newArtistData
-                    , newsletterModel = model.modelAboutPage.newsletterModel 
+                    , newsletterModel = model.modelAboutPage.newsletterModel
                     , formState = model.modelAboutPage.formState
                     }
 
@@ -347,6 +350,13 @@ update msg model =
             in
             ( { model | modelHomePage = newHomePageModel }, Cmd.map MsgHomePage cmdHomePage )
 
+        MsgHeader msgHeader -> 
+            let
+                ( newHeaderModel, cmdHeader ) =
+                    Components.Header.update msgHeader model.modelHeader
+            in
+            ( { model | modelHeader = newHeaderModel } , Cmd.map MsgHeader cmdHeader)
+
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
@@ -374,8 +384,10 @@ view model =
 
 viewContent : Model -> Html Msg
 viewContent model =
-    Html.div [ HA.class "bg-bgLight" ]
-        [ Html.Extra.viewIf model.isHeaderShowing Components.Header.view
+    Html.div [ HA.class "bg-bgLight max-w-screen overflow-x-hidden" ]
+        [ Html.Extra.viewIf model.isHeaderShowing
+            (Html.map MsgHeader (Components.Header.view model.modelHeader))
+
         , case ( model.isPageLoading, model.isPageError ) of
             ( True, False ) ->
                 Pages.Loading.view
