@@ -15,6 +15,6 @@ view =
                 [ Html.text "ArtMorph" ]
             , Html.p
                 [ HA.class "text-textLight absolute bottom-4 left-1/2 -translate-x-1/2 text-sm" ]
-                [ Html.text "© Copyright Artmorph - 2025" ]
+                [ Html.text "© Copyright Artmorph - 2025 All rights reserved" ]
             ]
         ]
