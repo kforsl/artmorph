@@ -146,9 +146,9 @@ viewArtistInformation artist =
 viewList : String -> List String -> Html Msg
 viewList label list =
     Html.ul
-        [ HA.class "flex flex-wrap gap-4" ]
+        [ HA.class "flex flex-wrap gap-4 h-fit" ]
         (Html.h4
-            [ HA.class "mb-4 font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
+            [ HA.class "font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
             [ Html.text label ]
             :: List.map viewListChip list
         )
