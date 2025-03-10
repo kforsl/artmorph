@@ -64,6 +64,7 @@ view model =
             [ Html.text "Your Journey Into Art Begins Here" ]
         , Html.img
             [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/newsletter.png"
+            , HA.alt "A digital painting of a city skyline at sunset with a silhouetted figure standing on a bridge. The figure reaches toward the sky, where vibrant splashes of colorful paint drip down, blending with the clouds. The artwork creates a surreal and dreamlike atmosphere, symbolizing creativity and imagination."
             , HA.class "max-w-full rounded sm:col-span-5"
             ]
             []

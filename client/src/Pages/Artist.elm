@@ -64,7 +64,13 @@ viewArtistInformation artist =
                     [ HA.class "sm:text-base text-sm sm:mb-8 mb-4 text-textLight" ]
                     [ Html.text artist.aboutMe ]
                 ]
-            , Html.img [ HA.src artist.profileImgUrl, HA.class "md:col-span-1 col-span-full md:row-span-2 mx-auto" ] []
+            , Html.img 
+                [ HA.src artist.profileImgUrl
+                , HA.alt ("A portrait of " ++ artist.name ++ ".")
+
+                , HA.class "md:col-span-1 col-span-full md:row-span-2 mx-auto" 
+                ] 
+                []
             , Html.section
                 [ HA.class "grid gap-4 p-4 md:col-span-2 col-span-full sm:grid-cols-2" ]
                 [ viewList "Styles" artist.styles

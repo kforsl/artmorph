@@ -65,7 +65,10 @@ viewArtwork artwork navigationKey =
                 , HA.target "_blank"
                 ]
                 [ Html.img
-                    [ HA.src artwork.imageUrl, HA.class "h-full" ]
+                    [ HA.src artwork.imageUrl
+                    , HA.alt artwork.description
+                    , HA.class "h-full" 
+                    ]
                     []
                 ]
             ]
@@ -130,7 +133,12 @@ viewArtistInformation artist =
                     [ HA.class "sm:text-base text-sm text-textLight mb-8 max-w-[50ch]" ]
                     [ Html.text artist.aboutMe ]
                 ]
-            , Html.img [ HA.src artist.profileImgUrl, HA.class "h-80" ] []
+            , Html.img 
+                [ HA.src artist.profileImgUrl
+                , HA.alt ("A portrait of " ++ artist.name ++ ".")
+                , HA.class "h-80" 
+                ] 
+                []
             ]
         ]
 

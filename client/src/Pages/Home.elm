@@ -61,11 +61,13 @@ viewHero =
             [ HA.class "max-w-maxWidth h-full m-auto grid md:grid-cols-12 grid-cols-7 md:grid-rows-2 grid-rows-3 gap-4 px-4" ]
             [ Html.img
                 [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-hero.png"
+                , HA.alt "Surreal artwork of a human face split into colorful, abstract sections blending gold, purple, blue, and cream hues with fluid, melting textures."
                 , HA.class "object-contain max-h-full overflow-hidden rounded md:col-span-5 sm:col-span-4 col-span-6 md:row-start-1 row-span-2 self-end row-start-2 md:col-start-1 col-start-1"
                 ]
                 []
             , Html.img
                 [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-secondary-hero.png"
+                , HA.alt "A hand with paint on fingers touches a colorful, swirling abstract painting, creating an impression of interaction between the hand and the art."
                 , HA.class "object-contain z-10 max-h-full rounded md:col-span-3 sm:col-span-2 md:col-start-5 col-start-5 md:row-start-2 row-start-3 w-full col-span-3"
                 ]
                 []
@@ -91,6 +93,7 @@ viewWelcome =
         [ HA.class "max-w-maxWidth m-auto sm:pt-12 sm:pb-24 grid sm:grid-cols-12 sm:gap-0 gap-4 grid-cols-6 border-b-2 border-bgDark md:px-4 px-4 py-8" ]
         [ Html.img
             [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/welcome.png"
+            , HA.alt "A vibrant painting featuring a colorful door set against a lively, multicolored background."
             , HA.class "w-full sm:col-span-5 col-span-6 rounded"
             ]
             []
@@ -142,6 +145,7 @@ viewExhibitionCard x exhibition =
         ]
         [ Html.img
             [ HA.src exhibition.thumbnailUrl
+            , HA.alt exhibition.description
             , HA.class "max-w-96 object-cover object-top rounded"
             ]
             []
@@ -174,6 +178,7 @@ viewPictureOfTheMonth artworks =
                         [ Html.text "Picture of the month" ]
                     , Html.img
                         [ HA.src artwork.imageUrl
+                        , HA.alt artwork.description
                         , HA.class "mb-8 m-auto rounded"
                         ]
                         []
@@ -220,6 +225,7 @@ viewArtistCard artist =
             [ Html.text artist.name ]
         , Html.img
             [ HA.src artist.profileImgUrl
+            , HA.alt ("A portrait of " ++ artist.name ++ ".") 
             , HA.class "rounded"
             ]
             []

@@ -54,7 +54,12 @@ viewHero exhibition =
     Html.section [ HA.class "bg-bgDark relative z-0 bg-text h-fit" ]
         [ Html.div
             [ HA.class "max-w-maxWidth m-auto grid md:grid-cols-3 gap-8 grid-cols-2 sm:py-24 px-4 py-8" ]
-            [ Html.img [ HA.src exhibition.thumbnailUrl, HA.class "md:col-span-1 col-span-full md:row-span-2 mx-auto" ] []
+            [ Html.img 
+                [ HA.src exhibition.thumbnailUrl
+                , HA.alt exhibition.description
+                , HA.class "md:col-span-1 col-span-full md:row-span-2 mx-auto" 
+                ] 
+                []
             , Html.section [ HA.class "p-4 md:col-span-2 col-span-full" ]
                 [ Html.h2
                     [ HA.class "font-title text-primary mb-4 lg:text-5xl sm:text-3xl text-xl" ]
@@ -121,6 +126,7 @@ viewArtworkCard x artwork =
             ]
         , Html.img
             [ HA.src artwork.imageUrl
+            , HA.alt artwork.description
             , HA.class "place-self-center"
             ]
             []
@@ -164,6 +170,7 @@ viewArtistCard artist =
             [ Html.text artist.name ]
         , Html.img
             [ HA.src artist.profileImgUrl
+            , HA.alt ("A portrait of " ++ artist.name ++ ".")
             , HA.class "rounded"
             ]
             []
@@ -206,6 +213,7 @@ viewExhibitionCard x exhibition =
         ]
         [ Html.img
             [ HA.src exhibition.thumbnailUrl
+            , HA.alt exhibition.description
             , HA.class "max-w-96 object-cover object-top rounded"
             ]
             []
