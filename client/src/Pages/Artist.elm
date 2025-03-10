@@ -138,7 +138,7 @@ viewArtworkCard x artwork =
 viewOtherArtists : List Artist -> Html Msg
 viewOtherArtists artists =
     Html.section
-        [ HA.class "max-w-maxWidth w-full m-auto py-16 border-b-2 border-bgDark px-4 py-8" ]
+        [ HA.class "max-w-maxWidth w-full m-auto py-16 px-4 py-8" ]
         [ Html.h2
             [ HA.class "font-title sm:text-3xl text-xl mb-8 text-textDark col-span-full" ]
             [ Html.text "The Minds Behind the Masterpieces" ]
