@@ -79,6 +79,7 @@ initModel url navigationKey =
 
 type Msg
     = None
+    | MsgScrollToTop 
     | MsgUrlChange Url
     | MsgUrlRequested Browser.UrlRequest
     | MsgFetchArtistData Api.Artist.Msg
@@ -101,6 +102,18 @@ update msg model =
         None ->
             ( model
             , Cmd.none
+            )
+
+        MsgScrollToTop -> 
+            let
+                scrollCmd = 
+                        setViewport 0 0
+                            |> Task.perform (always None)
+            in
+            ( model 
+            , Cmd.batch 
+                [ scrollCmd
+                ] 
             )
 
         MsgUrlChange url ->
@@ -397,7 +410,7 @@ viewContent model =
 
             _ ->
                 viewPage model
-        , Html.Extra.viewIf (not model.isPageLoading) Components.Footer.view
+        , Html.Extra.viewIf (not model.isPageLoading)( Components.Footer.view MsgScrollToTop )
         ]
 
 
