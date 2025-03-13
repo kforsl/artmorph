@@ -4,7 +4,9 @@ import Html exposing (Html)
 import Html.Attributes as HA
 import Html.Events as HE
 import Api.Exhibitions exposing (Exhibition)
-import Svg.Attributes exposing (opacity)
+import Svg
+import Svg.Attributes as SA
+import Html.Extra
 
 type alias Model = 
     { activeCarouselItemIndex : Int
@@ -54,12 +56,6 @@ view model exhibitions =
             [ Html.h2
                 [ HA.class "font-title md:text-3xl text-2xl mb-4 text-textDark col-span-full" ]
                 [ Html.text "Featured Exhibitions" ]
-            , Html.button 
-                [ HE.onClick (PrevCarouselItem (List.length exhibitions))]
-                [ Html.text "Prev"]
-            , Html.button 
-                [ HE.onClick (NextCarouselItem (List.length exhibitions))] 
-                [ Html.text "Next"]
             , Html.a
                 [ HA.href "/exhibitions"
                 , HA.class "place-self-center text-nowrap sm:text-base text-sm h-fit py-2.5 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80"
@@ -68,23 +64,33 @@ view model exhibitions =
             ]
         , Html.ul
             [ HA.class "relative h-87 perspective-normal perspective-origin-top-center transition ease-in-out duration-200" ]
-            (List.indexedMap
-                (\x exhibition -> viewExhibitionCard x model.activeCarouselItemIndex exhibition  )
-                exhibitions
+            ( List.append 
+                (List.indexedMap
+                    (\x exhibition -> viewExhibitionCard x model.activeCarouselItemIndex exhibition  )
+                    exhibitions
+                ) 
+                [ Html.button 
+                    [ HE.onClick (PrevCarouselItem (List.length exhibitions))
+                    , HA.class "absolute z-20 left-0 top-0 h-87 sm:w-1/6 p-2 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
+                    ] 
+                    [ prevItemSvg ] 
+                , Html.button 
+                    [ HE.onClick (NextCarouselItem (List.length exhibitions))
+                    , HA.class "absolute z-20 right-0 top-0 h-87 sm:w-1/6 p-2 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
+                    ]
+                    [ nextItemSvg ]
+                ] 
             )
         ]
 
 
 viewExhibitionCard : Int -> Int -> Exhibition -> Html Msg
 viewExhibitionCard x activeIndex exhibition =
-    let
-        _ = Debug.log "hidden check " 
-    in
     Html.li
-        [ HA.class ("p-1 -translate-x-1/2 absolute max-w-md hover:opacity-80 focus-within:opacity-80 ") 
+        [ HA.class ("p-1 -translate-x-1/2 absolute sm:max-w-md max-w-xs hover:opacity-80 focus-within:opacity-80 pointer-event-none") 
         , HA.classList 
             [ ("hidden", ( x /= activeIndex && (x > ( activeIndex + 2 ) || x < (activeIndex - 2))) )
-            , ("top-0 left-1/2 z-20 ", x == activeIndex )
+            , ("top-0 left-1/2 z-20 pointer-event-auto", x == activeIndex )
             , ("top-0 left-3/4 z-10 -rotate-y-40 origin-right -translate-z-50", x == activeIndex + 1 )
             , ("top-0 left-1/4 z-10 rotate-y-40 origin-left -translate-z-50", x == activeIndex - 1 )
             , ("top-0 left-full -rotate-y-90 origin-right -translate-z-100", x == activeIndex + 2 )
@@ -97,11 +103,48 @@ viewExhibitionCard x activeIndex exhibition =
             , HA.class "max-w-3xs object-cover object-top rounded"
             ]
             []
-        , Html.a
-            [ HA.href ("/exhibitions/" ++ exhibition.id)
-            , HA.class "absolute w-full h-full top-0 left-0"
+        , (Html.Extra.viewIf 
+            (x == activeIndex) 
+            ( Html.a
+                [ HA.href ("/exhibitions/" ++ exhibition.id)
+                , HA.class "absolute w-full h-full top-0 left-0"
+                ]
+                []
+            )
+            ) 
+          
+        ]
+
+nextItemSvg : Html Msg
+nextItemSvg = 
+    Svg.svg
+        [ SA.fill "none"
+        , SA.viewBox "0 0 24 24"
+        , SA.strokeWidth "1.5"
+        , SA.stroke "currentColor"
+        , SA.class "sm:size-10 size-8"
+        ]
+        [ Svg.path
+            [ SA.strokeLinecap "round"
+            , SA.strokeLinejoin "round"
+            , SA.d "m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
             ]
             []
         ]
 
-   
+prevItemSvg : Html Msg
+prevItemSvg = 
+    Svg.svg
+        [ SA.fill "none"
+        , SA.viewBox "0 0 24 24"
+        , SA.strokeWidth "1.5"
+        , SA.stroke "currentColor"
+        , SA.class "sm:size-10 size-8"
+        ]
+        [ Svg.path
+            [ SA.strokeLinecap "round"
+            , SA.strokeLinejoin "round"
+            , SA.d "m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
+            ]
+            []
+        ]       
