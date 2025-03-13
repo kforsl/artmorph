@@ -81,7 +81,7 @@ view model =
                 , HE.onSubmit MsgSubmitForm
                 ]
                 [ Html.input
-                    [ HA.class "w-full bg-textLight rounded-lg pl-2 py-2"
+                    [ HA.class "w-full bg-textLight rounded pl-2 py-2"
                     , HA.placeholder "John.Doe@mail.com"
                     , HA.required True
                     ]
@@ -89,22 +89,22 @@ view model =
                 , case model.formState of
                     Resting ->
                         Html.button
-                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                             [ Html.text "Subscribe Now" ]
 
                     Loading ->
                         Html.button
-                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold" ]
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded font-bold" ]
                             [ Html.text "Loading . . ." ]
 
                     Success ->
                         Html.button
-                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold" ]
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded font-bold" ]
                             [ Html.text "Success" ]
 
                     Error ->
                         Html.button
-                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                             [ Html.text "Subscribe Now" ]
                 ]
             , Html.nav

@@ -390,7 +390,7 @@ viewContact model =
                 [ Html.text "Art is all about connection. Whether you have a question, a collaboration idea, or just want to say hello—drop us a message. We look forward to hearing from you!" ]
             ]
         , Html.form
-            [ HA.class "sm:p-8 p-4 bg-primary rounded-2xl flex flex-col gap-4 h-fit md:text-base text-sm"
+            [ HA.class "sm:p-8 p-4 bg-primary rounded flex flex-col gap-4 h-fit md:text-base text-sm"
             , HE.onSubmit MsgSubmitForm
             ]
             [ Html.h3
@@ -399,7 +399,7 @@ viewContact model =
             , Html.label []
                 [ Html.text "Name:"
                 , Html.input
-                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
+                    [ HA.class "w-full bg-bgLight rounded pl-2 py-2"
                     , HA.required True
                     ]
                     []
@@ -407,7 +407,7 @@ viewContact model =
             , Html.label []
                 [ Html.text "Email:"
                 , Html.input
-                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
+                    [ HA.class "w-full bg-bgLight rounded pl-2 py-2"
                     , HA.required True
                     ]
                     []
@@ -415,27 +415,27 @@ viewContact model =
             , Html.label
                 []
                 [ Html.text "Message:"
-                , Html.textarea [ HA.class "w-full bg-bgLight rounded-lg resize-none h-44 pl-2 pt-2" ] []
+                , Html.textarea [ HA.class "w-full bg-bgLight rounded resize-none h-44 pl-2 pt-2" ] []
                 ]
             , case model.formState of
                 Resting ->
                     Html.button
-                        [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                        [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                         [ Html.text "Send Message" ]
 
                 Loading ->
                     Html.button
-                        [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                        [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight" ]
                         [ Html.text "Loading . . ." ]
 
                 Success ->
                     Html.button
-                        [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                        [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight" ]
                         [ Html.text "Success" ]
 
                 Error ->
                     Html.button
-                        [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                        [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                         [ Html.text "Send Message" ]
             ]
         ]
