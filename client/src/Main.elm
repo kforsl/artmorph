@@ -181,6 +181,7 @@ update msg model =
                 updatedExhibitionModel =
                     { artistData = newArtistData
                     , exhibitionData = model.modelExhibitionPage.exhibitionData
+                    , carouselModel = model.modelExhibitionPage.carouselModel
                     }
 
                 isPageLoading =
@@ -283,6 +284,7 @@ update msg model =
                 updatedExhibitionPageModel =
                     { exhibitionData = newExhibitionsData
                     , artistData = model.modelHomePage.artistData
+                    , carouselModel = model.modelExhibitionPage.carouselModel
                     }
 
                 isPageLoading =
