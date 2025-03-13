@@ -1,0 +1,95 @@
+@font-face {
+  font-family: Aboreto;
+  src: url(./assets/fonts/Aboreto/Aboreto-Regular.ttf);
+}
+
+@font-face {
+  font-family: Inter;
+  src: url(./assets/fonts/Inter/Inter-VariableFont_opsz_wght.ttf);
+}
+
+@font-face {
+  font-family: Megrim;
+  src: url(./assets/fonts/Megrim/Megrim-Regular.ttf);
+}
+
+@import "tailwindcss";
+
+@theme {
+        --color-primary: #EC5001;
+        --color-secondary: #363F34;
+        --color-textLight: #FFFFFF;
+        --color-textDark: #000000;
+        --color-bgLight: #f4f0e6;
+        --color-bgDark: #283127;
+        --spacing-maxWidth: 1180px;
+        --font-logo: "Megrim";
+        --font-title: "Aboreto";
+        --text-sizeBg: 304px;
+}
+
+
+main {
+  font-family: "Inter";
+}
+
+.bg-light-text {
+  background-image: url(./assets/images/bg-text-light.svg);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.bg-text {
+  background-image: url(./assets/images/bg-text.svg);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 80%;
+}
+
+.bg-footer-text {
+  background-image: url(./assets/images/bg-footer-text.svg);
+  background-repeat: no-repeat;
+  background-position: center 85%;
+}
+
+.loading {
+  stroke-dashoffset: 1000;
+  stroke-dasharray: 1000;
+  animation: draw 6s linear infinite;
+}
+
+@keyframes draw {
+  5% {
+    stroke-dashoffset: 1000;
+    opacity: 0.6;
+    d: path("M5 217L42 115.5L79 14L152 210.955H30.6771");
+  }
+
+  25% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  45% {
+    stroke-dashoffset: 1000;
+    opacity: 0.6;
+    d: path("M5 217L42 115.5L79 14L152 210.955H30.6771");
+  }
+  50% {
+    d: path("M5 214.501L5 2.0006L78 164.76L151 2V210H29.1693");
+    stroke-dashoffset: 1000;
+    opacity: 0.6;
+  }
+
+  75% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  100% {
+    stroke-dashoffset: 1000;
+    opacity: 0.6;
+    d: path("M5 214.501L5 2.0006L78 164.76L151 2V210H29.1693");
+  }
+}
