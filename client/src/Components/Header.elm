@@ -23,6 +23,7 @@ type Msg
     = ToggleBurgerState
 
 
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         ToggleBurgerState ->
@@ -35,9 +36,13 @@ view model =
         [ HA.class "bg-bgDark sticky top-0 w-full z-40 lg:px-0 px-4" ]
         [ Html.div
             [ HA.class "flex justify-between max-w-maxWidth m-auto" ]
-            [ Html.h1
-                [ HA.class "font-logo text-primary font-medium content-center py-2 lg:text-6xl sm:text-5xl text-3xl" ]
-                [ Html.text "ArtMorph" ]
+            [ Html.a 
+                [ HA.href "/" 
+                ] 
+                [ Html.h1
+                    [ HA.class "font-logo text-primary font-medium content-center py-2 lg:text-6xl sm:text-5xl text-3xl" ]
+                    [ Html.text "ArtMorph" ]
+                ]
             , viewNavigation model
             ]
         ]

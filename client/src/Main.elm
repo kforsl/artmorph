@@ -79,6 +79,7 @@ initModel url navigationKey =
 
 type Msg
     = None
+    | MsgScrollToTop 
     | MsgUrlChange Url
     | MsgUrlRequested Browser.UrlRequest
     | MsgFetchArtistData Api.Artist.Msg
@@ -101,6 +102,18 @@ update msg model =
         None ->
             ( model
             , Cmd.none
+            )
+
+        MsgScrollToTop -> 
+            let
+                scrollCmd = 
+                        setViewport 0 0
+                            |> Task.perform (always None)
+            in
+            ( model 
+            , Cmd.batch 
+                [ scrollCmd
+                ] 
             )
 
         MsgUrlChange url ->
@@ -146,6 +159,7 @@ update msg model =
                     , artworkData = model.modelHomePage.artworkData
                     , exhibitionData = model.modelHomePage.exhibitionData
                     , newsletterModel = model.modelHomePage.newsletterModel
+                    , carouselModel = model.modelHomePage.carouselModel
                     }
 
                 updatedArtistsPageModel =
@@ -167,6 +181,7 @@ update msg model =
                 updatedExhibitionModel =
                     { artistData = newArtistData
                     , exhibitionData = model.modelExhibitionPage.exhibitionData
+                    , carouselModel = model.modelExhibitionPage.carouselModel
                     }
 
                 isPageLoading =
@@ -206,6 +221,7 @@ update msg model =
                     , artworkData = newArtworkData
                     , exhibitionData = model.modelHomePage.exhibitionData
                     , newsletterModel = model.modelHomePage.newsletterModel
+                    , carouselModel = model.modelHomePage.carouselModel
                     }
 
                 updatedArtistPageModel =
@@ -258,6 +274,7 @@ update msg model =
                     , artworkData = model.modelHomePage.artworkData
                     , exhibitionData = newExhibitionsData
                     , newsletterModel = model.modelHomePage.newsletterModel
+                    , carouselModel = model.modelHomePage.carouselModel
                     }
 
                 updatedExhibitionsPageModel =
@@ -267,6 +284,7 @@ update msg model =
                 updatedExhibitionPageModel =
                     { exhibitionData = newExhibitionsData
                     , artistData = model.modelHomePage.artistData
+                    , carouselModel = model.modelExhibitionPage.carouselModel
                     }
 
                 isPageLoading =
@@ -397,7 +415,7 @@ viewContent model =
 
             _ ->
                 viewPage model
-        , Html.Extra.viewIf (not model.isPageLoading) Components.Footer.view
+        , Html.Extra.viewIf (not model.isPageLoading)( Components.Footer.view MsgScrollToTop )
         ]
 
 

@@ -65,7 +65,10 @@ viewArtwork artwork navigationKey =
                 , HA.target "_blank"
                 ]
                 [ Html.img
-                    [ HA.src artwork.imageUrl, HA.class "h-full" ]
+                    [ HA.src artwork.imageUrl
+                    , HA.alt artwork.description
+                    , HA.class "h-full" 
+                    ]
                     []
                 ]
             ]
@@ -76,7 +79,7 @@ viewArtwork artwork navigationKey =
 viewBackBnt : Navigation.Key -> Html Msg
 viewBackBnt navigationKey =
     Html.a
-        [ HA.class "absolute top-0 left-0 p-4 text-secondary hover:text-primary focus-within:text-primary"
+        [ HA.class "absolute top-0 left-0 p-4 text-primary hover:text-textLight focus-within:text-textLight"
         , NavigateBack navigationKey |> HE.onClick
         ]
         [ Svg.svg
@@ -130,7 +133,12 @@ viewArtistInformation artist =
                     [ HA.class "sm:text-base text-sm text-textLight mb-8 max-w-[50ch]" ]
                     [ Html.text artist.aboutMe ]
                 ]
-            , Html.img [ HA.src artist.profileImgUrl, HA.class "h-80" ] []
+            , Html.img 
+                [ HA.src artist.profileImgUrl
+                , HA.alt ("A portrait of " ++ artist.name ++ ".")
+                , HA.class "h-80" 
+                ] 
+                []
             ]
         ]
 
@@ -138,9 +146,9 @@ viewArtistInformation artist =
 viewList : String -> List String -> Html Msg
 viewList label list =
     Html.ul
-        [ HA.class "flex flex-wrap gap-4" ]
+        [ HA.class "flex flex-wrap gap-4 h-fit" ]
         (Html.h4
-            [ HA.class "mb-4 font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
+            [ HA.class "font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
             [ Html.text label ]
             :: List.map viewListChip list
         )

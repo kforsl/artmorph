@@ -55,6 +55,7 @@ viewArtistCard x artist artworks =
         ]
         [ Html.img
             [ HA.src artist.profileImgUrl
+            , HA.alt ("A portrait of " ++ artist.name ++ ".")
             , HA.class "max-w-64 col-span-4 w-full row-span-2 rounded place-self-center"
             ]
             []
@@ -79,8 +80,14 @@ viewArtistPreviewImages artistId artworks =
                 |> List.filter (\artwork -> artwork.artist.id == artistId)
                 |> List.take 3
 
+        generateImage : Artwork -> Html Msg
         generateImage artwork =
-            Html.img [ HA.src artwork.imageUrl, HA.class "max-w-52 w-full rounded" ] []
+            Html.img 
+                [ HA.src artwork.imageUrl
+                , HA.alt artwork.description
+                , HA.class "max-w-52 w-full rounded" 
+                ] 
+                []
     in
     Html.figure
         [ HA.class "col-span-full grid gap-2 col-start-5 grid-cols-3 place-content-center md:p-0 p-4" ]

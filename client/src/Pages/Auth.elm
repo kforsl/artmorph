@@ -101,7 +101,7 @@ view model navigationKey =
                             [ Html.label []
                                 [ Html.text "Email"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
+                                    [ HA.class "w-full bg-bgLight rounded pl-2 py-2"
                                     , HA.required True
                                     ]
                                     []
@@ -109,7 +109,7 @@ view model navigationKey =
                             , Html.label []
                                 [ Html.text "Password"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
+                                    [ HA.class "w-full bg-bgLight rounded pl-2 py-2"
                                     , HA.type_ "password"
                                     , HA.required True
                                     ]
@@ -128,22 +128,22 @@ view model navigationKey =
                         , case model.formState of
                             Resting ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                                     [ Html.text "Sign In" ]
 
                             Loading ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight" ]
                                     [ Html.text "Loading . . ." ]
 
                             Success ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight" ]
                                     [ Html.text "Success" ]
 
                             Error ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                                     [ Html.text "Sign In" ]
                         ]
                     ]
@@ -167,7 +167,7 @@ view model navigationKey =
                             [ Html.label []
                                 [ Html.text "Email"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
+                                    [ HA.class "w-full bg-bgLight rounded pl-2 py-2"
                                     , HA.required True
                                     ]
                                     []
@@ -175,7 +175,7 @@ view model navigationKey =
                             , Html.label []
                                 [ Html.text "Password"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
+                                    [ HA.class "w-full bg-bgLight rounded pl-2 py-2"
                                     , HA.type_ "password"
                                     , HA.required True
                                     ]
@@ -184,7 +184,7 @@ view model navigationKey =
                             , Html.label []
                                 [ Html.text "Repeat Password"
                                 , Html.input
-                                    [ HA.class "w-full bg-bgLight rounded-lg pl-2 py-2"
+                                    [ HA.class "w-full bg-bgLight rounded pl-2 py-2"
                                     , HA.type_ "password"
                                     , HA.required True
                                     ]
@@ -203,22 +203,22 @@ view model navigationKey =
                         , case model.formState of
                             Resting ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                                     [ Html.text "Register" ]
 
                             Loading ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight" ]
                                     [ Html.text "Loading . . ." ]
 
                             Success ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight" ]
                                     [ Html.text "Success" ]
 
                             Error ->
                                 Html.button
-                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded-2xl font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                                    [ HA.class "text-nowrap text-sm py-2 px-4 bg-secondary rounded font-bold ml-auto w-fit text-textLight hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                                     [ Html.text "Register" ]
                         ]
                     ]

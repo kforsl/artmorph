@@ -4,11 +4,13 @@ import Api.Artist exposing (Artist)
 import Api.Exhibitions exposing (Exhibition, ExhibitionArtwork)
 import Html exposing (Html)
 import Html.Attributes as HA
+import Components.Carousel
 
 
 type alias Model =
     { exhibitionData : List Exhibition
     , artistData : List Artist
+    , carouselModel : Components.Carousel.Model
     }
 
 
@@ -16,18 +18,28 @@ initModel : Model
 initModel =
     { exhibitionData = []
     , artistData = []
+    , carouselModel = Components.Carousel.init
     }
 
 
 type Msg
     = None
-
+    | MsgCarousel Components.Carousel.Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         None ->
             ( model, Cmd.none )
+
+        MsgCarousel msgCarousel -> 
+            let
+                ( newCarouselModel, cmdCarousel ) = 
+                    Components.Carousel.update msgCarousel model.carouselModel   
+            in
+            ( { model | carouselModel = newCarouselModel } , Cmd.map MsgCarousel cmdCarousel)
+
+
 
 
 view : Model -> String -> Html Msg
@@ -42,7 +54,7 @@ view model id =
                 [ viewHero exhibition
                 , viewArtworks exhibition.artworks
                 , viewCreatedBy exhibition.artworks model.artistData
-                , viewOtherExhibitions otherExhibitions
+                , Html.map MsgCarousel (Components.Carousel.view model.carouselModel otherExhibitions)
                 ]
 
         Nothing ->
@@ -54,7 +66,12 @@ viewHero exhibition =
     Html.section [ HA.class "bg-bgDark relative z-0 bg-text h-fit" ]
         [ Html.div
             [ HA.class "max-w-maxWidth m-auto grid md:grid-cols-3 gap-8 grid-cols-2 sm:py-24 px-4 py-8" ]
-            [ Html.img [ HA.src exhibition.thumbnailUrl, HA.class "md:col-span-1 col-span-full md:row-span-2 mx-auto" ] []
+            [ Html.img 
+                [ HA.src exhibition.thumbnailUrl
+                , HA.alt exhibition.description
+                , HA.class "md:col-span-1 col-span-full md:row-span-2 mx-auto" 
+                ] 
+                []
             , Html.section [ HA.class "p-4 md:col-span-2 col-span-full" ]
                 [ Html.h2
                     [ HA.class "font-title text-primary mb-4 lg:text-5xl sm:text-3xl text-xl" ]
@@ -121,6 +138,7 @@ viewArtworkCard x artwork =
             ]
         , Html.img
             [ HA.src artwork.imageUrl
+            , HA.alt artwork.description
             , HA.class "place-self-center"
             ]
             []
@@ -157,13 +175,14 @@ viewCreatedBy artworks artists =
 viewArtistCard : Artist -> Html Msg
 viewArtistCard artist =
     Html.article
-        [ HA.class "max-w-44 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
+        [ HA.class "sm:max-w-44 max-w-36 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
         [ Html.h3
             [ HA.class "font-title text-base text-textLight overflow-hidden text-ellipsis text-nowrap underline underline-offset-2"
             ]
             [ Html.text artist.name ]
         , Html.img
             [ HA.src artist.profileImgUrl
+            , HA.alt ("A portrait of " ++ artist.name ++ ".")
             , HA.class "rounded"
             ]
             []
@@ -174,48 +193,3 @@ viewArtistCard artist =
             []
         ]
 
-
-viewOtherExhibitions : List Exhibition -> Html Msg
-viewOtherExhibitions exhibitions =
-    Html.article
-        [ HA.class "max-w-maxWidth m-auto py-24 w-full" ]
-        [ Html.section
-            [ HA.class "flex flex-wrap justify-between" ]
-            [ Html.h2
-                [ HA.class "font-title md:text-3xl text-2xl mb-4 text-textDark col-span-full" ]
-                [ Html.text "Featured Exhibitions" ]
-            , Html.a
-                [ HA.href "/exhibitions"
-                , HA.class "place-self-center text-nowrap sm:text-base text-sm h-fit py-2.5 px-4 bg-primary   rounded-2xl font-bold hover:opacity-80 focus-within:opacity-80"
-                ]
-                [ Html.text "Checkout all our exhibitions" ]
-            ]
-        , Html.ul
-            [ HA.class "flex gap-4 overflow-x-scroll py-8" ]
-            (List.indexedMap
-                viewExhibitionCard
-                exhibitions
-            )
-        ]
-
-
-viewExhibitionCard : Int -> Exhibition -> Html Msg
-viewExhibitionCard x exhibition =
-    Html.li
-        [ HA.class "grid gap-0.5 relative p-1 hover:opacity-80 focus-within:opacity-80"
-        ]
-        [ Html.img
-            [ HA.src exhibition.thumbnailUrl
-            , HA.class "max-w-96 object-cover object-top rounded"
-            ]
-            []
-        , Html.p
-            [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap"
-            ]
-            [ Html.text exhibition.title ]
-        , Html.a
-            [ HA.href ("/exhibitions/" ++ exhibition.id)
-            , HA.class "absolute w-full h-full"
-            ]
-            []
-        ]

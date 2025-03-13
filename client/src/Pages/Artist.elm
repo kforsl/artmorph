@@ -64,7 +64,13 @@ viewArtistInformation artist =
                     [ HA.class "sm:text-base text-sm sm:mb-8 mb-4 text-textLight" ]
                     [ Html.text artist.aboutMe ]
                 ]
-            , Html.img [ HA.src artist.profileImgUrl, HA.class "md:col-span-1 col-span-full md:row-span-2 mx-auto" ] []
+            , Html.img 
+                [ HA.src artist.profileImgUrl
+                , HA.alt ("A portrait of " ++ artist.name ++ ".")
+
+                , HA.class "md:col-span-1 col-span-full md:row-span-2 mx-auto" 
+                ] 
+                []
             , Html.section
                 [ HA.class "grid gap-4 p-4 md:col-span-2 col-span-full sm:grid-cols-2" ]
                 [ viewList "Styles" artist.styles
@@ -138,7 +144,7 @@ viewArtworkCard x artwork =
 viewOtherArtists : List Artist -> Html Msg
 viewOtherArtists artists =
     Html.section
-        [ HA.class "max-w-maxWidth w-full m-auto py-16 border-b-2 border-bgDark px-4 py-8" ]
+        [ HA.class "max-w-maxWidth w-full m-auto py-16 px-4 py-8" ]
         [ Html.h2
             [ HA.class "font-title sm:text-3xl text-xl mb-8 text-textDark col-span-full" ]
             [ Html.text "The Minds Behind the Masterpieces" ]
@@ -151,7 +157,7 @@ viewOtherArtists artists =
 viewArtistCard : Artist -> Html Msg
 viewArtistCard artist =
     Html.article
-        [ HA.class "max-w-44 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
+        [ HA.class "sm:max-w-44 max-w-36 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
         [ Html.h3
             [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2"
             ]
