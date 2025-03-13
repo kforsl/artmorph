@@ -124,53 +124,6 @@ viewWelcome =
         ]
 
 
-viewExhibitions : List Exhibition -> Html Msg
-viewExhibitions exhibitions =
-    Html.article
-        [ HA.class "max-w-maxWidth m-auto py-24" ]
-        [ Html.section
-            [ HA.class "flex flex-wrap justify-between" ]
-            [ Html.h2
-                [ HA.class "font-title md:text-3xl text-2xl mb-4 text-textDark col-span-full" ]
-                [ Html.text "Featured Exhibitions" ]
-            , Html.a
-                [ HA.href "/exhibitions"
-                , HA.class "place-self-center text-nowrap sm:text-base text-sm h-fit py-2.5 px-4 bg-primary rounded font-bold hover:opacity-80 focus-within:opacity-80"
-                ]
-                [ Html.text "Checkout all our exhibitions" ]
-            ]
-        , Html.ul
-            [ HA.class "flex gap-4 overflow-x-scroll py-8" ]
-            (List.indexedMap
-                viewExhibitionCard
-                exhibitions
-            )
-        ]
-
-
-viewExhibitionCard : Int -> Exhibition -> Html Msg
-viewExhibitionCard x exhibition =
-    Html.li
-        [ HA.class "grid gap-0.5 relative p-1 hover:opacity-80 focus-within:opacity-80"
-        ]
-        [ Html.img
-            [ HA.src exhibition.thumbnailUrl
-            , HA.alt exhibition.description
-            , HA.class "max-w-96 object-cover object-top rounded"
-            ]
-            []
-        , Html.p
-            [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap"
-            ]
-            [ Html.text exhibition.title ]
-        , Html.a
-            [ HA.href ("/exhibitions/" ++ exhibition.id)
-            , HA.class "absolute w-full h-full"
-            ]
-            []
-        ]
-
-
 viewPictureOfTheMonth : List Artwork -> Html Msg
 viewPictureOfTheMonth artworks =
     let
@@ -228,7 +181,7 @@ viewArtist artists =
 viewArtistCard : Artist -> Html Msg
 viewArtistCard artist =
     Html.article
-        [ HA.class "max-w-44 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
+        [ HA.class "sm:max-w-44 max-w-36 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
         [ Html.h3
             [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2"
             ]
