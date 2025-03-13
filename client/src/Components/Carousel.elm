@@ -50,7 +50,7 @@ update msg model =
 view : Model -> List Exhibition -> Html Msg 
 view model exhibitions =
      Html.article
-        [ HA.class "max-w-maxWidth m-auto py-24" ]
+        [ HA.class "max-w-maxWidth w-full m-auto py-16 px-4 py-8" ]
         [ Html.section
             [ HA.class "flex flex-wrap justify-between mb-4" ]
             [ Html.h2
@@ -71,12 +71,12 @@ view model exhibitions =
                 ) 
                 [ Html.button 
                     [ HE.onClick (PrevCarouselItem (List.length exhibitions))
-                    , HA.class "absolute z-20 left-0 top-0 h-87 sm:w-1/6 p-2 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
+                    , HA.class "absolute z-20 left-0 top-0 h-87 sm:w-1/6 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
                     ] 
                     [ prevItemSvg ] 
                 , Html.button 
                     [ HE.onClick (NextCarouselItem (List.length exhibitions))
-                    , HA.class "absolute z-20 right-0 top-0 h-87 sm:w-1/6 p-2 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
+                    , HA.class "absolute z-20 right-0 top-0 h-87 sm:w-1/6 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
                     ]
                     [ nextItemSvg ]
                 ] 
