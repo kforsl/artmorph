@@ -159,6 +159,7 @@ update msg model =
                     , artworkData = model.modelHomePage.artworkData
                     , exhibitionData = model.modelHomePage.exhibitionData
                     , newsletterModel = model.modelHomePage.newsletterModel
+                    , carouselModel = model.modelHomePage.carouselModel
                     }
 
                 updatedArtistsPageModel =
@@ -219,6 +220,7 @@ update msg model =
                     , artworkData = newArtworkData
                     , exhibitionData = model.modelHomePage.exhibitionData
                     , newsletterModel = model.modelHomePage.newsletterModel
+                    , carouselModel = model.modelHomePage.carouselModel
                     }
 
                 updatedArtistPageModel =
@@ -271,6 +273,7 @@ update msg model =
                     , artworkData = model.modelHomePage.artworkData
                     , exhibitionData = newExhibitionsData
                     , newsletterModel = model.modelHomePage.newsletterModel
+                    , carouselModel = model.modelHomePage.carouselModel
                     }
 
                 updatedExhibitionsPageModel =

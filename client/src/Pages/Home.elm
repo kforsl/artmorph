@@ -5,6 +5,7 @@ import Api.Artwork exposing (Artwork)
 import Api.Exhibitions exposing (Exhibition)
 import Array
 import Components.Newsletter
+import Components.Carousel 
 import Html exposing (Html)
 import Html.Attributes as HA
 
@@ -14,6 +15,7 @@ type alias Model =
     , artworkData : List Artwork
     , exhibitionData : List Exhibition
     , newsletterModel : Components.Newsletter.Model
+    , carouselModel : Components.Carousel.Model
     }
 
 
@@ -23,22 +25,30 @@ initModel =
     , artworkData = []
     , exhibitionData = []
     , newsletterModel = Components.Newsletter.initModel
+    , carouselModel = Components.Carousel.init
     }
 
 
 type Msg
     = MsgNewsletterSubmit Components.Newsletter.Msg
-
+    | MsgCarousel Components.Carousel.Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MsgNewsletterSubmit msgArtworkPage ->
+        MsgNewsletterSubmit msgNewsletter ->
             let
                 ( newNewsletterModel, cmdNewsletter ) =
-                    Components.Newsletter.update msgArtworkPage Components.Newsletter.initModel
+                    Components.Newsletter.update msgNewsletter Components.Newsletter.initModel
             in
             ( { model | newsletterModel = newNewsletterModel } , Cmd.map MsgNewsletterSubmit cmdNewsletter )
+        MsgCarousel msgCarousel -> 
+            let
+                ( newCarouselModel, cmdCarousel ) = 
+                    Components.Carousel.update msgCarousel model.carouselModel   
+            in
+            ( { model | carouselModel = newCarouselModel } , Cmd.map MsgCarousel cmdCarousel)
+
 
 
 view : Model -> Html Msg
@@ -46,8 +56,8 @@ view model =
     Html.main_ [ HA.class "bg-bgLight" ]
         [ viewHero
         , viewWelcome
-        , viewExhibitions model.exhibitionData
-        , viewPictureOfTheMonth model.artworkData
+        , Html.map MsgCarousel (Components.Carousel.view model.carouselModel model.exhibitionData)
+        , viewPictureOfTheMonth model.artworkData 
         , viewArtist model.artistData
         , Html.map MsgNewsletterSubmit (Components.Newsletter.view model.newsletterModel)
         ]
