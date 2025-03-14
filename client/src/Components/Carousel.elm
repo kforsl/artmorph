@@ -9,13 +9,20 @@ import Svg.Attributes as SA
 import Html.Extra
 
 type alias Model = 
-    { activeCarouselItemIndex : Int
+    { activeItemIndex : Int
     }
 
 init : Model 
 init = 
-    { activeCarouselItemIndex = 0
+    { activeItemIndex = 0
     }
+
+
+type alias CarouselIndexInfo =
+        { lastIndex : Int
+        , activeIndex : Int
+        }
+
 
 type Msg 
     = NextCarouselItem Int
@@ -28,37 +35,44 @@ update msg model =
         NextCarouselItem maxIndex -> 
             let
                 newActiveIndex = 
-                    if (model.activeCarouselItemIndex < (maxIndex - 1) ) then
-                            model.activeCarouselItemIndex + 1
+                    if (model.activeItemIndex < (maxIndex - 1) ) then
+                            model.activeItemIndex + 1
                     else
                             0
             in
-            ( { model | activeCarouselItemIndex = newActiveIndex } , Cmd.none)
+            ( { model | activeItemIndex = newActiveIndex } , Cmd.none)
 
         PrevCarouselItem maxIndex-> 
             let
                 newActiveIndex = 
-                    if (model.activeCarouselItemIndex == 0 ) then 
+                    if (model.activeItemIndex == 0 ) then 
                         (maxIndex - 1)
                     else 
-                        model.activeCarouselItemIndex - 1
+                        model.activeItemIndex - 1
                     
             in
-            ( { model | activeCarouselItemIndex = newActiveIndex } , Cmd.none)
+            ( { model | activeItemIndex = newActiveIndex } , Cmd.none)
 
 
 view : Model -> List Exhibition -> Html Msg 
 view model exhibitions =
+    let
+        carouselIndexInfo : CarouselIndexInfo
+        carouselIndexInfo = 
+            { lastIndex = List.length exhibitions - 1
+            , activeIndex = model.activeItemIndex
+            }
+    in
      Html.article
         [ HA.class "max-w-maxWidth w-full m-auto py-16 px-4 py-8" ]
         [ Html.section
-            [ HA.class "flex flex-wrap justify-between mb-4" ]
+            [ HA.class "flex flex-wrap sm:justify-between justify-center mb-8" ]
             [ Html.h2
                 [ HA.class "font-title md:text-3xl text-2xl mb-4 text-textDark col-span-full" ]
                 [ Html.text "Featured Exhibitions" ]
             , Html.a
                 [ HA.href "/exhibitions"
-                , HA.class "place-self-center text-nowrap sm:text-base text-sm h-fit py-2.5 px-4 bg-primary rounded font-bold hover:opacity-80 focus-within:opacity-80"
+                , HA.class "place-self-center text-nowrap sm:text-base text-xs h-fit py-2.5 px-4 bg-primary rounded font-bold hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Checkout all our exhibitions" ]
             ]
@@ -66,7 +80,7 @@ view model exhibitions =
             [ HA.class "relative h-87 perspective-normal perspective-origin-top-center transition ease-in-out duration-200" ]
             ( List.append 
                 (List.indexedMap
-                    (\x exhibition -> viewExhibitionCard x model.activeCarouselItemIndex exhibition  )
+                    (\x exhibition -> viewExhibitionCard x carouselIndexInfo exhibition  )
                     exhibitions
                 ) 
                 [ Html.button 
@@ -84,17 +98,61 @@ view model exhibitions =
         ]
 
 
-viewExhibitionCard : Int -> Int -> Exhibition -> Html Msg
-viewExhibitionCard x activeIndex exhibition =
+viewExhibitionCard : Int -> CarouselIndexInfo -> Exhibition -> Html Msg
+viewExhibitionCard x {lastIndex, activeIndex} exhibition =
+    let 
+        isHiddenItem = 
+            x /= activeIndex 
+            && not isNextItem 
+            && not isLastRightItem 
+            && not isPrevItem
+            && not isLastLeftItem
+
+        isNextItem = 
+            if (activeIndex /= x && activeIndex == lastIndex && x == 0 ) then 
+                True
+            else if (x == activeIndex + 1) then 
+                True 
+            else 
+                False 
+
+        isLastRightItem =
+            if (activeIndex /= x && activeIndex == lastIndex && x == 1 ) then 
+                True
+            else if (activeIndex /= x && activeIndex == lastIndex - 1 && x == 0  ) then 
+                True
+            else if (x == activeIndex + 2) then 
+                True
+            else 
+                False
+
+        isPrevItem = 
+            if (activeIndex /= x && activeIndex == 0 && x == lastIndex ) then 
+                True
+            else if (x == activeIndex - 1) then 
+                True 
+            else 
+                False
+
+        isLastLeftItem = 
+            if (activeIndex /= x && activeIndex == 0 && x == lastIndex - 1 ) then 
+                True
+            else if (activeIndex /= x && activeIndex == 1 && x == lastIndex  ) then 
+                True
+            else if (x == activeIndex - 2) then 
+                True
+            else 
+                False
+    in 
     Html.li
-        [ HA.class ("p-1 -translate-x-1/2 absolute sm:max-w-md max-w-xs hover:opacity-80 focus-within:opacity-80 pointer-event-none") 
+        [ HA.class ("p-1 -translate-x-1/2 absolute sm:max-w-md max-w-xs ") 
         , HA.classList 
-            [ ("hidden", ( x /= activeIndex && (x > ( activeIndex + 2 ) || x < (activeIndex - 2))) )
-            , ("top-0 left-1/2 z-20 pointer-event-auto", x == activeIndex )
-            , ("top-0 left-3/4 z-10 -rotate-y-40 origin-right -translate-z-50", x == activeIndex + 1 )
-            , ("top-0 left-1/4 z-10 rotate-y-40 origin-left -translate-z-50", x == activeIndex - 1 )
-            , ("top-0 left-full -rotate-y-90 origin-right -translate-z-100", x == activeIndex + 2 )
-            , ("top-0 left-0 rotate-y-90 origin-left -translate-z-100", x == activeIndex - 2 )
+            [ ("hidden ", isHiddenItem)
+            , ("top-0 left-1/2 z-20 pointer-event-auto hover:opacity-80 focus-within:opacity-80 pointer-event-none", x == activeIndex )
+            , ("top-0 left-3/4 z-10 -rotate-y-40 origin-right -translate-z-50", isNextItem)
+            , ("top-0 left-1/4 z-10 rotate-y-40 origin-left -translate-z-50", isPrevItem)
+            , ("top-0 left-full -rotate-y-90 origin-right -translate-z-100", isLastRightItem)
+            , ("top-0 left-0 rotate-y-90 origin-left -translate-z-100", isLastLeftItem )
             ]
         ]
         [ Html.img
