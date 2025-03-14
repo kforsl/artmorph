@@ -89,34 +89,34 @@ view model =
                 , case model.formState of
                     Resting ->
                         Html.button
-                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                            [ HA.class "text-nowrap sm:text-sm text-xs py-2 px-4 bg-primary rounded font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                             [ Html.text "Subscribe Now" ]
 
                     Loading ->
                         Html.button
-                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded font-bold" ]
+                            [ HA.class "text-nowrap sm:text-sm text-xs py-2 px-4 bg-primary rounded font-bold" ]
                             [ Html.text "Loading . . ." ]
 
                     Success ->
                         Html.button
-                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded font-bold" ]
+                            [ HA.class "text-nowrap sm:text-sm text-xs py-2 px-4 bg-primary rounded font-bold" ]
                             [ Html.text "Success" ]
 
                     Error ->
                         Html.button
-                            [ HA.class "text-nowrap text-sm py-2 px-4 bg-primary rounded font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
+                            [ HA.class "text-nowrap sm:text-sm text-xs py-2 px-4 bg-primary rounded font-bold hover:opacity-80 focus-within:opacity-80 cursor-pointer" ]
                             [ Html.text "Subscribe Now" ]
                 ]
             , Html.nav
-                [ HA.class "flex justify-around" ]
+                [ HA.class "flex flex-wrap justify-around" ]
                 [ Html.a
                     [ HA.href "/exhibitions"
-                    , HA.class "font-title text-base mb-2 overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer p-2 hover:text-primary focus-within:text-primary"
+                    , HA.class "font-title sm:text-base text-sm mb-2 overflow-hidden text-nowrap underline underline-offset-2 cursor-pointer p-2 hover:text-primary focus-within:text-primary"
                     ]
                     [ Html.text "Start Exploring Exhibitions" ]
                 , Html.a
                     [ HA.href "/artists"
-                    , HA.class "font-title text-base mb-2 overflow-hidden text-ellipsis text-nowrap underline underline-offset-2 cursor-pointer p-2 hover:text-primary focus-within:text-primary"
+                    , HA.class "font-title sm:text-base text-sm mb-2 overflow-hidden text-nowrap underline underline-offset-2 cursor-pointer p-2 hover:text-primary focus-within:text-primary"
                     ]
                     [ Html.text "Check out our creators" ]
                 ]

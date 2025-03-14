@@ -49,7 +49,7 @@ viewExhibition model =
 viewExhibitionCard : Int -> Exhibition -> Html Msg
 viewExhibitionCard x exhibition =
     Html.article
-        [ HA.class ("grid grid-cols-12 md:p-4 gap-2 rounded bg-bgLight relative group hover:opacity-80 focus-within:opacity-80 md:row-span-2 md:row-start-" ++ String.fromInt (x + 1))
+        [ HA.class ("grid grid-cols-12 md:p-4 px-2 gap-2 rounded bg-bgLight relative group hover:opacity-80 focus-within:opacity-80 md:row-span-2 md:row-start-" ++ String.fromInt (x + 1))
         ]
         [ Html.img
             [ HA.src exhibition.thumbnailUrl

@@ -45,12 +45,14 @@ main {
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: 80%;
+  background-size: contain;
 }
 
 .bg-footer-text {
   background-image: url(./assets/images/bg-footer-text.svg);
   background-repeat: no-repeat;
   background-position: center 85%;
+  background-size: contain;
 }
 
 .loading {
