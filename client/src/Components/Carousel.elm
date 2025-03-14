@@ -161,6 +161,15 @@ viewExhibitionCard x {lastIndex, activeIndex} exhibition =
             , HA.class "max-w-3xs object-cover object-top rounded"
             ]
             []
+        , (Html.Extra.viewIf
+            (x == activeIndex)
+            ( Html.h3 
+                [ HA.class "absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-center text-nowrap font-title sm:text-base text-sm"
+                ]
+                [ Html.text exhibition.title
+                ]
+            )
+          )
         , (Html.Extra.viewIf 
             (x == activeIndex) 
             ( Html.a
