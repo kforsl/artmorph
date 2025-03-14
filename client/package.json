@@ -4,12 +4,13 @@
   "description": "",
   "main": "dist/elm.js",
   "scripts": {
-    "dev": "npx @tailwindcss/cli -i ./dist/index.css -o ./dist/output.css && elm-live src/Main.elm --pushstate --dir=dist -- --output=dist/elm.js --debug",
+    "dev": "concurrently \"npx @tailwindcss/cli -i ./dist/index.css -o ./dist/output.css --watch\" \"elm-live src/Main.elm --pushstate --dir=dist -- --output=dist/elm.js --debug\"",
     "build": "elm make src/Main.elm --optimize --output=dist/elm.js && npx @tailwindcss/cli -i ./dist/index.css -o ./dist/output.css"
   },
   "author": "Kim Forslund",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "elm": "^0.19.1-6",
     "elm-live": "^4.0.2"
   },
