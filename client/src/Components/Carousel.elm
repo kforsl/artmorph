@@ -178,6 +178,7 @@ viewExhibitionCard x {lastIndex, activeIndex} exhibition =
             ( Html.a
                 [ HA.href ("/exhibitions/" ++ exhibition.id)
                 , HA.class "absolute w-full h-full top-0 left-0"
+                , Aria.ariaLabel ("Navigate to " ++ exhibition.title ++ " page.")
                 ]
                 []
             )
