@@ -4,6 +4,7 @@ import Api.Artist exposing (Artist)
 import Components.Newsletter
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Attributes.Aria as Aria
 import Html.Events as HE
 import Process
 import Svg exposing (Svg)
@@ -73,7 +74,8 @@ sendToSelfWithDelay delay msg =
 
 view : Model -> Html Msg
 view model =
-    Html.main_ []
+    Html.main_ 
+        []
         [ viewHero
         , viewAbout
         , viewArtists model.artistData
@@ -173,7 +175,7 @@ viewArtists artists =
 viewArtistCard : Int -> Artist -> Html Msg
 viewArtistCard x artist =
     if x < 2 then
-        Html.article
+        Html.li
             [ HA.class "max-w-44 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
             [ Html.h3
                 [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2"
@@ -187,6 +189,7 @@ viewArtistCard x artist =
                 []
             , Html.a
                 [ HA.href ("/artists/" ++ artist.id)
+                , Aria.ariaLabel ("Navigate to " ++ artist.name ++ " page.")
                 , HA.class "h-full w-full absolute top-0 left-0"
                 ]
                 []
@@ -216,20 +219,23 @@ viewExhibitions =
                 [ Html.p
                     [ HA.class "sm:text-base text-sm mb-4 leading-7" ]
                     [ Html.text "Step into a world where art transforms, history whispers, nature comes alive, and the unseen takes shape. Each Artmorph exhibition is a curated collection that explores unique themes and artistic expressions. Immerse yourself in creativity and discover stories told through brushstrokes, textures, and imagination." ]
-                , Html.ul
-                    [ HA.class "sm:text-base text-sm list-disc md:mb-8 md:ml-8 mb-4 ml-4 leading-relaxed" ]
+                , Html.section
+                    [ HA.class "sm:text-base text-sm md:mb-8 md:ml-8 mb-4" ]
                     [ Html.h3
                         [ HA.class "text-base" ]
                         [ Html.text "Current Highlights:" ]
-                    , Html.li
-                        [ HA.class "ml-8" ]
-                        [ Html.text "“Metamorphosis: The Art of Transformation”" ]
-                    , Html.li
-                        [ HA.class "ml-8" ]
-                        [ Html.text "“Whispers Through Time: Art Echoing History”" ]
-                    , Html.li
-                        [ HA.class "ml-8" ]
-                        [ Html.text "“Nature Reimagined: The Soul of the Wild”" ]
+                    , Html.ul 
+                        [ HA.class "list-disc ml-4 leading-relaxed" ]
+                        [ Html.li
+                            [ HA.class "ml-8" ]
+                            [ Html.text "“Metamorphosis: The Art of Transformation”" ]
+                        , Html.li
+                            [ HA.class "ml-8" ]
+                            [ Html.text "“Whispers Through Time: Art Echoing History”" ]
+                        , Html.li
+                            [ HA.class "ml-8" ]
+                            [ Html.text "“Nature Reimagined: The Soul of the Wild”" ]
+                        ]
                     ]
                 , Html.p
                     [ HA.class "sm:text-base text-sm mb-2" ]
@@ -304,20 +310,22 @@ viewContact model =
                 [ HA.class "sm:text-base text-sm text-textDark mb-4 leading-7" ]
                 [ Html.text "Have questions, collaboration ideas, or just want to learn more about Artmorph? We'd love to hear from you! Reach out via email, phone, or visit us at our studio. Fill out the form, and we'll get back to you as soon as possible."
                 ]
-            , Html.ul
+            , Html.section
                 [ HA.class "mb-8 sm:text-sm text-xs" ]
                 [ Html.h3
                     [ HA.class "font-title text-2xl text-center mb-4" ]
                     [ Html.text "Contact Details:" ]
-                , Html.li
-                    [ HA.class "flex gap-4 items-center uppercase" ]
-                    [ Svg.svg
-                        [ SA.fill "none"
-                        , SA.viewBox "0 0 24 24"
-                        , SA.strokeWidth "1.5"
-                        , SA.stroke "currentColor"
-                        , SA.class "size-6"
-                        ]
+                , Html.ul 
+                    []
+                    [ Html.li
+                        [ HA.class "flex gap-4 items-center uppercase" ]
+                        [ Svg.svg
+                            [ SA.fill "none"
+                            , SA.viewBox "0 0 24 24"
+                            , SA.strokeWidth "1.5"
+                            , SA.stroke "currentColor"
+                            , SA.class "size-6"
+                            ]
                         [ Svg.path
                             [ SA.strokeLinecap "round"
                             , SA.strokeLinejoin "round"
@@ -384,6 +392,7 @@ viewContact model =
                         []
                         [ Html.text "+123 456 7890" ]
                     ]
+                ]
                 ]
             , Html.p
                 [ HA.class "sm:text-base text-sm text-textDark leading-7" ]
