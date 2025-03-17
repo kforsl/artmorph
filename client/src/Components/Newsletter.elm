@@ -2,6 +2,7 @@ module Components.Newsletter exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Attributes.Aria as Aria
 import Html.Events as HE
 import Process
 import Task
@@ -83,6 +84,7 @@ view model =
                 [ Html.input
                     [ HA.class "w-full bg-textLight rounded pl-2 py-2"
                     , HA.placeholder "John.Doe@mail.com"
+                    , Aria.ariaLabel "Email"
                     , HA.required True
                     ]
                     []
