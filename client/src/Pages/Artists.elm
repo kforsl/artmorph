@@ -4,7 +4,7 @@ import Api.Artist exposing (Artist)
 import Api.Artwork exposing (Artwork)
 import Html exposing (Html)
 import Html.Attributes as HA
-
+import Html.Attributes.Aria as Aria
 
 type alias Model =
     { artistData : List Artist
@@ -65,6 +65,7 @@ viewArtistCard x artist artworks =
         , viewArtistPreviewImages artist.id artworks
         , Html.a
             [ HA.href ("/artists/" ++ artist.id)
+            , Aria.ariaLabel ("Navigate to " ++ artist.name ++ " page.") 
             , HA.class "absolute p-4 top-0 left-0 h-full w-full"
             ]
             []

@@ -8,7 +8,6 @@ import Components.Newsletter
 import Components.Carousel 
 import Html exposing (Html)
 import Html.Attributes as HA
-import Html.Attributes.Aria exposing (ariaLabel)
 import Html.Attributes.Aria as Aria
 
 
@@ -122,7 +121,7 @@ viewWelcome =
                 [ Html.text "Art is a living, breathing force — constantly shifting, transforming, and telling new stories. At Artmorph, we curate immersive online exhibitions that celebrate this evolution. From the echoes of history to the boundless realms of imagination, each collection invites you to see the world through a new artistic lens. Explore, experience, and let creativity reshape your perspective." ]
             , Html.a
                 [ HA.href "/about"
-                , ariaLabel "Navigate to About page"
+                , Aria.ariaLabel "Navigate to About page"
                 , HA.class "underline underline-offset-2 text-primary cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Discover More About Us" ]
