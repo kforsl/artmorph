@@ -28,12 +28,14 @@
         --text-sizeBg: 304px;
 }
 
-html, body, main {
+html, body  {
     height : 100%; 
 }
 
 main {
-  font-family: "Inter";
+    min-height: fit-content;
+    height: 100%;
+    font-family: "Inter";
 }
 
 .bg-light-text {
