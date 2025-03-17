@@ -93,7 +93,7 @@ viewHero =
             [ Html.figure
                 [ HA.class "w-full grid place-content-end lg:col-span-5 col-span-6" ]
                 [ Html.img
-                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-hero.png"
+                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-hero.webp"
                     , HA.alt "A surreal digital painting of a woman in high heels and a flowing black dress, seamlessly blending into an abstract artwork behind her. The painting features swirling clouds and geometric patterns in shades of blue and white, creating a dreamlike and futuristic effect. The woman's silhouette appears partially transparent, merging with the artwork as if she is becoming part of the painting."
                     , HA.class "rounded w-fill"
                     ]
@@ -138,7 +138,7 @@ viewAbout =
                 [ Html.text """Every piece featured here is a reflection of this vision—a celebration of artistic evolution in all its forms. Welcome to Artmorph, where art never stays still.""" ]
             ]
         , Html.img
-            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about.png"
+            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about.webp"
             , HA.alt "A vibrant abstract painting depicting four diverse hands reaching towards each other over a body of water. The hands, each with different skin tones and artistic textures, appear to be touching or interacting with the rippling surface, creating dynamic reflections and distortions. The composition conveys themes of unity, connection, and diversity."
             , HA.class "w-full sm:col-span-5 col-span-6 rounded"
             ]
@@ -206,7 +206,7 @@ viewExhibitions =
                 [ HA.class "font-title sm:text-3xl text-xl sm:mb-6 mb-4 text-primary md:col-span-12 col-span-2" ]
                 [ Html.text "Exploring Creativity Through Exhibitions" ]
             , Html.img
-                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-exhibition.png"
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-exhibition.webp"
                 , HA.alt "Abstract collage with black ink splashes, torn photos, and textured paint in blue, beige, and black tones."
                 , HA.class "w-full md:col-span-5 col-span-2 mx-auto"
                 ]

@@ -72,14 +72,14 @@ viewHero =
         [ Html.div
             [ HA.class "max-w-maxWidth w-full h-full m-auto grid md:grid-cols-12 grid-cols-7 md:grid-rows-2 grid-rows-3 gap-4 px-4" ]
             [ Html.img
-                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-hero.png"
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-hero.webp"
                 , HA.alt "Surreal artwork of a human face split into colorful, abstract sections blending gold, purple, blue, and cream hues with fluid, melting textures."
                 , HA.attribute "loading" "lazy"
                 , HA.class "object-contain max-h-full overflow-hidden rounded md:col-span-5 sm:col-span-4 col-span-6 md:row-start-1 row-span-2 self-end row-start-2 md:col-start-1 col-start-1"
                 ]
                 []
             , Html.img
-                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-secondary-hero.png"
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-secondary-hero.webp"
                 , HA.alt "A hand with paint on fingers touches a colorful, swirling abstract painting, creating an impression of interaction between the hand and the art."
                 , HA.attribute "loading" "lazy"
                 , HA.class "object-contain z-10 max-h-full rounded md:col-span-3 sm:col-span-2 md:col-start-5 col-start-5 md:row-start-2 row-start-3 w-full col-span-3"
@@ -106,7 +106,7 @@ viewWelcome =
     Html.article
         [ HA.class "max-w-maxWidth w-full m-auto sm:pt-12 sm:pb-24 grid sm:grid-cols-12 sm:gap-0 gap-4 grid-cols-6 border-b-2 border-bgDark md:px-4 px-4 py-8" ]
         [ Html.img
-            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/welcome.png"
+            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/welcome.webp"
             , HA.alt "A vibrant painting featuring a colorful door set against a lively, multicolored background."
             , HA.attribute "loading" "lazy"
             , HA.class "w-full sm:col-span-5 col-span-6 rounded"

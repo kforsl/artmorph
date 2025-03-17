@@ -21,7 +21,7 @@ view model =
         [ Html.section
             [ HA.class "max-w-maxWidth grid m-auto md:grid-cols-3 sm:grid-cols-2 sm:grid-rows-1 grid-cols-1 grid-rows-2 h-full" ]
             [ Html.img
-                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/error.png"
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/error.webp"
                 , HA.alt "A friendly but confused-looking monster, digitally painted, stands in the middel of a chaotic scene. The creature has large, expressive eyes, a goofy grin, and multiple arms holding tangled wires."
                 , HA.class "max-h-full place-self-center"
                 ]
