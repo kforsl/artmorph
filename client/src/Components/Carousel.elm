@@ -77,7 +77,7 @@ view model exhibitions =
                 ]
                 [ Html.text "Checkout all our exhibitions" ]
             ]
-        , Html.ul
+        , Html.section
             [ HA.class "relative h-87 perspective-normal perspective-origin-top-center transition ease-in-out duration-200" ]
             ( List.append 
                 (List.indexedMap
@@ -147,7 +147,7 @@ viewExhibitionCard x {lastIndex, activeIndex} exhibition =
             else 
                 False
     in 
-    Html.li
+    Html.article
         [ HA.class ("p-1 -translate-x-1/2 absolute sm:max-w-md max-w-xs ") 
         , HA.classList 
             [ ("hidden ", isHiddenItem)

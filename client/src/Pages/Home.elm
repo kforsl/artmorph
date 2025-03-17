@@ -184,7 +184,7 @@ viewArtist artists =
 
 viewArtistCard : Artist -> Html Msg
 viewArtistCard artist =
-    Html.article
+    Html.li
         [ HA.class "sm:max-w-44 max-w-36 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
         [ Html.h3
             [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2"
