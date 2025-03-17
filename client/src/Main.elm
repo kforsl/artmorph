@@ -402,7 +402,7 @@ view model =
 
 viewContent : Model -> Html Msg
 viewContent model =
-    Html.div [ HA.class "bg-bgLight max-w-screen overflow-x-hidden" ]
+    Html.div [ HA.class "bg-bgLight h-full max-w-screen overflow-x-hidden" ]
         [ Html.Extra.viewIf model.isHeaderShowing
             (Html.map MsgHeader (Components.Header.view model.modelHeader))
 

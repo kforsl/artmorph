@@ -28,6 +28,9 @@
         --text-sizeBg: 304px;
 }
 
+html, body, main {
+    height : 100%; 
+}
 
 main {
   font-family: "Inter";
