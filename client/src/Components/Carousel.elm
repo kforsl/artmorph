@@ -2,6 +2,7 @@ module Components.Carousel exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Attributes.Aria as Aria
 import Html.Events as HE
 import Api.Exhibitions exposing (Exhibition)
 import Svg
@@ -86,11 +87,13 @@ view model exhibitions =
                 [ Html.button 
                     [ HE.onClick (PrevCarouselItem (List.length exhibitions))
                     , HA.class "absolute z-20 left-0 top-0 h-87 sm:w-1/6 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
+                    , Aria.ariaLabel "Previous"
                     ] 
                     [ prevItemSvg ] 
                 , Html.button 
                     [ HE.onClick (NextCarouselItem (List.length exhibitions))
                     , HA.class "absolute z-20 right-0 top-0 h-87 sm:w-1/6 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
+                    , Aria.ariaLabel "Next"
                     ]
                     [ nextItemSvg ]
                 ] 
