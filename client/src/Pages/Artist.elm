@@ -4,7 +4,7 @@ import Api.Artist exposing (Artist)
 import Api.Artwork exposing (Artwork)
 import Html exposing (Html)
 import Html.Attributes as HA
-
+import Html.Attributes.Aria as Aria
 
 type alias Model =
     { artistData : List Artist
@@ -73,21 +73,24 @@ viewArtistInformation artist =
                 []
             , Html.section
                 [ HA.class "grid gap-4 p-4 md:col-span-2 col-span-full sm:grid-cols-2" ]
-                [ viewList "Styles" artist.styles
-                , viewList "Mediums" artist.mediums
-                ]
+                [ Html.h3 
+                    [ HA.class "font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ] 
+                    [ Html.text "Styles" ] 
+                , Html.h3 
+                    [ HA.class "font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ] 
+                    [ Html.text "Mediums"]
+                , viewList artist.styles
+                , viewList artist.mediums
+                ] 
             ]
         ]
 
 
-viewList : String -> List String -> Html Msg
-viewList label list =
+viewList : List String -> Html Msg
+viewList list =
     Html.ul
         [ HA.class "flex flex-wrap gap-4" ]
-        (Html.h4
-            [ HA.class "mb-4 font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
-            [ Html.text label ]
-            :: List.map viewListChip list
+        ( List.map viewListChip list
         )
 
 
@@ -111,8 +114,7 @@ viewArtworkCard x artwork =
         [ HA.class ("grid grid-cols-2 gap-4 relative p-2 group hover:opacity-80 focus-within:opacity-80 row-span-2 md:row-start-" ++ String.fromInt (x + 1))
         ]
         [ Html.section
-            [ HA.href ("/artwork/" ++ artwork.id)
-            , HA.class "grid justify-between"
+            [ HA.class "grid justify-between"
             , HA.classList
                 [ ( "order-1", modBy 2 x == 1 )
                 ]
@@ -130,11 +132,13 @@ viewArtworkCard x artwork =
             ]
         , Html.img
             [ HA.src artwork.imageUrl
+            , HA.alt artwork.description
             , HA.class "place-self-center"
             ]
             []
         , Html.a
             [ HA.href ("/artwork/" ++ artwork.id)
+            , Aria.ariaLabel ("Navigate to " ++ artwork.title ++ " page.")
             , HA.class "absolute top-0 left-0 h-full w-full p-2"
             ]
             []
@@ -156,19 +160,21 @@ viewOtherArtists artists =
 
 viewArtistCard : Artist -> Html Msg
 viewArtistCard artist =
-    Html.article
+    Html.li
         [ HA.class "sm:max-w-44 max-w-36 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
         [ Html.h3
             [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2"
             ]
             [ Html.text artist.name ]
         , Html.img
-            [ HA.src artist.profileImgUrl
+            [ HA.src artist.profileImgUrl 
+            , HA.alt ("A portrait of " ++ artist.name ++ ".") 
             , HA.class "rounded"
             ]
             []
         , Html.a
             [ HA.href ("/artists/" ++ artist.id)
+            , Aria.ariaLabel ("Navigate to " ++ artist.name ++ " page.")
             , HA.class "h-full w-full absolute top-0 left-0"
             ]
             []

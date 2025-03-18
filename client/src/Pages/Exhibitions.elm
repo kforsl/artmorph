@@ -3,6 +3,7 @@ module Pages.Exhibitions exposing (..)
 import Api.Exhibitions exposing (Exhibition)
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Attributes.Aria as Aria
 import Api.Exhibitions exposing (ExhibitionArtwork)
 
 
@@ -63,6 +64,7 @@ viewExhibitionCard x exhibition =
         , viewExhibitionPreviewImages exhibition
         , Html.a
             [ HA.href ("/exhibitions/" ++ exhibition.id)
+            , Aria.ariaLabel ("Navigate to " ++ exhibition.title ++ " page")
             , HA.class "absolute p-4 top-0 left-0 h-full w-full"
             ]
             []

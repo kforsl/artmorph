@@ -56,11 +56,11 @@ view model id navigationKey =
 viewArtwork : Artwork -> Navigation.Key -> Html Msg
 viewArtwork artwork navigationKey =
     Html.section
-        [ HA.class "bg-bgDark h-fit z-0 px-4 py-8 bg-text" ]
+        [ HA.class "bg-bgDark min-h-screen h-fit z-0 px-4 py-8 bg-text" ]
         [ Html.figure [ HA.class "max-w-maxWidth z-0 m-auto relative grid w-full place-items-center" ]
             [ viewBackBnt navigationKey
             , Html.a
-                [ HA.class "w-fit       "
+                [ HA.class "w-fit"
                 , HA.href artwork.imageUrl
                 , HA.target "_blank"
                 ]
@@ -145,13 +145,15 @@ viewArtistInformation artist =
 
 viewList : String -> List String -> Html Msg
 viewList label list =
-    Html.ul
-        [ HA.class "flex flex-wrap gap-4 h-fit" ]
-        (Html.h4
-            [ HA.class "font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
+    Html.section
+        []
+        [ Html.h4
+            [ HA.class "font-title w-full mb-4 font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
             [ Html.text label ]
-            :: List.map viewListChip list
-        )
+         , Html.ul
+            [ HA.class "flex flex-wrap gap-4 h-fit" ]
+            (List.map viewListChip list) 
+         ]
 
 
 viewListChip : String -> Html Msg
