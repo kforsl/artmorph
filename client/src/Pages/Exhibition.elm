@@ -165,9 +165,9 @@ viewCreatedBy artworks artists =
                 artists
     in
     Html.article
-        [ HA.class "bg-bgDark bg-text px-4 py-8" ]
+        [ HA.class "bg-bgDark bg-overlay px-4 py-8" ]
         [ Html.section
-            [ HA.class "max-w-maxWidth flex flex-wrap justify-center gap-x-12 gap-y-4 m-auto md:py-24 border-b-2 border-bgDark" ]
+            [ HA.class "max-w-maxWidth flex flex-wrap justify-center gap-x-12 gap-y-4 m-auto md:py-24" ]
             [ Html.h2
                 [ HA.class "font-title text-textLight sm:text-3xl text-xl mb-8 col-span-full" ]
                 [ Html.text "Created by: " ]

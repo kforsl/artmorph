@@ -41,7 +41,7 @@ view model id =
     in
     case List.head matchingArtist of
         Just artist ->
-            Html.main_ [ HA.class "max-w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1 " ]
+            Html.main_ [ HA.class "max-w-svw min-h-full grid auto-rows-max place-content-between grid-cols-1" ]
                 [ viewArtistInformation artist
                 , viewArtworks artistsArtwork
                 , viewOtherArtists otherArtists

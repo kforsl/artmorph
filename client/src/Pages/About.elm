@@ -79,8 +79,11 @@ view model =
         [ viewHero
         , viewAbout
         , viewArtists model.artistData
-        , viewExhibitions
-        , viewSpotlight
+        , Html.section 
+            [ HA.class  "bg-bgDark relative z-0 bg-overlay" ]
+            [ viewExhibitions
+            , viewSpotlight
+            ]
         , viewContact model
         , Html.map MsgNewsletterSubmit (Components.Newsletter.view model.newsletterModel)
         ]
@@ -89,7 +92,7 @@ view model =
 viewHero : Html Msg
 viewHero =
     Html.section
-        [ HA.class "bg-bgDark relative z-0 sm:h-3/4 bg-text h-fit" ]
+        [ HA.class "bg-bgDark relative z-0 sm:h-screen bg-text" ]
         [ Html.div
             [ HA.class "h-full max-w-maxWidth m-auto grid grid-cols-1 gap-8 px-8 sm:grid-cols-12 grid-cols-6" ]
             [ Html.figure
@@ -201,9 +204,7 @@ viewArtistCard x artist =
 
 viewExhibitions : Html Msg
 viewExhibitions =
-    Html.section
-        [ HA.class "bg-bgDark relative z-0" ]
-        [ Html.div
+        Html.article
             [ HA.class "max-w-maxWidth m-auto sm:pt-24 grid md:grid-cols-12 gap-x-8 gap-y-4 grid-cols-2 px-4 py-8" ]
             [ Html.h2
                 [ HA.class "font-title sm:text-3xl text-xl sm:mb-6 mb-4 text-primary md:col-span-12 col-span-2" ]
@@ -242,15 +243,13 @@ viewExhibitions =
                     [ Html.text "Immerse yourself in captivating themes and explore the artistic worlds within each exhibition." ]
                 ]
             ]
-        ]
+        
 
 
 viewSpotlight : Html Msg
 viewSpotlight =
-    Html.section
-        [ HA.class "sm:pb-24 bg-bgDark relative z-0 px-4 py-8" ]
-        [ Html.article
-            [ HA.class "max-w-maxWidth m-auto px-4 py-8" ]
+    Html.article
+            [ HA.class "max-w-maxWidth m-auto px-4 py-8 sm:pb-24 z-0" ]
             [ Html.h2
                 [ HA.class "font-title text-3xl mb-4 text-primary col-span-full" ]
                 [ Html.text "ArtMorph in the Spotlight" ]
@@ -294,7 +293,7 @@ viewSpotlight =
                     ]
                 ]
             ]
-        ]
+        
 
 
 viewContact : Model -> Html Msg

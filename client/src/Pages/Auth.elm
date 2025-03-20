@@ -85,7 +85,7 @@ view model navigationKey =
     case model.formType of
         Login ->
             Html.main_
-                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text px-4" ]
+                [ HA.class "relative z-0 h-svh bg-bgDark w-full grid content-center bg-text px-4" ]
                 [ Html.section
                     [ HA.class "grid place-content-center relative" ]
                     [ Html.h1
@@ -151,7 +151,7 @@ view model navigationKey =
 
         Register ->
             Html.main_
-                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text px-4" ]
+                [ HA.class "relative z-0 h-svh bg-bgDark w-full grid content-center bg-text px-4" ]
                 [ Html.section
                     [ HA.class "grid place-content-center relative" ]
                     [ Html.h1

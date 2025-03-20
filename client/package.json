@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/elm.js",
   "scripts": {
-    "dev": "concurrently \"npx @tailwindcss/cli -i ./dist/index.css -o ./dist/output.css --watch\" \"elm-live src/Main.elm --pushstate --dir=dist -- --output=dist/elm.js --debug\"",
-    "build": "elm make src/Main.elm --optimize --output=dist/elm.js && npx @tailwindcss/cli -i ./dist/index.css -o ./dist/output.css"
+    "dev": "concurrently \"npx @tailwindcss/cli -i ./src/index.css -o ./dist/output.css --watch\" \"elm-live src/Main.elm --pushstate --dir=dist -- --output=dist/elm.js --debug\"",
+    "build": "elm make src/Main.elm --optimize --output=dist/elm.js && npx @tailwindcss/cli -i ./src/index.css -o ./dist/output.css"
   },
   "author": "Kim Forslund",
   "license": "ISC",

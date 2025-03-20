@@ -32,7 +32,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     Html.main_
-        [ HA.class "bg-bgDark" ]
+        [ HA.class "bg-bgDark bg-overlay" ]
         [ viewExhibition model
         ]
 

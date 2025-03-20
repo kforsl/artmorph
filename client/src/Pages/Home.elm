@@ -67,7 +67,7 @@ view model =
 viewHero : Html Msg
 viewHero =
     Html.section
-        [ HA.class "bg-bgDark relative z-0 h-3/4 bg-text" ]
+        [ HA.class "bg-bgDark relative z-0 h-screen bg-text" ]
         [ Html.div
             [ HA.class "max-w-maxWidth w-full h-full m-auto grid md:grid-cols-12 grid-cols-7 md:grid-rows-2 grid-rows-3 gap-4 px-4" ]
             [ Html.img

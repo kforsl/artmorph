@@ -24,6 +24,7 @@ import Pages.Loading
 import Pages.NotFound
 import Route
 import Task
+import Process
 import Url exposing (Url)
 
 
@@ -107,19 +108,17 @@ update msg model =
         MsgScrollToTop -> 
             let
                 scrollCmd = 
-                        setViewport 0 0
-                            |> Task.perform (always None)
+                    Process.sleep 50
+                        |> Task.andThen (\_ -> setViewport 0 0)
+                        |> Task.perform (always None)
             in
-            ( model 
-            , Cmd.batch 
-                [ scrollCmd
-                ] 
-            )
+            ( model, scrollCmd )
 
         MsgUrlChange url ->
             let
                 scrollCmd =
-                    setViewport 0 0
+                    Process.sleep 50
+                        |> Task.andThen (\_ -> setViewport 0 0)
                         |> Task.perform (always None)
 
                 newIsHeaderShowing =
@@ -130,9 +129,7 @@ update msg model =
                 , isHeaderShowing = newIsHeaderShowing
                 , isPageLoading = False
               }
-            , Cmd.batch
-                [ scrollCmd
-                ]
+            , scrollCmd
             )
 
         MsgUrlRequested urlRequest ->
@@ -402,7 +399,7 @@ view model =
 
 viewContent : Model -> Html Msg
 viewContent model =
-    Html.div [ HA.class "bg-bgLight h-full max-w-screen overflow-x-hidden" ]
+    Html.div [ HA.class "bg-bgLight h-fit max-w-screen" ]
         [ Html.Extra.viewIf model.isHeaderShowing
             (Html.map MsgHeader (Components.Header.view model.modelHeader))
 

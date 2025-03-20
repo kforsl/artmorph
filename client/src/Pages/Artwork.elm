@@ -46,7 +46,6 @@ view model id navigationKey =
         Just artwork ->
             Html.main_ [ HA.class "max-w-svw" ]
                 [ viewArtwork artwork navigationKey
-                , viewArtistInformation artwork.artist
                 ]
 
         Nothing ->
@@ -73,6 +72,7 @@ viewArtwork artwork navigationKey =
                 ]
             ]
         , viewArtworkInformation artwork
+        , viewArtistInformation artwork.artist
         ]
 
 
@@ -121,9 +121,8 @@ viewArtworkInformation artwork =
 
 viewArtistInformation : Artist -> Html Msg
 viewArtistInformation artist =
-    Html.section [ HA.class "bg-bgDark relative z-0 flex justify-center" ]
-        [ Html.div
-            [ HA.class "max-w-maxWidth m-auto flex flex-wrap justify-center sm:gap-8 gap-2 sm:py-24 px-4 py-8" ]
+    Html.div
+            [ HA.class "max-w-maxWidth m-auto flex flex-wrap justify-center sm:gap-8 gap-2 px-4 py-8" ]
             [ Html.section
                 []
                 [ Html.h2
@@ -140,7 +139,6 @@ viewArtistInformation artist =
                 ] 
                 []
             ]
-        ]
 
 
 viewList : String -> List String -> Html Msg
