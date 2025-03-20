@@ -7,9 +7,9 @@ import Html.Attributes as HA
 view : Html msg
 view =
     Html.main_
-        [ HA.class "" ]
+        []
         [ Html.section
-            [ HA.class "max-w-maxWidth grid m-auto md:grid-cols-3 sm:grid-cols-2 sm:grid-rows-1 grid-cols-1 grid-rows-2 h-full" ]
+            [ HA.class "max-w-maxWidth pt-24 grid m-auto gap-y-4 md:grid-cols-3 sm:grid-cols-2 sm:grid-rows-1 grid-cols-1 grid-rows-2 h-full" ]
             [ Html.img
                 [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/page-not-found.webp" 
                 , HA.alt "A Shattered picture frame displaying a ripped artwork, symbolizing loss and nostalgia"

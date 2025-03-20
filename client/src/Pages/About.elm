@@ -167,7 +167,7 @@ viewArtists artists =
                 [ HA.class "sm:text-base text-sm sm:mb-4 mb-2 leading-7" ]
                 [ Html.text "Artmorph is shaped by the vision of talented artists who explore transformation, history, nature, and the unknown through their work. Each artist brings their own unique approach, style, and storytelling to the exhibitions. Discover the creatives behind the collections and explore their artistic worlds." ]
             , Html.a
-                [ HA.class "sm:text-base text-sm mb-2 text-primary underline underline-offset-2 hover:opacity-80 focus-within:opacity-80 sm:p-2 p-0"
+                [ HA.class "sm:text-base text-sm mb-2 text-link underline underline-offset-2 hover:opacity-80 focus-within:opacity-80 sm:p-2 p-0"
                 , HA.href "/artists"
                 ]
                 [ Html.text " Discover the creatives behind the collections and explore their artistic worlds." ]

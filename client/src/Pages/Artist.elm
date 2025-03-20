@@ -55,8 +55,9 @@ viewArtistInformation : Artist -> Html Msg
 viewArtistInformation artist =
     Html.section [ HA.class "bg-bgDark relative z-0 bg-text h-fit" ]
         [ Html.div
-            [ HA.class "max-w-maxWidth m-auto grid md:grid-cols-3 gap-8 grid-cols-2 sm:py-24 px-4 py-8" ]
-            [ Html.section [ HA.class "p-4 md:col-span-2 col-span-full" ]
+            [ HA.class "max-w-maxWidth m-auto grid md:grid-cols-3 gap-8 grid-cols-2 sm:py-32 px-4 py-16" ]
+            [ Html.section 
+                [ HA.class "p-4 md:col-span-2 col-span-full" ]
                 [ Html.h2
                     [ HA.class "font-title text-primary mb-4 lg:text-5xl sm:text-3xl text-xl" ]
                     [ Html.text artist.name ]
@@ -104,7 +105,7 @@ viewListChip label =
 viewArtworks : List Artwork -> Html Msg
 viewArtworks artworks =
     Html.section
-        [ HA.class " max-w-maxWidth m-auto py-24 grid md:grid-cols-2 gap-8" ]
+        [ HA.class " max-w-maxWidth m-auto py-12 grid md:grid-cols-2 gap-8" ]
         (List.indexedMap viewArtworkCard artworks)
 
 
@@ -151,7 +152,7 @@ viewOtherArtists artists =
         [ HA.class "max-w-maxWidth w-full m-auto py-16 px-4 py-8" ]
         [ Html.h2
             [ HA.class "font-title sm:text-3xl text-xl mb-8 text-textDark col-span-full" ]
-            [ Html.text "The Minds Behind the Masterpieces" ]
+            [ Html.text "Other Minds Behind the Masterpieces" ]
         , Html.ul
             [ HA.class "flex md:flex-nowrap flex-wrap overflow-hidden justify-evenly" ]
             (List.map viewArtistCard artists)

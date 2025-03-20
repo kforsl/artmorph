@@ -122,7 +122,7 @@ viewWelcome =
             , Html.a
                 [ HA.href "/about"
                 , Aria.ariaLabel "Navigate to About page"
-                , HA.class "underline underline-offset-2 text-primary cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
+                , HA.class "underline underline-offset-2 text-link cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Discover More About Us" ]
             ]

@@ -40,7 +40,7 @@ view model =
 viewExhibition : Model -> Html Msg
 viewExhibition model =
     Html.section
-        [ HA.class ("max-w-maxWidth m-auto grid md:grid-cols-2 lg:gap-8 gap-4 md:py-24 p-4 grid-rows-" ++ String.fromInt (List.length model.exhibitionData + 1)) ]
+        [ HA.class ("max-w-maxWidth m-auto grid md:grid-cols-2 lg:gap-8 gap-4 md:py-32 px-4 py-18 grid-rows-" ++ String.fromInt (List.length model.exhibitionData + 1)) ]
         (List.indexedMap
             viewExhibitionCard
             model.exhibitionData

@@ -55,7 +55,7 @@ view model id navigationKey =
 viewArtwork : Artwork -> Navigation.Key -> Html Msg
 viewArtwork artwork navigationKey =
     Html.section
-        [ HA.class "bg-bgDark min-h-screen h-fit z-0 px-4 py-8 bg-text" ]
+        [ HA.class "bg-bgDark min-h-screen h-fit z-0 sm:pt-32 pt-24 px-4 py-8 bg-text" ]
         [ Html.figure [ HA.class "max-w-maxWidth z-0 m-auto relative grid w-full place-items-center" ]
             [ viewBackBnt navigationKey
             , Html.a
@@ -87,7 +87,7 @@ viewBackBnt navigationKey =
             , SA.viewBox "0 0 24 24"
             , SA.strokeWidth "1.5"
             , SA.stroke "currentColor"
-            , SA.class "size-10"
+            , SA.class "sm:size-10 size-6"
             ]
             [ Svg.path
                 [ SA.strokeLinecap "round"

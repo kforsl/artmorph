@@ -26,6 +26,6 @@ view =
                     []
                 ]
     in
-    Html.figure [ HA.class "min-h-full grid place-content-center bg-bgDark bg-text" ]
+    Html.figure [ HA.class "h-screen grid place-content-center bg-bgDark bg-text" ]
         [ svgLoader
         ]

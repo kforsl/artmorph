@@ -17,9 +17,9 @@ initModel =
 view : Model -> Html msg
 view model =
     Html.main_
-        [ HA.class "" ]
+        []
         [ Html.section
-            [ HA.class "max-w-maxWidth grid m-auto md:grid-cols-3 sm:grid-cols-2 sm:grid-rows-1 grid-cols-1 grid-rows-2 h-full" ]
+            [ HA.class "max-w-maxWidth min-h-screen grid m-auto md:grid-cols-3 sm:grid-cols-2 sm:grid-rows-1 grid-cols-1 grid-rows-2 h-full" ]
             [ Html.img
                 [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/error.webp"
                 , HA.alt "A friendly but confused-looking monster, digitally painted, stands in the middel of a chaotic scene. The creature has large, expressive eyes, a goofy grin, and multiple arms holding tangled wires."

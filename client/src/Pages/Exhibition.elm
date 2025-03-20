@@ -66,7 +66,7 @@ viewHero : Exhibition -> Html Msg
 viewHero exhibition =
     Html.section [ HA.class "bg-bgDark relative z-0 bg-text h-fit" ]
         [ Html.div
-            [ HA.class "max-w-maxWidth m-auto grid md:grid-cols-3 gap-8 grid-cols-2 sm:py-24 px-4 py-8" ]
+            [ HA.class "max-w-maxWidth m-auto grid md:grid-cols-3 gap-8 grid-cols-2 sm:py-32 px-4 py-16" ]
             [ Html.img 
                 [ HA.src exhibition.thumbnailUrl
                 , HA.alt exhibition.description

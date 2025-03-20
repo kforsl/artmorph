@@ -110,7 +110,7 @@ view model =
                             [ Html.text "Subscribe Now" ]
                 ]
             , Html.nav
-                [ HA.class "flex flex-wrap justify-around" ]
+                [ HA.class "flex flex-wrap justify-around text-link" ]
                 [ Html.a
                     [ HA.href "/exhibitions"
                     , HA.class "font-title sm:text-base text-sm mb-2 overflow-hidden text-nowrap underline underline-offset-2 cursor-pointer p-2 hover:text-primary focus-within:text-primary"

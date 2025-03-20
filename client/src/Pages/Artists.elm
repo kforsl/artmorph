@@ -41,7 +41,7 @@ view model =
 viewArtist : Model -> Html Msg
 viewArtist model =
     Html.section
-        [ HA.class ("max-w-maxWidth m-auto grid md:grid-cols-2 lg:gap-8 gap-4 md:py-24 p-4 grid-rows-" ++ String.fromInt (List.length model.artistData + 1)) ]
+        [ HA.class ("max-w-maxWidth m-auto grid md:grid-cols-2 lg:gap-8 gap-4 md:py-32 px-4 py-18 grid-rows-" ++ String.fromInt (List.length model.artistData + 1)) ]
         (List.indexedMap
             (\x artist -> viewArtistCard x artist model.artworkData)
             model.artistData
