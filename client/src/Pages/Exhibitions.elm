@@ -3,6 +3,7 @@ module Pages.Exhibitions exposing (..)
 import Api.Exhibitions exposing (Exhibition)
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Attributes.Aria as Aria
 import Api.Exhibitions exposing (ExhibitionArtwork)
 
 
@@ -31,7 +32,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     Html.main_
-        [ HA.class "bg-bgDark" ]
+        [ HA.class "bg-bgDark bg-overlay" ]
         [ viewExhibition model
         ]
 
@@ -39,7 +40,7 @@ view model =
 viewExhibition : Model -> Html Msg
 viewExhibition model =
     Html.section
-        [ HA.class ("max-w-maxWidth m-auto grid md:grid-cols-2 lg:gap-8 gap-4 md:py-24 p-4 grid-rows-" ++ String.fromInt (List.length model.exhibitionData + 1)) ]
+        [ HA.class ("max-w-maxWidth m-auto grid md:grid-cols-2 lg:gap-8 gap-4 md:py-32 px-4 py-18 grid-rows-" ++ String.fromInt (List.length model.exhibitionData + 1)) ]
         (List.indexedMap
             viewExhibitionCard
             model.exhibitionData
@@ -63,6 +64,7 @@ viewExhibitionCard x exhibition =
         , viewExhibitionPreviewImages exhibition
         , Html.a
             [ HA.href ("/exhibitions/" ++ exhibition.id)
+            , Aria.ariaLabel ("Navigate to " ++ exhibition.title ++ " page")
             , HA.class "absolute p-4 top-0 left-0 h-full w-full"
             ]
             []

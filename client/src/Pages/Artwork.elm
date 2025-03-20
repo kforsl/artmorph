@@ -46,7 +46,6 @@ view model id navigationKey =
         Just artwork ->
             Html.main_ [ HA.class "max-w-svw" ]
                 [ viewArtwork artwork navigationKey
-                , viewArtistInformation artwork.artist
                 ]
 
         Nothing ->
@@ -56,11 +55,11 @@ view model id navigationKey =
 viewArtwork : Artwork -> Navigation.Key -> Html Msg
 viewArtwork artwork navigationKey =
     Html.section
-        [ HA.class "bg-bgDark h-fit z-0 px-4 py-8 bg-text" ]
+        [ HA.class "bg-bgDark min-h-screen h-fit z-0 sm:pt-32 pt-24 px-4 py-8 bg-text" ]
         [ Html.figure [ HA.class "max-w-maxWidth z-0 m-auto relative grid w-full place-items-center" ]
             [ viewBackBnt navigationKey
             , Html.a
-                [ HA.class "w-fit       "
+                [ HA.class "w-fit"
                 , HA.href artwork.imageUrl
                 , HA.target "_blank"
                 ]
@@ -73,6 +72,7 @@ viewArtwork artwork navigationKey =
                 ]
             ]
         , viewArtworkInformation artwork
+        , viewArtistInformation artwork.artist
         ]
 
 
@@ -87,7 +87,7 @@ viewBackBnt navigationKey =
             , SA.viewBox "0 0 24 24"
             , SA.strokeWidth "1.5"
             , SA.stroke "currentColor"
-            , SA.class "size-10"
+            , SA.class "sm:size-10 size-6"
             ]
             [ Svg.path
                 [ SA.strokeLinecap "round"
@@ -121,9 +121,8 @@ viewArtworkInformation artwork =
 
 viewArtistInformation : Artist -> Html Msg
 viewArtistInformation artist =
-    Html.section [ HA.class "bg-bgDark relative z-0 flex justify-center" ]
-        [ Html.div
-            [ HA.class "max-w-maxWidth m-auto flex flex-wrap justify-center sm:gap-8 gap-2 sm:py-24 px-4 py-8" ]
+    Html.div
+            [ HA.class "max-w-maxWidth m-auto flex flex-wrap justify-center sm:gap-8 gap-2 px-4 py-8" ]
             [ Html.section
                 []
                 [ Html.h2
@@ -140,18 +139,19 @@ viewArtistInformation artist =
                 ] 
                 []
             ]
-        ]
 
 
 viewList : String -> List String -> Html Msg
 viewList label list =
-    Html.ul
-        [ HA.class "flex flex-wrap gap-4 h-fit" ]
-        (Html.h4
-            [ HA.class "font-title w-full font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
+    Html.section
+        []
+        [ Html.h4
+            [ HA.class "font-title w-full mb-4 font-semibold text-primary lg:text-2xl sm:text-xl text-lg" ]
             [ Html.text label ]
-            :: List.map viewListChip list
-        )
+         , Html.ul
+            [ HA.class "flex flex-wrap gap-4 h-fit" ]
+            (List.map viewListChip list) 
+         ]
 
 
 viewListChip : String -> Html Msg

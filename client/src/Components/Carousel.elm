@@ -2,6 +2,7 @@ module Components.Carousel exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Attributes.Aria as Aria
 import Html.Events as HE
 import Api.Exhibitions exposing (Exhibition)
 import Svg
@@ -76,7 +77,7 @@ view model exhibitions =
                 ]
                 [ Html.text "Checkout all our exhibitions" ]
             ]
-        , Html.ul
+        , Html.section
             [ HA.class "relative h-87 perspective-normal perspective-origin-top-center transition ease-in-out duration-200" ]
             ( List.append 
                 (List.indexedMap
@@ -86,11 +87,13 @@ view model exhibitions =
                 [ Html.button 
                     [ HE.onClick (PrevCarouselItem (List.length exhibitions))
                     , HA.class "absolute z-20 left-0 top-0 h-87 sm:w-1/6 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
+                    , Aria.ariaLabel "Previous"
                     ] 
                     [ prevItemSvg ] 
                 , Html.button 
                     [ HE.onClick (NextCarouselItem (List.length exhibitions))
                     , HA.class "absolute z-20 right-0 top-0 h-87 sm:w-1/6 cursor-pointer grid place-items-center bg-bgLight hover:text-primary focus-within:text-primary"
+                    , Aria.ariaLabel "Next"
                     ]
                     [ nextItemSvg ]
                 ] 
@@ -144,7 +147,7 @@ viewExhibitionCard x {lastIndex, activeIndex} exhibition =
             else 
                 False
     in 
-    Html.li
+    Html.article
         [ HA.class ("p-1 -translate-x-1/2 absolute sm:max-w-md max-w-xs ") 
         , HA.classList 
             [ ("hidden ", isHiddenItem)
@@ -175,6 +178,7 @@ viewExhibitionCard x {lastIndex, activeIndex} exhibition =
             ( Html.a
                 [ HA.href ("/exhibitions/" ++ exhibition.id)
                 , HA.class "absolute w-full h-full top-0 left-0"
+                , Aria.ariaLabel ("Navigate to " ++ exhibition.title ++ " page.")
                 ]
                 []
             )

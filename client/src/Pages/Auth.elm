@@ -85,7 +85,7 @@ view model navigationKey =
     case model.formType of
         Login ->
             Html.main_
-                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text px-4" ]
+                [ HA.class "relative z-0 h-svh bg-bgDark w-full grid content-center bg-text px-4" ]
                 [ Html.section
                     [ HA.class "grid place-content-center relative" ]
                     [ Html.h1
@@ -117,13 +117,14 @@ view model navigationKey =
                                 ]
                             ]
                         , Html.p
-                            [ HA.class "sm:text-base text-sm text-center font-bold" ]
+                            [ HA.class "sm:text-base text-sm text-center font-bold cursor-pointer"
+                            , HE.onClick MsgChangeFormType
+                            ]
                             [ Html.span
-                                [ HA.class "mr-1 underline underline-offset-2 cursor-pointer"
-                                , HE.onClick MsgChangeFormType
+                                [ HA.class "underline underline-offset-2"
                                 ]
                                 [ Html.text "Create an account" ]
-                            , Html.text "to start exploring exhibitions, connect with artists, and receive exclusive updates."
+                            , Html.text " to start exploring exhibitions, connect with artists, and receive exclusive updates."
                             ]
                         , case model.formState of
                             Resting ->
@@ -151,11 +152,11 @@ view model navigationKey =
 
         Register ->
             Html.main_
-                [ HA.class "relative z-0 h-full max-h-svh bg-bgDark w-full grid content-center bg-text px-4" ]
+                [ HA.class "relative z-0 h-svh bg-bgDark w-full grid content-center bg-text p-4" ]
                 [ Html.section
                     [ HA.class "grid place-content-center relative" ]
                     [ Html.h1
-                        [ HA.class "lg:text-sizeBg md:text-[250px] sm:text-[200px] text-[100px] w-full text-secondary font-logo absolute sm:-top-12 top-0 left-0 sm:-translate-y-1/2 text-center text-nowrap z-20" ]
+                        [ HA.class "lg:text-sizeBg md:text-[200px] sm:text-[160px] text-[80px] w-full text-secondary font-logo absolute sm:-top-12 top-0 left-0 sm:-translate-y-1/2 text-center text-nowrap z-20" ]
                         [ Html.text "Register" ]
                     , Html.form
                         [ HA.class "bg-primary flex flex-col mb:p-28 gap-4 max-w-3xl justify-center relative h-[596px] sm:p-14 p-4 pt-40"
@@ -192,13 +193,13 @@ view model navigationKey =
                                 ]
                             ]
                         , Html.p
-                            [ HA.class "sm:text-base text-sm text-center font-bold" ]
-                            [ Html.span
-                                [ HA.class "mr-1 underline underline-offset-2 cursor-pointer"
-                                , HE.onClick MsgChangeFormType
-                                ]
-                                [ Html.text "Log in" ]
-                            , Html.text "to continue discovering and engaging with inspiring art collections."
+                            [ HA.class "sm:text-base text-sm text-center font-bold cursor-pointer"
+                            , HE.onClick MsgChangeFormType
+                            ]
+                            [ Html.span 
+                                [ HA.class "underline underline-offset-2"] 
+                                [ Html.text "Log in"] 
+                            , Html.text " to continue discovering and engaging with inspiring art collections."
                             ]
                         , case model.formState of
                             Resting ->
