@@ -4,7 +4,7 @@ import Api.Artist exposing (Artist)
 import Api.Artwork exposing (Artwork)
 import Html exposing (Html)
 import Html.Attributes as HA
-
+import Html.Attributes.Aria as Aria
 
 type alias Model =
     { artistData : List Artist
@@ -33,7 +33,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     Html.main_
-        [ HA.class "bg-bgDark" ]
+        [ HA.class "bg-bgDark bg-overlay" ]
         [ viewArtist model
         ]
 
@@ -41,7 +41,7 @@ view model =
 viewArtist : Model -> Html Msg
 viewArtist model =
     Html.section
-        [ HA.class ("max-w-maxWidth m-auto grid md:grid-cols-2 lg:gap-8 gap-4 md:py-24 p-4 grid-rows-" ++ String.fromInt (List.length model.artistData + 1)) ]
+        [ HA.class ("max-w-maxWidth m-auto grid md:grid-cols-2 lg:gap-8 gap-4 md:py-32 px-4 py-18 grid-rows-" ++ String.fromInt (List.length model.artistData + 1)) ]
         (List.indexedMap
             (\x artist -> viewArtistCard x artist model.artworkData)
             model.artistData
@@ -65,6 +65,7 @@ viewArtistCard x artist artworks =
         , viewArtistPreviewImages artist.id artworks
         , Html.a
             [ HA.href ("/artists/" ++ artist.id)
+            , Aria.ariaLabel ("Navigate to " ++ artist.name ++ " page.") 
             , HA.class "absolute p-4 top-0 left-0 h-full w-full"
             ]
             []

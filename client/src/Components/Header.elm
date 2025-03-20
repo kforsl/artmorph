@@ -33,7 +33,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     Html.header
-        [ HA.class "bg-bgDark sticky top-0 w-full z-40 lg:px-0 px-4" ]
+        [ HA.class "bg-bgDark fixed top-0 w-full z-40 lg:px-0 px-4 drop-shadow-md" ]
         [ Html.div
             [ HA.class "flex justify-between max-w-maxWidth m-auto" ]
             [ Html.a 

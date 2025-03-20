@@ -4,6 +4,7 @@ import Api.Artist exposing (Artist)
 import Components.Newsletter
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Attributes.Aria as Aria
 import Html.Events as HE
 import Process
 import Svg exposing (Svg)
@@ -73,12 +74,16 @@ sendToSelfWithDelay delay msg =
 
 view : Model -> Html Msg
 view model =
-    Html.main_ []
+    Html.main_ 
+        []
         [ viewHero
         , viewAbout
         , viewArtists model.artistData
-        , viewExhibitions
-        , viewSpotlight
+        , Html.section 
+            [ HA.class  "bg-bgDark relative z-0 bg-overlay" ]
+            [ viewExhibitions
+            , viewSpotlight
+            ]
         , viewContact model
         , Html.map MsgNewsletterSubmit (Components.Newsletter.view model.newsletterModel)
         ]
@@ -87,13 +92,13 @@ view model =
 viewHero : Html Msg
 viewHero =
     Html.section
-        [ HA.class "bg-bgDark relative z-0 sm:h-3/4 bg-text h-fit" ]
+        [ HA.class "bg-bgDark relative z-0 sm:h-screen bg-text" ]
         [ Html.div
             [ HA.class "h-full max-w-maxWidth m-auto grid grid-cols-1 gap-8 px-8 sm:grid-cols-12 grid-cols-6" ]
             [ Html.figure
                 [ HA.class "w-full grid place-content-end lg:col-span-5 col-span-6" ]
                 [ Html.img
-                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-hero.png"
+                    [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-hero.webp"
                     , HA.alt "A surreal digital painting of a woman in high heels and a flowing black dress, seamlessly blending into an abstract artwork behind her. The painting features swirling clouds and geometric patterns in shades of blue and white, creating a dreamlike and futuristic effect. The woman's silhouette appears partially transparent, merging with the artwork as if she is becoming part of the painting."
                     , HA.class "rounded w-fill"
                     ]
@@ -138,7 +143,7 @@ viewAbout =
                 [ Html.text """Every piece featured here is a reflection of this vision—a celebration of artistic evolution in all its forms. Welcome to Artmorph, where art never stays still.""" ]
             ]
         , Html.img
-            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about.png"
+            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about.webp"
             , HA.alt "A vibrant abstract painting depicting four diverse hands reaching towards each other over a body of water. The hands, each with different skin tones and artistic textures, appear to be touching or interacting with the rippling surface, creating dynamic reflections and distortions. The composition conveys themes of unity, connection, and diversity."
             , HA.class "w-full sm:col-span-5 col-span-6 rounded"
             ]
@@ -162,7 +167,7 @@ viewArtists artists =
                 [ HA.class "sm:text-base text-sm sm:mb-4 mb-2 leading-7" ]
                 [ Html.text "Artmorph is shaped by the vision of talented artists who explore transformation, history, nature, and the unknown through their work. Each artist brings their own unique approach, style, and storytelling to the exhibitions. Discover the creatives behind the collections and explore their artistic worlds." ]
             , Html.a
-                [ HA.class "sm:text-base text-sm mb-2 text-primary underline underline-offset-2 hover:opacity-80 focus-within:opacity-80 sm:p-2 p-0"
+                [ HA.class "sm:text-base text-sm mb-2 text-link underline underline-offset-2 hover:opacity-80 focus-within:opacity-80 sm:p-2 p-0"
                 , HA.href "/artists"
                 ]
                 [ Html.text " Discover the creatives behind the collections and explore their artistic worlds." ]
@@ -173,7 +178,7 @@ viewArtists artists =
 viewArtistCard : Int -> Artist -> Html Msg
 viewArtistCard x artist =
     if x < 2 then
-        Html.article
+        Html.li
             [ HA.class "max-w-44 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
             [ Html.h3
                 [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2"
@@ -187,6 +192,7 @@ viewArtistCard x artist =
                 []
             , Html.a
                 [ HA.href ("/artists/" ++ artist.id)
+                , Aria.ariaLabel ("Navigate to " ++ artist.name ++ " page.")
                 , HA.class "h-full w-full absolute top-0 left-0"
                 ]
                 []
@@ -198,15 +204,13 @@ viewArtistCard x artist =
 
 viewExhibitions : Html Msg
 viewExhibitions =
-    Html.section
-        [ HA.class "bg-bgDark relative z-0" ]
-        [ Html.div
+        Html.article
             [ HA.class "max-w-maxWidth m-auto sm:pt-24 grid md:grid-cols-12 gap-x-8 gap-y-4 grid-cols-2 px-4 py-8" ]
             [ Html.h2
                 [ HA.class "font-title sm:text-3xl text-xl sm:mb-6 mb-4 text-primary md:col-span-12 col-span-2" ]
                 [ Html.text "Exploring Creativity Through Exhibitions" ]
             , Html.img
-                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-exhibition.png"
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/about-exhibition.webp"
                 , HA.alt "Abstract collage with black ink splashes, torn photos, and textured paint in blue, beige, and black tones."
                 , HA.class "w-full md:col-span-5 col-span-2 mx-auto"
                 ]
@@ -216,35 +220,36 @@ viewExhibitions =
                 [ Html.p
                     [ HA.class "sm:text-base text-sm mb-4 leading-7" ]
                     [ Html.text "Step into a world where art transforms, history whispers, nature comes alive, and the unseen takes shape. Each Artmorph exhibition is a curated collection that explores unique themes and artistic expressions. Immerse yourself in creativity and discover stories told through brushstrokes, textures, and imagination." ]
-                , Html.ul
-                    [ HA.class "sm:text-base text-sm list-disc md:mb-8 md:ml-8 mb-4 ml-4 leading-relaxed" ]
+                , Html.section
+                    [ HA.class "sm:text-base text-sm md:mb-8 md:ml-8 mb-4" ]
                     [ Html.h3
                         [ HA.class "text-base" ]
                         [ Html.text "Current Highlights:" ]
-                    , Html.li
-                        [ HA.class "ml-8" ]
-                        [ Html.text "“Metamorphosis: The Art of Transformation”" ]
-                    , Html.li
-                        [ HA.class "ml-8" ]
-                        [ Html.text "“Whispers Through Time: Art Echoing History”" ]
-                    , Html.li
-                        [ HA.class "ml-8" ]
-                        [ Html.text "“Nature Reimagined: The Soul of the Wild”" ]
+                    , Html.ul 
+                        [ HA.class "list-disc ml-4 leading-relaxed" ]
+                        [ Html.li
+                            [ HA.class "ml-8" ]
+                            [ Html.text "“Metamorphosis: The Art of Transformation”" ]
+                        , Html.li
+                            [ HA.class "ml-8" ]
+                            [ Html.text "“Whispers Through Time: Art Echoing History”" ]
+                        , Html.li
+                            [ HA.class "ml-8" ]
+                            [ Html.text "“Nature Reimagined: The Soul of the Wild”" ]
+                        ]
                     ]
                 , Html.p
                     [ HA.class "sm:text-base text-sm mb-2" ]
                     [ Html.text "Immerse yourself in captivating themes and explore the artistic worlds within each exhibition." ]
                 ]
             ]
-        ]
+        
 
 
 viewSpotlight : Html Msg
 viewSpotlight =
-    Html.section
-        [ HA.class "sm:pb-24 bg-bgDark relative z-0 px-4 py-8" ]
-        [ Html.article
-            [ HA.class "max-w-maxWidth m-auto px-4 py-8" ]
+    Html.article
+            [ HA.class "max-w-maxWidth m-auto px-4 py-8 sm:pb-24 z-0" ]
             [ Html.h2
                 [ HA.class "font-title text-3xl mb-4 text-primary col-span-full" ]
                 [ Html.text "ArtMorph in the Spotlight" ]
@@ -288,7 +293,7 @@ viewSpotlight =
                     ]
                 ]
             ]
-        ]
+        
 
 
 viewContact : Model -> Html Msg
@@ -304,20 +309,22 @@ viewContact model =
                 [ HA.class "sm:text-base text-sm text-textDark mb-4 leading-7" ]
                 [ Html.text "Have questions, collaboration ideas, or just want to learn more about Artmorph? We'd love to hear from you! Reach out via email, phone, or visit us at our studio. Fill out the form, and we'll get back to you as soon as possible."
                 ]
-            , Html.ul
+            , Html.section
                 [ HA.class "mb-8 sm:text-sm text-xs" ]
                 [ Html.h3
                     [ HA.class "font-title text-2xl text-center mb-4" ]
                     [ Html.text "Contact Details:" ]
-                , Html.li
-                    [ HA.class "flex gap-4 items-center uppercase" ]
-                    [ Svg.svg
-                        [ SA.fill "none"
-                        , SA.viewBox "0 0 24 24"
-                        , SA.strokeWidth "1.5"
-                        , SA.stroke "currentColor"
-                        , SA.class "size-6"
-                        ]
+                , Html.ul 
+                    []
+                    [ Html.li
+                        [ HA.class "flex gap-4 items-center uppercase" ]
+                        [ Svg.svg
+                            [ SA.fill "none"
+                            , SA.viewBox "0 0 24 24"
+                            , SA.strokeWidth "1.5"
+                            , SA.stroke "currentColor"
+                            , SA.class "size-6"
+                            ]
                         [ Svg.path
                             [ SA.strokeLinecap "round"
                             , SA.strokeLinejoin "round"
@@ -384,6 +391,7 @@ viewContact model =
                         []
                         [ Html.text "+123 456 7890" ]
                     ]
+                ]
                 ]
             , Html.p
                 [ HA.class "sm:text-base text-sm text-textDark leading-7" ]

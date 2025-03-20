@@ -8,6 +8,7 @@ import Components.Newsletter
 import Components.Carousel 
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Attributes.Aria as Aria
 
 
 type alias Model =
@@ -66,18 +67,20 @@ view model =
 viewHero : Html Msg
 viewHero =
     Html.section
-        [ HA.class " bg-bgDark relative z-0 h-3/4 bg-text" ]
+        [ HA.class "bg-bgDark relative z-0 h-screen bg-text" ]
         [ Html.div
-            [ HA.class "max-w-maxWidth h-full m-auto grid md:grid-cols-12 grid-cols-7 md:grid-rows-2 grid-rows-3 gap-4 px-4" ]
+            [ HA.class "max-w-maxWidth w-full h-full m-auto grid md:grid-cols-12 grid-cols-7 md:grid-rows-2 grid-rows-3 gap-4 px-4" ]
             [ Html.img
-                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-hero.png"
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-hero.webp"
                 , HA.alt "Surreal artwork of a human face split into colorful, abstract sections blending gold, purple, blue, and cream hues with fluid, melting textures."
+                , HA.attribute "loading" "lazy"
                 , HA.class "object-contain max-h-full overflow-hidden rounded md:col-span-5 sm:col-span-4 col-span-6 md:row-start-1 row-span-2 self-end row-start-2 md:col-start-1 col-start-1"
                 ]
                 []
             , Html.img
-                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-secondary-hero.png"
+                [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/home-secondary-hero.webp"
                 , HA.alt "A hand with paint on fingers touches a colorful, swirling abstract painting, creating an impression of interaction between the hand and the art."
+                , HA.attribute "loading" "lazy"
                 , HA.class "object-contain z-10 max-h-full rounded md:col-span-3 sm:col-span-2 md:col-start-5 col-start-5 md:row-start-2 row-start-3 w-full col-span-3"
                 ]
                 []
@@ -100,10 +103,11 @@ viewHero =
 viewWelcome : Html Msg
 viewWelcome =
     Html.article
-        [ HA.class "max-w-maxWidth m-auto sm:pt-12 sm:pb-24 grid sm:grid-cols-12 sm:gap-0 gap-4 grid-cols-6 border-b-2 border-bgDark md:px-4 px-4 py-8" ]
+        [ HA.class "max-w-maxWidth w-full m-auto sm:pt-12 sm:pb-24 grid sm:grid-cols-12 sm:gap-0 gap-4 grid-cols-6 border-b-2 border-bgDark md:px-4 px-4 py-8" ]
         [ Html.img
-            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/welcome.png"
+            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/welcome.webp"
             , HA.alt "A vibrant painting featuring a colorful door set against a lively, multicolored background."
+            , HA.attribute "loading" "lazy"
             , HA.class "w-full sm:col-span-5 col-span-6 rounded"
             ]
             []
@@ -117,7 +121,8 @@ viewWelcome =
                 [ Html.text "Art is a living, breathing force — constantly shifting, transforming, and telling new stories. At Artmorph, we curate immersive online exhibitions that celebrate this evolution. From the echoes of history to the boundless realms of imagination, each collection invites you to see the world through a new artistic lens. Explore, experience, and let creativity reshape your perspective." ]
             , Html.a
                 [ HA.href "/about"
-                , HA.class "underline underline-offset-2 text-primary cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
+                , Aria.ariaLabel "Navigate to About page"
+                , HA.class "underline underline-offset-2 text-link cursor-pointer text-base p-2 hover:opacity-80 focus-within:opacity-80"
                 ]
                 [ Html.text "Discover More About Us" ]
             ]
@@ -133,7 +138,7 @@ viewPictureOfTheMonth artworks =
     case pictureOfTheMonth of
         Just artwork ->
             Html.section
-                [ HA.class "bg-bgDark sm:py-24 px-4 py-8 relative z-0 bg-text" ]
+                [ HA.class "bg-bgDark w-full sm:py-24 px-4 py-8 relative z-0 bg-text" ]
                 [ Html.figure
                     [ HA.class "max-w-maxWidth m-auto grid place-content-center relative p-1 hover:opacity-80 focus-within:opacity-80" ]
                     [ Html.h2
@@ -142,6 +147,7 @@ viewPictureOfTheMonth artworks =
                     , Html.img
                         [ HA.src artwork.imageUrl
                         , HA.alt artwork.description
+                        , HA.attribute "loading" "lazy"
                         , HA.class "mb-8 m-auto rounded"
                         ]
                         []
@@ -155,6 +161,7 @@ viewPictureOfTheMonth artworks =
                         [ Html.text "Created by ", Html.span [] [ Html.text artwork.artist.name ] ]
                     , Html.a
                         [ HA.href ("/artwork/" ++ artwork.id)
+                        , Aria.ariaLabel ("Navigate to " ++ artwork.title ++ " page") 
                         , HA.class "h-full w-full absolute "
                         ]
                         []
@@ -180,7 +187,7 @@ viewArtist artists =
 
 viewArtistCard : Artist -> Html Msg
 viewArtistCard artist =
-    Html.article
+    Html.li
         [ HA.class "sm:max-w-44 max-w-36 grid gap-0.5 hover:opacity-80 relative focus-within:opacity-80 p-1" ]
         [ Html.h3
             [ HA.class "font-title text-base overflow-hidden text-ellipsis text-nowrap underline underline-offset-2"
@@ -189,11 +196,13 @@ viewArtistCard artist =
         , Html.img
             [ HA.src artist.profileImgUrl
             , HA.alt ("A portrait of " ++ artist.name ++ ".") 
+            , HA.attribute "loading" "lazy"
             , HA.class "rounded"
             ]
             []
         , Html.a
             [ HA.href ("/artists/" ++ artist.id)
+            , Aria.ariaLabel ("Navigate to " ++ artist.name ++ " page.")
             , HA.class "h-full w-full absolute top-0 left-0"
             ]
             []

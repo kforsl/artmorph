@@ -2,6 +2,7 @@ module Components.Newsletter exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes as HA
+import Html.Attributes.Aria as Aria
 import Html.Events as HE
 import Process
 import Task
@@ -63,7 +64,7 @@ view model =
             [ HA.class "font-title sm:text-3xl text-xl col-span-full" ]
             [ Html.text "Your Journey Into Art Begins Here" ]
         , Html.img
-            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/newsletter.png"
+            [ HA.src "https://artmorph-images.s3.eu-north-1.amazonaws.com/newsletter.webp"
             , HA.alt "A digital painting of a city skyline at sunset with a silhouetted figure standing on a bridge. The figure reaches toward the sky, where vibrant splashes of colorful paint drip down, blending with the clouds. The artwork creates a surreal and dreamlike atmosphere, symbolizing creativity and imagination."
             , HA.class "max-w-full rounded sm:col-span-5"
             ]
@@ -83,6 +84,7 @@ view model =
                 [ Html.input
                     [ HA.class "w-full bg-textLight rounded pl-2 py-2"
                     , HA.placeholder "John.Doe@mail.com"
+                    , Aria.ariaLabel "Email"
                     , HA.required True
                     ]
                     []
@@ -108,7 +110,7 @@ view model =
                             [ Html.text "Subscribe Now" ]
                 ]
             , Html.nav
-                [ HA.class "flex flex-wrap justify-around" ]
+                [ HA.class "flex flex-wrap justify-around text-link" ]
                 [ Html.a
                     [ HA.href "/exhibitions"
                     , HA.class "font-title sm:text-base text-sm mb-2 overflow-hidden text-nowrap underline underline-offset-2 cursor-pointer p-2 hover:text-primary focus-within:text-primary"
