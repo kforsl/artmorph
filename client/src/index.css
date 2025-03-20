@@ -29,13 +29,9 @@
 }
 
 html, body  {
+    min-height: 100vh;
     height : 100%; 
-}
-
-main {
-    min-height: fit-content;
-    height: 100%;
-    font-family: "Inter";
+    font-family: "Inter" sans-serif;
 }
 
 .bg-light-text {
@@ -50,6 +46,13 @@ main {
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;  
+}
+
+.bg-overlay {
+    background-image: url(./assets/images/bg-overlay.svg);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .bg-footer-text {
