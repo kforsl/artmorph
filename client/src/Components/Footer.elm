@@ -4,12 +4,10 @@ import Html exposing (Html)
 import Html.Attributes as HA
 import Html.Events as HE
 
-
-
 view : msg -> Html msg
 view msg =
     Html.footer
-        [ HA.class "p-8 py-24 bg-bgDark min-h-96 max-w-full grid auto-rows-max place-content-between grid-cols-1 bg-footer-text relative" ]
+        [ HA.class "p-8 py-24 bg-bgDark min-h-96 max-w-full grid auto-rows-max place-content-between grid-cols-1 bg-footer-text relative drop-shadow-2xl" ]
         [ Html.section
             [ HA.class "max-w-maxWidth m-auto w-full"
             ]
