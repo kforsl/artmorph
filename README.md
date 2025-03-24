@@ -15,6 +15,10 @@ ArtMorph is a curated online platform showcasing themed digital art exhibitions.
 - **Hosting:** AWS Cloudfront, Render
 - **Styling:** Tailwind CSS  
 
+## 🎨 Design
+Check out the project’s wireframes and UI design on Figma:  
+[View on Figma](https://www.figma.com/design/ERrkdce4MS2D1jZefU24sp/ArtMorph?node-id=0-1&t=1OAo7xbh1sYFKBac-1)  
+
 ## 🚀 Getting Started
 
 ### 1. Clone the repository 
@@ -49,3 +53,5 @@ Visit [http://localhost:8000]() to view the project.
 
 ## 🌍 Live Site 
 [Artmorph](https://d1964um5pbaqp4.cloudfront.net/)
+
+## Design 
