@@ -53,5 +53,3 @@ Visit [http://localhost:8000]() to view the project.
 
 ## 🌍 Live Site 
 [Artmorph](https://d1964um5pbaqp4.cloudfront.net/)
-
-## Design 
